@@ -1,0 +1,13 @@
+{
+	"Mesh" : 
+	[
+		"Circle\u0000",
+		"Cone\u0000",
+		"Cube\u0000",
+		"Cylinder\u0000",
+		"Point\u0000",
+		"Rectangle\u0000",
+		"Sphere\u0000",
+		"Terrain\u0000"
+	]
+}

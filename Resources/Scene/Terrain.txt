@@ -1,0 +1,12 @@
+{
+	"Indice" : 
+	{
+		"Indices" : null,
+		"IndicesCount" : 0
+	},
+	"Vertex" : 
+	{
+		"Position" : null,
+		"VerticesCount" : 0
+	}
+}
