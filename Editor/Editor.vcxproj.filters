@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Editor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Editor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="DragonController.cpp">
+      <Filter>Editor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Main\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Editor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="RotationXComponent.cpp">
+      <Filter>Editor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolScene.cpp">
+      <Filter>Editor\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="TestEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="HierarchyEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Billboard.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="DragonController.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Main\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Main\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="RotationXComponent.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolScene.h">
+      <Filter>Editor\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Editor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="TestEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="HierarchyEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Main</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{1a04c6b6-5fb7-440e-9a35-f92b3857caf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main\Util">
+      <UniqueIdentifier>{29203081-a7de-4dcb-b9c7-225db5bf1bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{70fc72d4-b721-493c-b3bd-08e48abb3dbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Component">
+      <UniqueIdentifier>{5f441734-c273-4c7d-91ea-d5592305beed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Tool">
+      <UniqueIdentifier>{81f7e02d-cbd2-4cbb-94d0-2f4135ae7935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\Editor">
+      <UniqueIdentifier>{7cec27c7-89a2-4679-a37e-796bdfea5ef2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
