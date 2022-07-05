@@ -12,7 +12,7 @@ void EditorManager::Init()
 	descSrv.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descSrv.NumDescriptors = RENDER_TARGET_LIGHTING_GROUP_MEMBER_COUNT + RENDER_TARGET_G_BUFFER_GROUP_MEMBER_COUNT + SRV_REGISTER_COUNT;
 	descSrv.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	DEVICE->CreateDescriptorHeap(&descSrv, IID_PPV_ARGS(&_srvHeap));
+	DEVICE->CreateDescriptorHeap(&descSrv, IID_PPV_ARGS(&m_srvHeap));
 
 
 	// Setup Dear ImGui context
@@ -22,23 +22,21 @@ void EditorManager::Init()
 
 	ImGui_ImplWin32_Init(GEngine->GetWindow().hWnd);
 	ImGui_ImplDX12_Init(DEVICE.Get(), descSrv.NumDescriptors,
-		DXGI_FORMAT_R8G8B8A8_UNORM, _srvHeap.Get(),
-		_srvHeap->GetCPUDescriptorHandleForHeapStart(),
-		_srvHeap->GetGPUDescriptorHandleForHeapStart());
+		DXGI_FORMAT_R8G8B8A8_UNORM, m_srvHeap.Get(),
+		m_srvHeap->GetCPUDescriptorHandleForHeapStart(),
+		m_srvHeap->GetGPUDescriptorHandleForHeapStart());
 
 	ImGuiContext& g = *GImGui;
 	ImGuiViewportP* viewport = g.Viewports[0];
 	g.Viewports[0]->Size.x = GEngine->GetWindow().width;
 	g.Viewports[0]->Size.y = GEngine->GetWindow().height;
 
-    for (IEditor* editor : m_vecEditor) {
-        editor->Init();
-    }
+    m_DefaultImage = GET_SINGLE(Resources)->Get<Texture>(L"Default");
 }
 
 void EditorManager::Render()
 {
-	ID3D12DescriptorHeap* descriptorHeaps[] = { _srvHeap.Get() };
+	ID3D12DescriptorHeap* descriptorHeaps[] = { m_srvHeap.Get() };
 	GRAPHICS_CMD_LIST->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
 	ImGui::GImageCount = 1;
@@ -214,10 +212,9 @@ void EditorManager::Clear(uint8 state)
 void EditorManager::PushEditor(IEditor* editor)
 {
     m_vecEditor.push_back(editor);
+    editor->Init();
 }
 
-
-#ifdef EDITOR_MANAGER
 
 void ImGui::Image(Ref<Texture> texture, const ImVec2& size, const ImVec2& uv0, const ImVec2& uv1, const ImVec4& tint_col, const ImVec4& border_col)
 {
@@ -228,7 +225,7 @@ void ImGui::Image(Ref<Texture> texture, const ImVec2& size, const ImVec2& uv0, c
 	uint32 increase = DEVICE->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	uint32 destSize = 1;
-	D3D12_CPU_DESCRIPTOR_HANDLE destHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(EDITOR->GetSRVHeap()->GetCPUDescriptorHandleForHeapStart(), (increase * GImageCount));
+	D3D12_CPU_DESCRIPTOR_HANDLE destHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(EDITOR->srvHeap->GetCPUDescriptorHandleForHeapStart(), (increase * GImageCount));
 
 	uint32 srcSize = 1;
 	ComPtr<ID3D12DescriptorHeap> srcRtvHeapBegin = texture->GetSRV();
@@ -236,7 +233,7 @@ void ImGui::Image(Ref<Texture> texture, const ImVec2& size, const ImVec2& uv0, c
 
 	DEVICE->CopyDescriptors(1, &destHandle, &destSize, 1, &srcHandle, &srcSize, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	D3D12_GPU_DESCRIPTOR_HANDLE guiGPU = EDITOR->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE guiGPU = EDITOR->srvHeap->GetGPUDescriptorHandleForHeapStart();
 	ImGui::Image((ImTextureID)(guiGPU.ptr + (increase * GImageCount)), size, uv0, uv1, tint_col, border_col);
 
 	GImageCount += 1;
@@ -268,7 +265,7 @@ void ImGui::ImageButton(Ref<Texture> texture, const ImVec2& size, const ImVec2& 
 	uint32 increase = DEVICE->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
 	uint32 destSize = 1;
-	D3D12_CPU_DESCRIPTOR_HANDLE destHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(EDITOR->GetSRVHeap()->GetCPUDescriptorHandleForHeapStart(), increase * GImageCount);
+	D3D12_CPU_DESCRIPTOR_HANDLE destHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(EDITOR->srvHeap->GetCPUDescriptorHandleForHeapStart(), increase * GImageCount);
 
 	uint32 srcSize = 1;
 	ComPtr<ID3D12DescriptorHeap> srcRtvHeapBegin = texture->GetSRV();
@@ -276,9 +273,7 @@ void ImGui::ImageButton(Ref<Texture> texture, const ImVec2& size, const ImVec2& 
 
 	DEVICE->CopyDescriptors(1, &destHandle, &destSize, 1, &srcHandle, &srcSize, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-	D3D12_GPU_DESCRIPTOR_HANDLE guiGPU = EDITOR->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE guiGPU = EDITOR->srvHeap->GetGPUDescriptorHandleForHeapStart();
 	ImGui::ImageButton((ImTextureID)(guiGPU.ptr + (increase * GImageCount)), size, uv0, uv1, frame_padding, bg_col, tint_col);
 }
 
-
-#endif

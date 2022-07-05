@@ -11,6 +11,7 @@
 #include "Transform.h"
 
 #include "Input.h"
+#include "EditorManager.h"
 
 Terrain::Terrain() : Component(COMPONENT_TYPE::TERRAIN)
 {
@@ -40,7 +41,7 @@ void Terrain::Init(int32 sizeX, int32 sizeZ)
 	_material->SetTexture(2, heightMap);
 
 	Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
-	meshRenderer->SetMesh(GET_SINGLE(Resources)->LoadTerrainMesh(sizeX, sizeZ));
+	meshRenderer->mesh = (GET_SINGLE(Resources)->LoadTerrainMesh(sizeX, sizeZ));
 	meshRenderer->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Terrain"));
 	
 	GetGameObject()->AddComponent(meshRenderer);
@@ -66,7 +67,77 @@ void Terrain::FinalUpdate()
 		return;
 	}
 
-	Vec3 cameraPos = mainCamera->GetTransform()->GetLocalPosition();
+	Vec3 cameraPos = mainCamera->GetTransform()->localPosition;
 	_material->SetVec4(0, Vec4(cameraPos.x, cameraPos.y, cameraPos.z, 0.0f));
 
+}
+
+void Terrain::EditorUpdate()
+{
+	string guiName = "";
+
+	if (ImGui::CollapsingHeader("Terrain")) {
+		if (ImGui::CollapsingHeader("Property")) {
+
+		}
+
+		if (ImGui::CollapsingHeader("Base")) {
+			if (_material->GetTexture(0) == nullptr) {
+				ImGui::Image(EDITOR->DefaultImage, ImVec2(50.0f, 50.0f));
+				guiName = "nullptr";
+			}
+			else {
+				ImGui::Image(_material->GetTexture(0), ImVec2(50.0f, 50.0f));
+				guiName = _material->GetTexture(0)->GetGUIName();
+			}
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
+					_material->SetTexture(0, static_pointer_cast<Texture>(EDITOR->DefaultImage));
+					EDITOR->DefaultImage = nullptr;
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+
+		}
+		if (ImGui::CollapsingHeader("Normal")) {
+			if (_material->GetTexture(1) == nullptr) {
+				ImGui::Image(EDITOR->DefaultImage, ImVec2(50.0f, 50.0f));
+				guiName = "nullptr";
+			}
+			else {
+				ImGui::Image(_material->GetTexture(1), ImVec2(50.0f, 50.0f));
+				guiName = _material->GetTexture(1)->GetGUIName();
+			}
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
+					_material->SetTexture(1, static_pointer_cast<Texture>(EDITOR->DefaultImage));
+					EDITOR->DefaultImage = nullptr;
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+
+		}
+		if (ImGui::CollapsingHeader("HeightMap")) {
+			if (_material->GetTexture(2) == nullptr) {
+				ImGui::Image(EDITOR->DefaultImage, ImVec2(50.0f, 50.0f));
+				guiName = "nullptr";
+			}
+			else {
+				ImGui::Image(_material->GetTexture(2), ImVec2(50.0f, 50.0f));
+				guiName = _material->GetTexture(2)->GetGUIName();
+			}
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
+					_material->SetTexture(2, static_pointer_cast<Texture>(EDITOR->DefaultImage));
+					EDITOR->DefaultImage = nullptr;
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+
+		}
+
+	}
 }

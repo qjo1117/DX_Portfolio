@@ -19,35 +19,47 @@ void Transform::FinalUpdate()
 {
 	/* ----- 현재 기본적인 Scale, Rotation, Translation Matrix 셋팅후 SRT 순서로 합친다. ----- */
 
-	if (_change == false) {
+	if (m_change == false) {
 		return;
 	}
-	_change = false;
+	m_change = false;
 
-	Matrix matScale = Matrix::CreateScale(_localScale);
-	Matrix matRotation = Matrix::CreateRotationX(_localRotation.x);
-	matRotation *= Matrix::CreateRotationY(_localRotation.y);
-	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
-	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
+	Matrix matScale = Matrix::CreateScale(m_localScale);
+	Matrix matRotation = Matrix::CreateRotationX(m_localRotation.x);
+	matRotation *= Matrix::CreateRotationY(m_localRotation.y);
+	matRotation *= Matrix::CreateRotationZ(m_localRotation.z);
+	Matrix matTranslation = Matrix::CreateTranslation(m_localPosition);
 
-	_matLocal = matScale * matRotation * matTranslation;
-	_matWorld = _matLocal;
+	m_matLocal = matScale * matRotation * matTranslation;
+	m_matWorld = m_matLocal;
 
 	/* ----- 부모가 있을경우 계층구조를 이용해준다. ----- */
 	Ref<Transform> parent = GetParent().lock();
 	if (parent != nullptr) {
-		_matWorld *= parent->GetLocalToWorldMatrix();
+		m_matWorld *= parent->GetLocalToWorldMatrix();
+	}
+}
+
+void Transform::EditorUpdate()
+{
+	if (ImGui::CollapsingHeader("Transform")) {
+		const float dragSpeed = 1.0f;
+		Vec3 vecTemp;
+
+		ImGui::DragFloat3("Position", (float*)&m_localPosition, dragSpeed, -10000.0f, 10000.0f);
+		ImGui::DragFloat3("Rotation", (float*)&m_localRotation, dragSpeed / 36, -10000.0f, 10000.0f);
+		ImGui::DragFloat3("Scale", (float*)&m_localScale, dragSpeed, -10000.0f, 10000.0f);
 	}
 }
 
 void Transform::PushData()
 {
 	TransformParams transformParams = {};
-	transformParams.matWorld = _matWorld;
+	transformParams.matWorld = m_matWorld;
 	transformParams.matView = Camera::S_MatView;
 	transformParams.matProjection = Camera::S_MatProjection;
-	transformParams.matWV = _matWorld * Camera::S_MatView;
-	transformParams.matWVP = _matWorld * Camera::S_MatView * Camera::S_MatProjection;
+	transformParams.matWV = m_matWorld * Camera::S_MatView;
+	transformParams.matWVP = m_matWorld * Camera::S_MatView * Camera::S_MatProjection;
 	transformParams.matViewInv = Camera::S_MatView.Invert();
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushGraphicsData(&transformParams, sizeof(transformParams));
@@ -73,13 +85,13 @@ void Transform::LookAt(const Vec3& dir)
 	matrix.Up(up);
 	matrix.Backward(front);
 
-	SetLocalRotation(DecomposeRotationMatrix(matrix));
+	m_localRotation = (DecomposeRotationMatrix(matrix));
 }
 
 void Transform::SetParent(Ref<Transform> parent)
 {
-	_parent = parent; 
-	parent->_childs.push_back(GetGameObject()->GetTransform());
+	m_parent = parent; 
+	parent->m_childs.push_back(GetGameObject()->GetTransform());
 }
 
 bool Transform::CloseEnough(const float& a, const float& b, const float& epsilon)
@@ -145,25 +157,25 @@ void Transform::Serializer(Json::Value& object)
 	Json::Value& transformInfo = object["Transform"];
 	{
 		Json::Value scale;
-		scale.append(_localScale.x);
-		scale.append(_localScale.y);
-		scale.append(_localScale.z);
+		scale.append(m_localScale.x);
+		scale.append(m_localScale.y);
+		scale.append(m_localScale.z);
 		transformInfo["Scale"] = scale;
 	}
 
 	{
 		Json::Value rot;
-		rot.append(_localRotation.x);
-		rot.append(_localRotation.y);
-		rot.append(_localRotation.z);
+		rot.append(m_localRotation.x);
+		rot.append(m_localRotation.y);
+		rot.append(m_localRotation.z);
 		transformInfo["Rotation"] = rot;
 	}
 
 	{
 		Json::Value pos;
-		pos.append(_localPosition.x);
-		pos.append(_localPosition.y);
-		pos.append(_localPosition.z);
+		pos.append(m_localPosition.x);
+		pos.append(m_localPosition.y);
+		pos.append(m_localPosition.z);
 		transformInfo["Position"] = pos;
 	}
 	

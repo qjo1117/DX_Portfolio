@@ -81,7 +81,7 @@ vector<Ref<GameObject>> MeshData::Instantiate()
 
 		go->AddComponent(make_shared<Transform>());
 		go->AddComponent(make_shared<MeshRenderer>());
-		go->GetMeshRenderer()->SetMesh(info.mesh);
+		go->GetMeshRenderer()->mesh = info.mesh;
 
 		for (uint32 i = 0; i < info.materials.size(); i++) {
 			go->GetMeshRenderer()->SetMaterial(info.materials[i], i);

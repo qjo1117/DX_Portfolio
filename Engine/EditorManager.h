@@ -21,39 +21,40 @@ public:
 
 	void ResizeWindow();
 
-public:
-	/* ----- Helper Function ----- */
-	ComPtr<ID3D12DescriptorHeap> GetSRVHeap() { return _srvHeap; }
 
 public:
 	/* ----- MenuBar ------ */
-	void MainMenuBar();
+	void				MainMenuBar();
 
-	void RegisterMenuBar(const string& p_title, function<void(void)> p_func);
-	Ref<MenuInfo> Ref_FindMenuBar(Ref<MenuInfo>& p_info, const vector<string>& title, int32 index = 0);
-	void Ref_MenuPresent(Ref<MenuInfo>& p_info);
+	void				RegisterMenuBar(const string& p_title, function<void(void)> p_func);
+	Ref<MenuInfo>		Ref_FindMenuBar(Ref<MenuInfo>& p_info, const vector<string>& title, int32 index = 0);
+	void				Ref_MenuPresent(Ref<MenuInfo>& p_info);
 
 	/* ----- Log ------ */
-	void ConsoleEditor();
-	void Log(const string& log, uint8 state = LOG_STATE::LOG);
-	void Clear(uint8 state = LOG_STATE::LOG | LOG_STATE::ERROR_ | LOG_STATE::WARNING);
+	void				ConsoleEditor();
+	void				Log(const string& log, uint8 state = LOG_STATE::LOG);
+	void				Clear(uint8 state = LOG_STATE::LOG | LOG_STATE::ERROR_ | LOG_STATE::WARNING);
 
-	void PushEditor(IEditor* editor);
+	void				PushEditor(IEditor* editor);
 
 	template<typename T>
 	T* GetWindow();
 
 private:
 	/* ----- Draw Variable ----- */
-	ComPtr<ID3D12DescriptorHeap> _srvHeap;
+	PRIVATE_PROPERTY(ComPtr<ID3D12DescriptorHeap>, srvHeap);
 
-	vector<IEditor*> m_vecEditor;
+	PRIVATE_PROPERTY(Ref<class Object>, PickObject);
+	PRIVATE_PROPERTY(Ref<class Texture>, DefaultImage);
+
+	vector<IEditor*>				m_vecEditor;
 
 	/* ----- Log ------ */
-	uint8 m_eState = LOG_STATE::LOG | LOG_STATE::WARNING | LOG_STATE::ERROR_;
-	array<vector<string>, 3> m_arrLogs;
+	uint8							m_eState = LOG_STATE::LOG | LOG_STATE::WARNING | LOG_STATE::ERROR_;
+	array<vector<string>, 3>		m_arrLogs;
+
 	/* ------ Menu Tree ------ */
-	Ref<MenuInfo> m_pMenuBar = make_shared<MenuInfo>();
+	Ref<MenuInfo>					m_pMenuBar = make_shared<MenuInfo>();
 };
 
 class Texture;
@@ -77,5 +78,7 @@ T* EditorManager::GetWindow()
 
 	T* window = new T;
 	PushEditor(window);
+
+	window->Init();
 	return window;
 }

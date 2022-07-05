@@ -60,6 +60,23 @@ public:
 	template<typename T>
 	Ref<T> GetOrAddComponent();
 
+	vector<Ref<Component>> GetAllComponent()
+	{
+		vector<Ref<Component>> components;
+
+		for (Ref<Component>& component : _components) {
+			if (component != nullptr) {
+				components.push_back(component);
+			}
+		}
+
+		for (auto& itme : _scripts) {
+			components.push_back(itme.second);
+		}
+
+		return components;
+	}
+
 	/* ----- Helper Function ----- */
 	uint32			GetLayer() { return _layerType; }
 	void			SetLayer(uint32 type) { _layerType = type; }

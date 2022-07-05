@@ -30,6 +30,7 @@ public:
 
 public:
 	virtual void FinalUpdate();
+	virtual void EditorUpdate() override;
 	void Render();
 
 public:
@@ -38,58 +39,27 @@ public:
 
 
 public:
-	/* ----- Get Helper Function ----- */
-	uint32 GetMaxParticleCount() { return _maxParticle; }
-
-	float GetMinLifeTime() { return _minLifeTime; }
-	float GetMaxLifeTime() { return _maxLifeTime; }
-	Vec2 GetLifeTime() { return Vec2(_minLifeTime, _maxLifeTime); }
-
-	float GetMinSpeed() { return _minSpeed; }
-	float GetMaxSpeed() { return _maxSpeed; }
-	Vec2 GetSpeed() { return Vec2(_minSpeed, _maxSpeed); }
-
-	float GetStartScale() { return _startScale; }
-	float GetEndScale() { return _endScale; }
-	Vec2 GetScale() { return Vec2(_startScale, _endScale); }
-
 	Ref<class Texture>  GetTexture();
-
-	/* ----- Set Helper Function ----- */
-	void SetMaxParticleCount(uint32 count) { _maxParticle = count; }
-
-	void SetMinLifeTime(float time) { _minLifeTime = time; }
-	void SetMaxLifeTime(float time) { _maxLifeTime = time; }
-	void SetLifeTime(Vec2 time) { _minLifeTime = time.x; _maxLifeTime = time.y; }
-
-	void SetMinSpeed(float time) { _minSpeed = time; }
-	void SetMaxSpeed(float time) { _maxSpeed = time; }
-	void SetSpeed(Vec2 time) { _minSpeed = time.x; _maxSpeed = time.y; }
-
-	void SetStartScale(float time) { _startScale = time; }
-	void SetEndScale(float time) { _endScale = time; }
-	void SetScale(Vec2 time) { _startScale = time.x; _endScale = time.y; }
 
 	void SetTexture(Ref<class Texture> tex);
 
 private:
 	Ref<StructuredBuffer>	_particleBuffer;
 	Ref<StructuredBuffer>	_computeSharedBuffer;
-	uint32					_maxParticle = 1000;
+	PRIVATE_PROPERTY(uint32, maxParticle) = 1000;
 
 	Ref<Material>			_computeMaterial;
 	Ref<Material>			_material;
 	Ref<Mesh>				_mesh;
 
-	float			_createInterval = 0.005f;
-	float			_accTime = 0.0f;
-	
-	float			_minLifeTime = 0.5f;
-	float			_maxLifeTime = 1.0f;
-	float			_minSpeed = 100.0f;
-	float			_maxSpeed = 50.0f;
-	float			_startScale = 10.0f;
-	float			_endScale = 5.0f;
+	PRIVATE_PROPERTY(float, createInterval)		= 0.005f;
+	PRIVATE_PROPERTY(float, accTime)			= 0.0f;
+	PRIVATE_PROPERTY(float, minLifeTime)		= 0.5f;
+	PRIVATE_PROPERTY(float, maxLifeTime)		= 1.0f;
+	PRIVATE_PROPERTY(float, minSpeed)			= 100.0f;
+	PRIVATE_PROPERTY(float, maxSpeed)			= 50.0f;
+	PRIVATE_PROPERTY(float, startScale)			= 10.0f;
+	PRIVATE_PROPERTY(float, endScale)			= 5.0f;
 
 };
 

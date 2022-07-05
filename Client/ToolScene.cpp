@@ -387,9 +387,7 @@ void ToolScene::Create()
 	_createList.clear();
 }
 
-void ToolScene::
-
-()
+void ToolScene::TestEditor()
 {
 	/* ----- 객체의 정보를 보여줍니다. ----- */
 	ImGui::Begin("Editor");

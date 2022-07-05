@@ -50,9 +50,7 @@ void Engine::Init(const WindowInfo& info)
 	_rootSignature->Init();
 	_graphicsDescHeap->Init(256);
 	_computeDescHeap->Init();
-#ifdef EDITOR_MANAGER
-	GET_SINGLE(EditorManager)->Init();
-#endif
+
 
 
 	CreateRenderTargetGroups();
@@ -61,6 +59,10 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(Input)->Init(_winInfo.hWnd);
 	GET_SINGLE(Timer)->Init(_winInfo.hWnd);
 	GET_SINGLE(Resources)->Init();
+
+#ifdef EDITOR_MANAGER
+	GET_SINGLE(EditorManager)->Init();
+#endif
 
 	ResizeWindow(info.width, info.height);
 

@@ -34,6 +34,12 @@
     <ClCompile Include="HierarchyEditor.cpp">
       <Filter>Editor\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="InspectorEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -76,6 +82,12 @@
       <Filter>Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="HierarchyEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceEditor.h">
       <Filter>Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>

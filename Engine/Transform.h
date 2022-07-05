@@ -13,6 +13,8 @@ public:
 
 	/* ----- External Function ----- */
 	virtual void		FinalUpdate() override;
+	virtual void		EditorUpdate() override;
+
 	void				PushData();
 
 public:
@@ -27,24 +29,24 @@ public:
 public:
 	/* ----- Helper Function ----- */
 	// Parent Bases
-	const Vec3&			GetLocalPosition() { return _localPosition; }
-	const Vec3&			GetLocalRotation() { return _localRotation; }
-	const Vec3&			GetLocalScale() { return _localScale; }
+	const Vec3&			GetLocalPosition() { return m_localPosition; }
+	const Vec3&			GetLocalRotation() { return m_localRotation; }
+	const Vec3&			GetLocalScale() { return m_localScale; }
 
 	// TEMP
-	float				GetBoundingSphereRadius() { return max(max(_localScale.x, _localScale.y), _localScale.z); }
+	float				GetBoundingSphereRadius() { return max(max(m_localScale.x, m_localScale.y), m_localScale.z); }
 
-	const Matrix&		GetLocalToWorldMatrix() { return _matWorld; }
-	Vec3				GetWorldPosition() { return _matWorld.Translation(); }
+	const Matrix&		GetLocalToWorldMatrix() { return m_matWorld; }
+	Vec3				GetWorldPosition() { return m_matWorld.Translation(); }
 
-	Vec3				GetRight() { return _matWorld.Right(); }
-	Vec3				GetUp() { return _matWorld.Up(); }
-	Vec3				GetForward() { return _matWorld.Backward(); }
+	Vec3				GetRight() { return m_matWorld.Right(); }
+	Vec3				GetUp() { return m_matWorld.Up(); }
+	Vec3				GetForward() { return m_matWorld.Backward(); }
 
-	void				SetLocalPosition(const Vec3& position) { _localPosition = position; IsTransformChange(); }
-	void				SetLocalRotation(const Vec3& rotation) { _localRotation = rotation; IsTransformChange(); }
-	void				SetLocalScale(const Vec3& scale) { _localScale = scale; IsTransformChange(); }
-	bool				IsChange() { return _change; }
+	void				SetLocalPosition(const Vec3& position) { m_localPosition = position; IsTransformChange(); }
+	void				SetLocalRotation(const Vec3& rotation) { m_localRotation = rotation; IsTransformChange(); }
+	void				SetLocalScale(const Vec3& scale) { m_localScale = scale; IsTransformChange(); }
+	bool				IsChange() { return m_change; }
 
 	void				LookAt(const Vec3& dir);
 	static bool			CloseEnough(const float& a, const float& b, const float& epsilon = std::numeric_limits<float>::epsilon());
@@ -55,11 +57,11 @@ public:
 
 private:
 	void IsTransformChange() {
-		if (_change == true) {
+		if (m_change == true) {
 			return;
 		}
-		_change = true;
-		for (const weak_ptr<Transform>& child : _childs) {
+		m_change = true;
+		for (const weak_ptr<Transform>& child : m_childs) {
 			child.lock()->IsTransformChange();
 		}
 	}
@@ -67,22 +69,22 @@ private:
 public:
 	/* ----- Parent Helper Function ----- */
 	void				SetParent(Ref<Transform> parent);
-	weak_ptr<Transform> GetParent() { return _parent; }
-	vector<weak_ptr<Transform>>& GetChilds() { return _childs; }
+	weak_ptr<Transform> GetParent() { return m_parent; }
+	vector<weak_ptr<Transform>>& GetChilds() { return m_childs; }
 
 private:
 	/* ----- Local Transform Variable ----- */
-	Vec3				_localPosition = {};
-	Vec3				_localRotation = {};
-	Vec3				_localScale = { 1.0f, 1.0f ,1.0f };
-	bool				_change = false;
+	PRIVATE_SET_EVENT_PROPERTY(Vec3, localPosition, IsTransformChange) = Vec3::Zero;
+	PRIVATE_SET_EVENT_PROPERTY(Vec3, localRotation, IsTransformChange) = Vec3::Zero;
+	PRIVATE_SET_EVENT_PROPERTY(Vec3, localScale, IsTransformChange) = Vec3::One;
+	bool				m_change = false;
 
 	/* ----- World, Parent Variable ----- */
-	Matrix				_matLocal = {};
-	Matrix				_matWorld = {};
+	PRIVATE_PROPERTY(Matrix, matLocal) = Matrix::Identity;
+	PRIVATE_PROPERTY(Matrix, matWorld) = Matrix::Identity;
 
 	/* ----- Parent Mapping Variable ----- */
-	weak_ptr<Transform>				_parent;
-	vector<weak_ptr<Transform>>		_childs;
+	weak_ptr<Transform>				m_parent;
+	vector<weak_ptr<Transform>>		m_childs;
 };
 

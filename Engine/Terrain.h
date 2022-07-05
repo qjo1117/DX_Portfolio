@@ -12,6 +12,7 @@ public:
 
 	virtual void Update() override;
 	virtual void FinalUpdate() override;
+	virtual void EditorUpdate() override;
 
 private:
 	int32 _sizeX = 15;

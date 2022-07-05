@@ -51,7 +51,7 @@ Ref<class GameObject> SceneManager::Pick(int32 screenX, int32 screenY)
 	float width = static_cast<float>(GEngine->GetWindow().width);
 	float height = static_cast<float>(GEngine->GetWindow().height);
 
-	Matrix matProj = camera->GetProjectionMatrix();
+	Matrix matProj = camera->matProjection;
 
 	// 현재의 보완해야할 점
 	// 1.	World Space에서의 변환으로 맞춰짐. 현재 Invert하는 Matrix와 Intersects에 있는 좌표를
@@ -65,7 +65,7 @@ Ref<class GameObject> SceneManager::Pick(int32 screenX, int32 screenY)
 	float viewX = (+2.0f * screenX / width - 1.0f) / matProj(0, 0);
 	float viewY = (-2.0f * screenY / height + 1.0f) / matProj(1, 1);
 
-	Matrix matView = camera->GetViewMatrix();
+	Matrix matView = camera->matView;
 	Matrix matViewInv = matView.Invert();
 
 	vector<Ref<GameObject>>& gameObjects = GetCurrentScene()->GetAllGameObjects();

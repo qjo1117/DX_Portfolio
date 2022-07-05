@@ -19,8 +19,5 @@ public:
 	virtual void LateUpdate() { }
 	virtual void FinalUpdate() sealed { }
 
-public:
-	/* ----- GUI Function ----- */
-	virtual void DrawGUI() { }
 };
 

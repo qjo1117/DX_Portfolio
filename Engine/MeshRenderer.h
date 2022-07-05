@@ -40,22 +40,22 @@ public:
 
 public:
 	/* ----- Helper Function ----- */
-	void SetMesh(Ref<Mesh> mesh) { _mesh = mesh; }
 	void SetMaterial(Ref<Material> material, int32 index = 0);
 
 	Ref<Material> GetMaterial(int32 index = 0) {
-		if (index > _materials.size()) { return nullptr; } 
-		return _materials[index];
+		if (index > m_materials.size()) { return nullptr; } 
+		return m_materials[index];
 	}
-	Ref<Mesh> GetMesh() { return _mesh; }
 
-	uint32 GetMaterialSize() { return _materials.size(); }
+	uint32 GetMaterialSize() { return m_materials.size(); }
 
 	uint64 GetInstanceID();
 
 	/* ----- virtual Function ----- */
 	void Render();
 	void Render(Ref<class InstancingBuffer>& buffer);
+	virtual void EditorUpdate() override;
+
 	void RenderShadow();
 	void RenderPick(uint32 index);
 
@@ -65,11 +65,11 @@ public:
 
 private:
 	/* ----- MeshRender Variable ----- */
-	Ref<Mesh>				_mesh;
-	vector<Ref<Material>>	_materials;
+	PRIVATE_PROPERTY(Ref<Mesh>, mesh);
+	PRIVATE_PROPERTY(vector<Ref<Material>>, materials);
 
-	Ref<Material>			_shadow;
-	Ref<Material>			_pick;
+	Ref<Material>			m_shadow;
+	Ref<Material>			m_pick;
 
 };
 

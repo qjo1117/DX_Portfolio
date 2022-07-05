@@ -21,8 +21,8 @@ Camera::Camera() : Component(COMPONENT_TYPE::CAMERA)
 	_vecShadow.reserve(1000);
 	_vecPick.reserve(1000);
 
-	_width = static_cast<float>(GEngine->GetWindow().width);
-	_height = static_cast<float>(GEngine->GetWindow().height);
+	m_width = static_cast<float>(GEngine->GetWindow().width);
+	m_height = static_cast<float>(GEngine->GetWindow().height);
 
 	_PickTargetView = GET_SINGLE(Resources)->Get<Texture>(L"PickTargetView");
 }
@@ -34,16 +34,26 @@ Camera::~Camera()
 void Camera::FinalUpdate()
 {
 	// 상세설명 : view는 꺼꾸로 봐야지 맞다.
-	_matView = GetTransform()->GetLocalToWorldMatrix().Invert();
+	m_matView = GetTransform()->GetLocalToWorldMatrix().Invert();
 
-	if (_type == PROJECTION_TYPE::PERSPECTIVE) {
-		_matProjection = ::XMMatrixPerspectiveFovLH(_fov, _width / _height, _near, _far);
+	if (m_CameraType == PROJECTION_TYPE::PERSPECTIVE) {
+		m_matProjection = ::XMMatrixPerspectiveFovLH(m_fov, m_width / m_height, m_Near, m_Far);
 	}
 	else {
-		_matProjection = ::XMMatrixOrthographicLH(_width * _scale, _height * _scale, _near, _far);
+		m_matProjection = ::XMMatrixOrthographicLH(m_width * m_scale, m_height * m_scale, m_Near, m_Far);
 	}
 
-	_frustum.FinalUpdate();
+	m_frustum.FinalUpdate();
+}
+
+void Camera::EditorUpdate()
+{
+	if (ImGui::CollapsingHeader("Camera")) {
+		// TODO : 직교랑 절두랑 분기를 시켜줘야한다.
+		ImGui::SliderFloat("Near", &Near, 0.001f, Far - 1);
+		ImGui::SliderFloat("Far", &Far, Near + 1, 10000.0f);
+		ImGui::SliderFloat("Fov", &fov, 0.0f, XM_PI);
+	}
 }
 
 void Camera::SortGameObject()
@@ -55,8 +65,8 @@ void Camera::SortGameObject()
 	_vecDeferred.clear();
 	_vecParticle.clear();
 
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	Vec3 cameraPos = GetTransform()->GetWorldPosition();
 
@@ -66,7 +76,7 @@ void Camera::SortGameObject()
 		}
 
 		if (go->GetCheckFrustum()) {
-			if (_frustum.ContainSphere(
+			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {
 				continue;
@@ -100,8 +110,8 @@ void Camera::SortForwadObject()
 	_vecForward.clear();
 	_vecParticle.clear();
 
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : gameObjects) {
 		if (IsCulled(go->GetLayer())) {
@@ -138,7 +148,7 @@ void Camera::SortShadowGameObject()
 			continue;
 		}
 		if (go->GetCheckFrustum()) {
-			if (_frustum.ContainSphere(
+			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {
 				continue;
@@ -158,15 +168,15 @@ void Camera::SortPickGameObject()
 	Ref<Scene> scene = GET_SINGLE(SceneManager)->GetCurrentScene();
 	const vector<Ref<GameObject>>& gameObjects = scene->GetRender();
 
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : _vecShadow) {
 		if (IsCulled(go->GetLayer())) {
 			continue;
 		}
 		if (go->GetCheckFrustum()) {
-			if (_frustum.ContainSphere(
+			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {
 				continue;
@@ -182,8 +192,8 @@ void Camera::SortPickGameObject()
 
 void Camera::Render_Deferred()
 {
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	// 그냥 그리지말고 나눠준다.
 	GET_SINGLE(InstancingManager)->Render(_vecDeferred);
@@ -200,8 +210,8 @@ void Camera::Render_Forward()
 
 void Camera::Render_Shadow()
 {
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : _vecShadow) {
 		go->GetMeshRenderer()->RenderShadow();
@@ -211,8 +221,8 @@ void Camera::Render_Shadow()
 
 void Camera::Render_Pick()
 {
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
+	S_MatView = m_matView;
+	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : _vecDeferred) {
 		go->GetMeshRenderer()->RenderPick(go->GetID());

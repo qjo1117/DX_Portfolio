@@ -9,7 +9,7 @@ public:
 	HierarchyEditor() {}
 	virtual ~HierarchyEditor() {}
 
-	MENUITEM("Menu/Test", HierarchyEditor, Register);
+	MENUITEM("Menu/Hierarchy", HierarchyEditor, Register);
 	static void Register()
 	{
 		m_pInstance = EDITOR->GetWindow<HierarchyEditor>();
@@ -19,7 +19,19 @@ public:
 	virtual void Show() override;
 	virtual void End() override;
 
+
+	void Create();
+	void Clear();
+	void ParentTree(const Ref<GameObject>& obj);
+
+public:
+	static HierarchyEditor* GetI() { return m_pInstance; }
+
 private:
 	inline static HierarchyEditor* m_pInstance = nullptr;
+
+	vector<WRef<GameObject>> m_objects;
+	string m_strName = "";
+	PRIVATE_PROPERTY(WRef<GameObject>, PickObject);
 };
 

@@ -1105,7 +1105,7 @@ void Resources::CreateDefaultGameObject()
 
 		Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
 		{
-			meshRenderer->SetMesh(GET_SINGLE(Resources)->LoadCubeMesh());
+			meshRenderer->mesh = (GET_SINGLE(Resources)->LoadCubeMesh());
 		}
 		{
 			Ref<Material> material = GET_SINGLE(Resources)->Get<Material>(L"Skybox");
@@ -1142,7 +1142,7 @@ void Resources::CreateDefaultGameObject()
 		camera->SetName(L"UI_Camera");
 
 		camera->GetTransform()->SetLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-		camera->GetCamera()->SetProjectionType(PROJECTION_TYPE::ORTHOGRAPHIC);
+		camera->GetCamera()->CameraType = PROJECTION_TYPE::ORTHOGRAPHIC;
 
 		camera->GetCamera()->SetCullingMaskAll();
 		camera->GetCamera()->SetCullingMaskLayerOnOff(LAYER_TYPE::UI, false);	// UI¸¸ ÂïÀ½
@@ -1195,7 +1195,7 @@ void Resources::CreateDefaultComponent()
 		Ref<Mesh> mesh = LoadCubeMesh();
 		material->SetShader(Get<Shader>(L"Deferred"));
 		meshRenderer->SetMaterial(material);
-		meshRenderer->SetMesh(mesh);
+		meshRenderer->mesh = (mesh);
 		Add<MeshRenderer>(L"MeshRenderer", meshRenderer);
 	}
 

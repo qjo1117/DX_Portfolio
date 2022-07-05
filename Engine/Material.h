@@ -52,31 +52,31 @@ public:
 	void PushComputeData();
 
 	/* ----- Helper Function ----- */
-	inline Ref<class Shader> GetShader() { return _shader; }
+	inline Ref<class Shader> GetShader() { return m_shader; }
 
-	void SetShader(Ref<class Shader> shader) { _shader = shader; }
-	void SetInt(uint8 index, int32 value) { _params.SetInt(index, value); }
-	void SetFloat(uint8 index, float value) { _params.SetFloat(index, value); }
+	void SetShader(Ref<class Shader> shader) { m_shader = shader; }
+	void SetInt(uint8 index, int32 value) { m_params.SetInt(index, value); }
+	void SetFloat(uint8 index, float value) { m_params.SetFloat(index, value); }
 	void SetTexture(uint8 index, Ref<class Texture> texture) {
-		_textures[index] = texture;
-		_params.SetTexOn(index, (texture == nullptr) ? 0 : 1);
+		m_textures[index] = texture;
+		m_params.SetTexOn(index, (texture == nullptr) ? 0 : 1);
 	}
-	void SetVec2(uint8 index, Vec2 value) { _params.SetVec2(index, value); }
-	void SetVec4(uint8 index, Vec4 value) { _params.SetVec4(index, value); }
-	void SetMatrix(uint8 index, Matrix value) { _params.SetMatrix(index, value); }
+	void SetVec2(uint8 index, Vec2 value) { m_params.SetVec2(index, value); }
+	void SetVec4(uint8 index, Vec4 value) { m_params.SetVec4(index, value); }
+	void SetMatrix(uint8 index, Matrix value) { m_params.SetMatrix(index, value); }
 
 
-	int32 GetInt(uint8 index) { return _params.intParam[index]; }
-	Vec4 GetVec4(uint8 index) { return _params.vec4Param[index]; }
+	int32 GetInt(uint8 index) { return m_params.intParam[index]; }
+	Vec4 GetVec4(uint8 index) { return m_params.vec4Param[index]; }
 
 	void Dispatch(uint32 x, uint32 y, uint32 z);
 	
-	Ref<class Texture> GetTexture(uint8 index) { return _textures[index]; }
+	Ref<class Texture> GetTexture(uint8 index) { return m_textures[index]; }
 	Ref<Material> Clone();
 private:
 	/* ----- Material Part Variable ----- */
-	Ref<class Shader>		_shader;
-	MaterialParam			_params = {};
-	array<Ref<class Texture>, MATERIAL_ARG_COUNT>	_textures;
+	PRIVATE_PROPERTY(Ref<class Shader>, shader);
+	PRIVATE_PROPERTY(MaterialParam, params);
+	array<Ref<class Texture>, MATERIAL_ARG_COUNT>	m_textures;
 };
 

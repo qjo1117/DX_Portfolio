@@ -47,7 +47,7 @@ void Animator::PushData()
 	}
 
 	/* ------ Compute Shader ------ */
-	Ref<Mesh> mesh = GetGameObject()->GetMeshRenderer()->GetMesh();
+	Ref<Mesh> mesh = GetGameObject()->GetMeshRenderer()->mesh;
 	mesh->GetBoneFrameDataBuffer(_clipIndex)->PushComputeSRVData(SRV_REGISTER::t8);
 	mesh->GetBoneOffsetBuffer()->PushComputeSRVData(SRV_REGISTER::t9);
 

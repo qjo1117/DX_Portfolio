@@ -84,6 +84,10 @@ inline static struct Register_##Class_##Func			\
 public:																\
 	void Set##member(const type& p_val) { m_##member = p_val; }     
 
+#define SETEVENTMEMBER(type, member, Event)										\
+public:																\
+	void Set##member(const type& p_val) { m_##member = p_val; Event(); }     
+
 #define GETMEMBER(type, member)										\
 public:																\
 	type& Get##member() { return m_##member; }				
@@ -109,6 +113,15 @@ private:                                                            \
 #define PROTECTED_PROPERTY(type, member)							\
 public:                                                             \
 	SETMEMBER(type, member)											\
+	GETMEMBER(type, member)											\
+	PROPERTY(Get##member,  Set##member) type& ##member;				\
+protected:                                                          \
+	type m_##member                       
+
+
+#define PRIVATE_SET_EVENT_PROPERTY(type, member, Event)						\
+public:                                                             \
+	SETEVENTMEMBER(type, member, Event)								\
 	GETMEMBER(type, member)											\
 	PROPERTY(Get##member,  Set##member) type& ##member;				\
 protected:                                                          \

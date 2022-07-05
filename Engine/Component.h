@@ -23,6 +23,8 @@ public:
 	virtual void LateUpdate() { }
 	virtual void FinalUpdate() { }
 
+	virtual void EditorUpdate() { }
+
 	/* ----- Serializer Function ------ */
 	virtual void Serializer(class Json::Value& object) {}
 	virtual void DeSerializer(class Json::Value& object) {}

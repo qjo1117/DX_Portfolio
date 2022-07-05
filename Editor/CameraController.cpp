@@ -79,7 +79,7 @@ void CameraController::CameraMove()
 		move *= 5.0f;
 	}
 
-	GetTransform()->SetLocalPosition(GetTransform()->GetLocalPosition() + move);
+	GetTransform()->localPosition += move;
 
 	move = Vec3(0.0f, 0.0f, 0.0f);
 	if (INPUT->GetButton(KEY_TYPE::Z)) {
@@ -88,9 +88,8 @@ void CameraController::CameraMove()
 	if (INPUT->GetButton(KEY_TYPE::C)) {
 		move.x += 1;
 	}
-	move.x *= DELTATIME;
-	move += GetTransform()->GetLocalRotation();
-	GetTransform()->SetLocalRotation(move);
+	
+	GetTransform()->localRotation += move * DELTATIME;
 
 
 }

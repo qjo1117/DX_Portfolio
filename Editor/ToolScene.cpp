@@ -27,6 +27,7 @@
 #include "DragonController.h"
 
 #include "TestEditor.h"
+#include "HierarchyEditor.h"
 
 ToolScene::ToolScene()
 {
@@ -39,7 +40,7 @@ ToolScene::ToolScene()
 		skybox->SetName(L"SkyBox");
 		Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
 		{
-			meshRenderer->SetMesh(GET_SINGLE(Resources)->LoadSphereMesh());
+			meshRenderer->mesh = (GET_SINGLE(Resources)->LoadSphereMesh());
 		}
 		{
 			Ref<Material> material = GET_SINGLE(Resources)->Get<Material>(L"Skybox");
@@ -95,7 +96,7 @@ ToolScene::ToolScene()
 		go->SetName(L"UI_Camera");
 
 		go->GetTransform()->SetLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-		go->GetCamera()->SetProjectionType(PROJECTION_TYPE::ORTHOGRAPHIC);
+		go->GetCamera()->CameraType = (PROJECTION_TYPE::ORTHOGRAPHIC);
 
 		go->GetCamera()->SetCullingMaskAll();
 		go->GetCamera()->SetCullingMaskLayerOnOff(LAYER_TYPE::UI, false);	// UI¸¸ ÂïÀ½
@@ -141,7 +142,7 @@ ToolScene::ToolScene()
 			renderTarget->GetTransform()->SetLocalScale(Vec3(100.0f, 100.0f, 100.0f));
 
 			Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
-			meshRenderer->SetMesh(GET_SINGLE(Resources)->LoadRectangleMesh());
+			meshRenderer->mesh = (GET_SINGLE(Resources)->LoadRectangleMesh());
 
 			{
 				Ref<Texture> texture;
@@ -226,8 +227,6 @@ ToolScene::ToolScene()
 	//}
 #pragma endregion
 
-	
-
 
 	GEngine->GetGraphicsCmdQueue()->WaitSync();
 
@@ -267,12 +266,4 @@ void ToolScene::LateUpdate()
 void ToolScene::FinalUpdate()
 {
 	Scene::FinalUpdate();
-}
-
-void ToolScene::Create()
-{
-	for (auto& func : _createList) {
-		func();
-	}
-	_createList.clear();
 }

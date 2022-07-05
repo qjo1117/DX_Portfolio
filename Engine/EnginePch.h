@@ -95,7 +95,7 @@ template<typename T>
 using Ref = shared_ptr<T>;
 
 template<typename T>
-using WeakRef = weak_ptr<T>;
+using WRef = weak_ptr<T>;
 
 
 extern unique_ptr<class Engine> GEngine;

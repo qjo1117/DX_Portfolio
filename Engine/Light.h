@@ -50,43 +50,45 @@ public:
 
 	/* ----- virtual Function ----- */
 	virtual void FinalUpdate() override;
+	virtual void EditorUpdate() override;
+	
 	void Render();
 	void RenderShadow();
 
 public:
 	/* ----- Helper Function ----- */
-	const LightInfo& GetLightInfo() { return _lightInfo; }
+	const LightInfo& GetLightInfo() { return m_lightInfo; }
 
 	void SetLightDirection(Vec3 direction);
 
-	void SetDiffuse(const Vec3& diffuse) { _lightInfo.color.diffuse = diffuse; }
-	void SetAmbient(const Vec3& ambient) { _lightInfo.color.ambient = ambient; }
-	void SetSpecular(const Vec3& specualr) { _lightInfo.color.specular = specualr; }
+	void SetDiffuse(const Vec3& diffuse) { m_lightInfo.color.diffuse = diffuse; }
+	void SetAmbient(const Vec3& ambient) { m_lightInfo.color.ambient = ambient; }
+	void SetSpecular(const Vec3& specualr) { m_lightInfo.color.specular = specualr; }
 
-	const Vec4& GetDiffuse() { return _lightInfo.color.diffuse; }
-	const Vec4& GetAmbient() { return _lightInfo.color.ambient; }
-	const Vec4& GetSpecular() { return _lightInfo.color.specular; }
-	LIGHT_TYPE GetLightType() { return static_cast<LIGHT_TYPE>(_lightInfo.lightType); }
+	const Vec4& GetDiffuse() { return m_lightInfo.color.diffuse; }
+	const Vec4& GetAmbient() { return m_lightInfo.color.ambient; }
+	const Vec4& GetSpecular() { return m_lightInfo.color.specular; }
+	LIGHT_TYPE GetLightType() { return static_cast<LIGHT_TYPE>(m_lightInfo.lightType); }
 
 	void SetLightType(LIGHT_TYPE type);
-	void SetLightRange(float range) { _lightInfo.range = range; }
-	void SetLightAngle(float angle) { _lightInfo.angle = angle; }
+	void SetLightRange(float range) { m_lightInfo.range = range; }
+	void SetLightAngle(float angle) { m_lightInfo.angle = angle; }
 
-	const float& GetRange() { return _lightInfo.range; }
-	const float& GetAngle() { return _lightInfo.angle; }
+	const float& GetRange() { return m_lightInfo.range; }
+	const float& GetAngle() { return m_lightInfo.angle; }
 
-	void SetLightIndex(int8 index) { _lightIndex = index; }
+	void SetLightIndex(int8 index) { m_lightIndex = index; }
 
 
 private:
 	/* ----- LightInfo Variable ----- */
-	LightInfo						_lightInfo = {};
+	PRIVATE_PROPERTY(LightInfo,		lightInfo) = {};
 
-	int8							_lightIndex = -1;
-	Ref<class Mesh>					_volumeMesh;
-	Ref<class Material>				_lightMaterial;
-	Ref<class GameObject>			_shadowCamera;
+	PRIVATE_PROPERTY(int8,			lightIndex) = -1;
+	Ref<class Mesh>					m_volumeMesh;
+	Ref<class Material>				m_lightMaterial;
+	Ref<class GameObject>			m_shadowCamera;
 
-	Ref<class Texture>				_shadowTex;
+	Ref<class Texture>				m_shadowTex;
 };
 
