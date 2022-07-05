@@ -44,11 +44,19 @@ void Transform::EditorUpdate()
 {
 	if (ImGui::CollapsingHeader("Transform")) {
 		const float dragSpeed = 1.0f;
-		Vec3 vecTemp;
+		Vec3 vecTemp = Vec3::Zero;
 
-		ImGui::DragFloat3("Position", (float*)&m_localPosition, dragSpeed, -10000.0f, 10000.0f);
-		ImGui::DragFloat3("Rotation", (float*)&m_localRotation, dragSpeed / 36, -10000.0f, 10000.0f);
-		ImGui::DragFloat3("Scale", (float*)&m_localScale, dragSpeed, -10000.0f, 10000.0f);
+		vecTemp = m_localPosition;
+		ImGui::DragFloat3("Position", (float*)&vecTemp, dragSpeed, -10000.0f, 10000.0f);
+		localPosition = vecTemp;			// 프로퍼티로 하는 이유가 있음
+
+		vecTemp = m_localRotation;
+		ImGui::DragFloat3("Rotation", (float*)&vecTemp, dragSpeed / 36, -10000.0f, 10000.0f);
+		localRotation = vecTemp;			// 프로퍼티로 하는 이유가 있음
+
+		vecTemp = m_localScale;
+		ImGui::DragFloat3("Scale", (float*)&vecTemp, dragSpeed, -10000.0f, 10000.0f);
+		localScale = vecTemp;				// 프로퍼티로 하는 이유가 있음
 	}
 }
 

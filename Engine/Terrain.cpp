@@ -92,8 +92,8 @@ void Terrain::EditorUpdate()
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
-					_material->SetTexture(0, static_pointer_cast<Texture>(EDITOR->DefaultImage));
-					EDITOR->DefaultImage = nullptr;
+					_material->SetTexture(0, static_pointer_cast<Texture>(EDITOR->PickObject));
+					EDITOR->PickObject = nullptr;
 				}
 				ImGui::EndDragDropTarget();
 			}
@@ -111,8 +111,8 @@ void Terrain::EditorUpdate()
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
-					_material->SetTexture(1, static_pointer_cast<Texture>(EDITOR->DefaultImage));
-					EDITOR->DefaultImage = nullptr;
+					_material->SetTexture(1, static_pointer_cast<Texture>(EDITOR->PickObject));
+					EDITOR->PickObject = nullptr;
 				}
 				ImGui::EndDragDropTarget();
 			}
@@ -130,8 +130,8 @@ void Terrain::EditorUpdate()
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
-					_material->SetTexture(2, static_pointer_cast<Texture>(EDITOR->DefaultImage));
-					EDITOR->DefaultImage = nullptr;
+					_material->SetTexture(2, static_pointer_cast<Texture>(EDITOR->PickObject));
+					EDITOR->PickObject = nullptr;
 				}
 				ImGui::EndDragDropTarget();
 			}
