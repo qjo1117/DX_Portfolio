@@ -30,16 +30,6 @@ public:
 	Object(OBJECT_TYPE type);
 	virtual ~Object();
 
-	OBJECT_TYPE GetType() { return _objectType; }
-
-	void SetName(const string& name) { _guiName = name; _name = Utils::Str2Wstr(name); }
-	void SetName(const wstring& name) { _name = name; _guiName = Utils::Wstr2Str(name); }
-
-	const wstring& GetName() { return _name; }
-	const string& GetGUIName() { return _guiName; }
-
-	uint32 GetID() { return _id; }
-
 	// TODO : Intantiate 복사본 역할
 
 protected:
@@ -48,11 +38,8 @@ protected:
 	virtual void Save(const wstring& path) { }
 
 protected:
-	OBJECT_TYPE		_objectType = OBJECT_TYPE::NONE;
-	wstring			_name;
-	string			_guiName;
-
-protected:
-	uint32			_id = 0;
+	PROTECTED_PROPERTY(wstring, name);
+	PROTECTED_PROPERTY(OBJECT_TYPE, objectType) = OBJECT_TYPE::NONE;
+	PROTECTED_PROPERTY(uint32, id) = 0;
 };
 

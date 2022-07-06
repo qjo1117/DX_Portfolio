@@ -31,5 +31,28 @@ public:
 		return x < low ? low : (x > high ? high : x);
 	}
 
+	static bool CollisionAABB(Vec3 dscPos, Vec3 dscExtend, Vec3 srcPos, Vec3 srcExtend)
+	{
+		if (dscPos.x - dscExtend.x > srcPos.x + srcExtend.x) {
+			return false;
+		}
+		else if (dscPos.x + dscExtend.x < srcPos.x + srcExtend.x) {
+			return false;
+		}
+		if (dscPos.y - dscExtend.y > srcPos.y + srcExtend.y) {
+			return false;
+		}
+		else if (dscPos.y + dscExtend.y < srcPos.y + srcExtend.y) {
+			return false;
+		}
+		if (dscPos.z - dscExtend.z > srcPos.z + srcExtend.z) {
+			return false;
+		}
+		else if (dscPos.z + dscExtend.z < srcPos.z + srcExtend.z) {
+			return false;
+		}
+
+		return true;
+	}
 };
 

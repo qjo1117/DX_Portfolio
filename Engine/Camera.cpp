@@ -225,7 +225,7 @@ void Camera::Render_Pick()
 	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : _vecDeferred) {
-		go->GetMeshRenderer()->RenderPick(go->GetID());
+		go->GetMeshRenderer()->RenderPick(go->id);
 	}
 
 }

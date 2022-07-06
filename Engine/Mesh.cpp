@@ -69,7 +69,7 @@ Ref<Mesh> Mesh::CreateFromFBX(const FbxMeshInfo* meshInfo, FBXLoader& loader)
 
 void Mesh::Save(const wstring& path)
 {
-	wstring pullPath = path + _name + FILE_EXPENSION;
+	wstring pullPath = path + m_name + FILE_EXPENSION;
 	std::ofstream file(pullPath);
 
 	Json::Value mesh;		// 매쉬 정보를 입력해줄 Json 객체
@@ -110,7 +110,7 @@ void Mesh::Save(const wstring& path)
 
 void Mesh::Load(const wstring& path)
 {
-	wstring pullPath = path + _name + FILE_EXPENSION;
+	wstring pullPath = path + m_name + FILE_EXPENSION;
 	std::ifstream file(pullPath);
 
 	Json::Value mesh;		// 매쉬 정보를 입력해줄 Json 객체

@@ -19,16 +19,16 @@ void InspectorEditor::Show()
 	Ref<GameObject> go = HierarchyEditor::GetI()->PickObject.lock();
 
 	static char strTemp[50] = {};
-	::sprintf_s(strTemp, "%s", Utils::Wstr2Str(go->GetName()));
+	::sprintf_s(strTemp, "%s", Utils::Wstr2Str(go->name));
 
 	bool active = go->GetActive();
 	ImGui::Checkbox("##Check", &active);
 	go->SetActive(active);
 	ImGui::SameLine();
 	static char _text[MAX_PATH / 2] = { 0 };
-	::strcpy_s(_text, go->GetGUIName().data());
+	::strcpy_s(_text, Utils::Wstr2Str(go->name).data());
 	ImGui::InputText("##Nmae", _text, MAX_PATH / 2);
-	go->SetName(_text);
+	go->name = Utils::Str2Wstr(_text);
 	ImGui::SameLine();
 
 	string layer = EnumToStr((LAYER_TYPE)go->GetLayer());				// 매크로 사용

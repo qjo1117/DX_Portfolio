@@ -49,15 +49,7 @@ void Terrain::Init(int32 sizeX, int32 sizeZ)
 
 void Terrain::Update()
 {
-	if (INPUT->GetButtonDown(KEY_TYPE::N_1)) {
-		vector<Vertex>& vertices = _mesh->GetVertices();
 
-		for (Vertex& vertex : vertices) {
-			vertex.pos.y += 10.0f;
-		}
-
-		_mesh->Create(vertices, _mesh->GetIndices());
-	}
 }
 
 void Terrain::FinalUpdate()
@@ -88,7 +80,7 @@ void Terrain::EditorUpdate()
 			}
 			else {
 				ImGui::Image(_material->GetTexture(0), ImVec2(50.0f, 50.0f));
-				guiName = _material->GetTexture(0)->GetGUIName();
+				guiName = Utils::Wstr2Str(_material->GetTexture(0)->name);
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -107,7 +99,7 @@ void Terrain::EditorUpdate()
 			}
 			else {
 				ImGui::Image(_material->GetTexture(1), ImVec2(50.0f, 50.0f));
-				guiName = _material->GetTexture(1)->GetGUIName();
+				guiName = Utils::Wstr2Str(_material->GetTexture(1)->name);
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -126,7 +118,7 @@ void Terrain::EditorUpdate()
 			}
 			else {
 				ImGui::Image(_material->GetTexture(2), ImVec2(50.0f, 50.0f));
-				guiName = _material->GetTexture(2)->GetGUIName();
+				guiName = Utils::Wstr2Str(_material->GetTexture(2)->name);
 			}
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -135,8 +127,6 @@ void Terrain::EditorUpdate()
 				}
 				ImGui::EndDragDropTarget();
 			}
-
-
 		}
 
 	}

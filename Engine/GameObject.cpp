@@ -17,7 +17,7 @@ GameObject::GameObject() : Object(OBJECT_TYPE::GAMEOBJECT)
 	GameObject::ID += 1;
 	static char nameText[50];
 	::sprintf_s(nameText, 50, "Unkwon(%u)", GameObject::ID);
-	_guiName = nameText;
+	name = Utils::Str2Wstr(nameText);
 }
 
 GameObject::~GameObject()
@@ -145,7 +145,7 @@ void GameObject::FinalUpdate()
 
 void GameObject::Serializer(class Json::Value& scene)
 {
-	Json::Value& gameObject = scene[Utils::Wstr2Str(_name)];
+	Json::Value& gameObject = scene[Utils::Wstr2Str(m_name)];
 
 	for(auto& component : _components) {
 		if (component) {
@@ -162,7 +162,7 @@ void GameObject::Serializer(class Json::Value& scene)
 
 void GameObject::DeSerializer(class Json::Value& scene)
 {
-	Json::Value gameObject = scene[Utils::Wstr2Str(_name)];
+	Json::Value gameObject = scene[Utils::Wstr2Str(m_name)];
 
 	for (auto& component : _components) {
 		if (component) {

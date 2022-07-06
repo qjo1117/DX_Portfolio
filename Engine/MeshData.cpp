@@ -31,7 +31,7 @@ Ref<MeshData> MeshData::LoadFromFBX(const wstring& path)
 	for (int32 i = 0; i < loader.GetMeshCount(); ++i) {
 		MeshRenderInfo info = {};
 		info.mesh = Mesh::CreateFromFBX(&loader.GetMesh(i), loader);
-		info.mesh->SetName(path);
+		info.mesh->name = path;
 		GET_SINGLE(Resources)->Add<Mesh>(name + std::to_wstring(i), info.mesh);
 
 		for (size_t j = 0; j < loader.GetMesh(i).materials.size(); ++j) {
@@ -50,7 +50,7 @@ void MeshData::Load(const wstring& path)
 	assert(nullptr);
 
 	// TODO
-	std::ifstream file(path + _name + FILE_EXPENSION);
+	std::ifstream file(path + m_name + FILE_EXPENSION);
 
 	_mesh->Load(path);
 

@@ -12,7 +12,9 @@ public:
 	MENUITEM("Menu/Resource", ResourceEditor, Register);
 	static void Register()
 	{
-		m_pInstance = EDITOR->GetWindow<ResourceEditor>();
+		if (m_pInstance == nullptr) {
+			m_pInstance = EDITOR->GetWindow<ResourceEditor>();
+		}
 	}
 
 	virtual void Init() override;

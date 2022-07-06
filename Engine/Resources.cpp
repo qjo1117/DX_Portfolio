@@ -657,7 +657,7 @@ Ref<MeshData> Resources::LoadFBX(const wstring& path)
 	if (meshData == nullptr) {
 		meshData = MeshData::LoadFromFBX(FBX_PATH + path);
 	}
-	meshData->SetName(key);
+	meshData->name = key;
 	Add(key, meshData);
 
 
@@ -1065,6 +1065,14 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"Terrain", material);
 	}
 
+	/* ----- Wirefram ----- */
+	{
+		Ref<Shader> shader = Get<Shader>(L"Wirefram");
+		Ref<Material> material = make_shared<Material>();
+		material->SetShader(shader);
+		Add<Material>(L"Wirefram", material);
+	}
+
 	/* ----- ComputeAnimation ----- */
 	{
 		Ref<Shader> shader = Get<Shader>(L"ComputeAnimation");
@@ -1125,7 +1133,7 @@ void Resources::CreateDefaultGameObject()
 		Ref<GameObject> camera = make_shared<GameObject>();
 		camera->AddComponent(make_shared<Transform>());
 		camera->AddComponent(make_shared<Camera>());
-		camera->SetName(L"MainCamera");
+		camera->name = (L"MainCamera");
 
 		camera->GetCamera()->SetCullingMaskLayerOnOff(LAYER_TYPE::UI, true); // UI´Â ¾ÈÂïÀ½
 		Add<GameObject>(L"MainCamera", camera);
@@ -1139,7 +1147,7 @@ void Resources::CreateDefaultGameObject()
 		camera->AddComponent(make_shared<Transform>());
 		camera->AddComponent(make_shared<Camera>());
 
-		camera->SetName(L"UI_Camera");
+		camera->name = (L"UI_Camera");
 
 		camera->GetTransform()->SetLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
 		camera->GetCamera()->CameraType = PROJECTION_TYPE::ORTHOGRAPHIC;
@@ -1154,7 +1162,7 @@ void Resources::CreateDefaultGameObject()
 #pragma region Directional Light
 	{
 		Ref<GameObject> light = make_shared<GameObject>();
-		light->SetName(L"Directional Light");
+		light->name = (L"Directional Light");
 		light->AddComponent(make_shared<Transform>());
 		light->AddComponent(make_shared<Light>());
 		light->GetLight()->SetLightDirection(Vec3(0.0f, -1.0f, 0.0f));
@@ -1170,7 +1178,7 @@ void Resources::CreateDefaultGameObject()
 #pragma region Point Light
 	{
 		Ref<GameObject> light = make_shared<GameObject>();
-		light->SetName(L"Point Light");
+		light->name = (L"Point Light");
 		light->AddComponent(make_shared<Transform>());
 		light->AddComponent(make_shared<Light>());
 		light->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);

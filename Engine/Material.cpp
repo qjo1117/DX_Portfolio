@@ -47,10 +47,10 @@ void Material::PushComputeData()
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::MATERIAL)->PushComputeData(&m_params, sizeof(m_params));
 
 	// SRV ¾÷·Îµå
-	for (size_t i = 0; i < m_textures.size(); i++)
-	{
-		if (m_textures[i] == nullptr)
+	for (size_t i = 0; i < m_textures.size(); i++) {
+		if (m_textures[i] == nullptr) {
 			continue;
+		}
 
 		SRV_REGISTER reg = SRV_REGISTER(static_cast<int8>(SRV_REGISTER::t0) + i);
 		GEngine->GetComputeDescHeap()->SetSRV(m_textures[i]->GetSRVCpuHandle(), reg);
@@ -78,7 +78,7 @@ Ref<Material> Material::Clone()
 	material->SetShader(m_shader);
 	material->m_params = m_params;
 	material->m_textures = m_textures;
-	material->SetName(_name);
+	material->name = m_name;
 
 	return material;
 }

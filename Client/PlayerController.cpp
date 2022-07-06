@@ -55,7 +55,7 @@ void PlayerController::LateUpdate()
 {
 }
 
-void PlayerController::DrawGUI()
+void PlayerController::EditorUpdate()
 {
 	if (ImGui::DragFloat("Speed", &_speed, 1.0f, 0.0f, 1000.0f)) {
 		_speed = _speed;

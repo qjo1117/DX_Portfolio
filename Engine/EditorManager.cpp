@@ -92,6 +92,7 @@ void EditorManager::MainMenuBar()
     }
 }
 
+
 void EditorManager::Ref_MenuPresent(Ref<MenuInfo>& p_info)
 {
     for (Ref<MenuInfo> info : p_info->vecChildMenu) {
@@ -159,22 +160,22 @@ void EditorManager::ConsoleEditor()
     ImGui::Begin("Console");
 
     if (LOG_STATE::LOG & m_eState) {
-        for (string& log : m_arrLogs[0]) {
-            string text = "| Log | " + log;
+        for (auto& log : m_arrLogs[0]) {
+            string text = "| Log | " + log.first + "/ Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();
     }
     if (LOG_STATE::WARNING & m_eState) {
-        for (string& log : m_arrLogs[1]) {
-            string text = "| Warning | " + log;
+        for (auto& log : m_arrLogs[1]) {
+            string text = "| Warning | " + log.first + "/ Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();
     }
     if (LOG_STATE::ERROR_ & m_eState) {
-        for (string& log : m_arrLogs[2]) {
-            string text = "| Error | " + log;
+        for (auto& log : m_arrLogs[2]) {
+            string text = "| Error | " + log.first + "/ Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();
@@ -186,13 +187,13 @@ void EditorManager::ConsoleEditor()
 void EditorManager::Log(const string& log, uint8 state)
 {
     if (LOG_STATE::LOG & state) {
-        m_arrLogs[0].push_back(log);
+        m_arrLogs[0][log] += 1;
     }
     if (LOG_STATE::WARNING & state) {
-        m_arrLogs[1].push_back(log);
+        m_arrLogs[1][log] += 1;
     }
     if (LOG_STATE::ERROR_ & state) {
-        m_arrLogs[2].push_back(log);
+        m_arrLogs[2][log] += 1;
     }
 }
 

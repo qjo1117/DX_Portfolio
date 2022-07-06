@@ -21,7 +21,7 @@ public:
 
 public:
 	/* ----- GUI Function ----- */
-	virtual void DrawGUI();
+	virtual void EditorUpdate();
 
 
 	float GetSpeed() { return _speed; }

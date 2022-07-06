@@ -58,6 +58,9 @@
     <Filter Include="Utils\FBX">
       <UniqueIdentifier>{f91b09cd-d347-4e38-ba98-1f2053f85678}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Collider">
+      <UniqueIdentifier>{bf7be6d1-5bef-4cb4-a572-8e28f6f7ad48}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -134,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
       <Filter>Object\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="BaseCollider.cpp">
-      <Filter>Object\Component\Collider</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Object\Component\Collider</Filter>
@@ -243,6 +243,18 @@
     <ClCompile Include="FBXLoader.cpp">
       <Filter>Utils\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="BaseCollider.cpp">
+      <Filter>Core\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Object\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliderManager.cpp">
+      <Filter>Core\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="OctorTree.cpp">
+      <Filter>Utils\User</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -322,9 +334,6 @@
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>Object\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseCollider.h">
-      <Filter>Object\Component\Collider</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
       <Filter>Object\Component\Collider</Filter>
@@ -439,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="FBXLoader.h">
       <Filter>Utils\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCollider.h">
+      <Filter>Core\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Object\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliderManager.h">
+      <Filter>Core\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="OctorTree.h">
+      <Filter>Utils\User</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

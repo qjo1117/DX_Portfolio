@@ -1,13 +1,17 @@
 #include "pch.h"
 #include "BaseCollider.h"
+#include "Resources.h"
+#include "Material.h"
 
-BaseCollider::BaseCollider(ColliderType type) :
+
+BaseCollider::BaseCollider(COLLIDER_TYPE type) :
 	Component(COMPONENT_TYPE::COLLIDER),
-	_colliderType(type)
+	m_ColliderType(type)
 {
-
+	material = GET_SINGLE(Resources)->Get<Material>(L"Wirefram");
 }
 
 BaseCollider::~BaseCollider()
 {
 }
+

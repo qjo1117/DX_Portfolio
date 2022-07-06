@@ -127,6 +127,14 @@ public:                                                             \
 protected:                                                          \
 	type m_##member                       
 
+#define PROTECTED_SET_EVENT_PROPERTY(type, member, Event)						\
+public:                                                             \
+	SETEVENTMEMBER(type, member, Event)								\
+	GETMEMBER(type, member)											\
+	PROPERTY(Get##member,  Set##member) type& ##member;				\
+protected:                                                          \
+	type m_##member                       
+
 
 /*	--------------------------------------------
 			EnumClass To String

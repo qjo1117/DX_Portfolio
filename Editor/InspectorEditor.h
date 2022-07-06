@@ -12,7 +12,9 @@ public:
 	MENUITEM("Menu/Inspector", InspectorEditor, Register);
 	static void Register()
 	{
-		m_pInstance = EDITOR->GetWindow<InspectorEditor>();
+		if (m_pInstance == nullptr) {
+			m_pInstance = EDITOR->GetWindow<InspectorEditor>();
+		}
 	}
 
 	virtual void Init() override;

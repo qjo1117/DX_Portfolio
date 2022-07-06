@@ -12,7 +12,9 @@ public:
 	MENUITEM("Menu/Hierarchy", HierarchyEditor, Register);
 	static void Register()
 	{
-		m_pInstance = EDITOR->GetWindow<HierarchyEditor>();
+		if (m_pInstance == nullptr) {
+			m_pInstance = EDITOR->GetWindow<HierarchyEditor>();
+		}
 	}
 
 	virtual void Init() override;

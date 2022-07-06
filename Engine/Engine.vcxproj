@@ -187,7 +187,9 @@
     <ClInclude Include="..\Library\Include\ImGui\ImZoomSlider.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseCollider.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColliderManager.h" />
     <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshData.h" />
+    <ClInclude Include="OctorTree.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="PMath.h" />
@@ -312,7 +315,9 @@
     </ClCompile>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="BaseCollider.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ColliderManager.cpp" />
     <ClCompile Include="CommandQueue.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
@@ -337,6 +342,7 @@
     <ClCompile Include="Macro.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshData.cpp" />
+    <ClCompile Include="OctorTree.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="PMath.cpp" />

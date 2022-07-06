@@ -13,6 +13,7 @@ MeshRenderer::MeshRenderer() :
 {
 	m_shadow = GET_SINGLE(Resources)->Get<Material>(L"Shadow");
 	m_pick = GET_SINGLE(Resources)->Get<Material>(L"Pick");
+
 }
 
 MeshRenderer::~MeshRenderer()
@@ -75,9 +76,8 @@ void MeshRenderer::EditorUpdate()
 			_gameObject.lock()->SetShadow(!isShadow);
 		}
 
-		ImGui::Text("Mesh : ");
+		ImGui::Text("Mesh : %s", Utils::Wstr2Str(m_mesh->name).data());
 		ImGui::SameLine();
-		ImGui::Text(m_mesh->GetGUIName().data());
 		if (ImGui::BeginDragDropTarget()) {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MESH_DRAG")) {
 				m_mesh = static_pointer_cast<Mesh>(EDITOR->PickObject);
@@ -96,13 +96,11 @@ void MeshRenderer::EditorUpdate()
 				text = "nullptr";
 			}
 			else {
-				text = material->GetGUIName();
+				text = Utils::Wstr2Str(material->name);
 			}
 
 			ImGui::Separator();
 			ImGui::Text("Material : %s", text.data());
-			ImGui::BeginGroup();
-			ImGui::EndGroup();
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("MATERIAL_DRAG")) {
 					m_materials[i] = static_pointer_cast<Material>(EDITOR->PickObject);
@@ -112,7 +110,7 @@ void MeshRenderer::EditorUpdate()
 			}
 
 			/* ----- Shader ----- */
-			ImGui::Text("Shader : %s", material->GetShader()->GetGUIName().data());
+			ImGui::Text("Shader : %s", Utils::Wstr2Str(material->GetShader()->name).data());
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("SHADER_DRAG")) {
 					m_materials[i]->shader = static_pointer_cast<Shader>(EDITOR->PickObject);
@@ -131,7 +129,7 @@ void MeshRenderer::EditorUpdate()
 				}
 				else {
 					ImGui::Image(material->GetTexture(0), ImVec2(50.0f, 50.0f));
-					text = material->GetTexture(0)->GetGUIName();
+					text = Utils::Wstr2Str(material->GetTexture(0)->name);
 				}
 				if (ImGui::BeginDragDropTarget()) {
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -155,7 +153,7 @@ void MeshRenderer::EditorUpdate()
 				}
 				else {
 					ImGui::Image(material->GetTexture(1), ImVec2(50.0f, 50.0f));
-					text = material->GetTexture(1)->GetGUIName();
+					text = Utils::Wstr2Str(material->GetTexture(1)->name);
 				}
 				if (ImGui::BeginDragDropTarget()) {
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -176,7 +174,7 @@ void MeshRenderer::EditorUpdate()
 				}
 				else {
 					ImGui::Image(material->GetTexture(2), ImVec2(50.0f, 50.0f));
-					text = material->GetTexture(2)->GetGUIName();
+					text = Utils::Wstr2Str(material->GetTexture(2)->name);
 				}
 				if (ImGui::BeginDragDropTarget()) {
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("TEXTURE_DRAG")) {
@@ -222,10 +220,10 @@ void MeshRenderer::Serializer(Json::Value& object)
 	//	transformInfo["Scale"] = scale;
 	//}
 
-	{
+	/*{
 		Json::Value mesh;
-		mesh.append(m_mesh->GetGUIName());
-	}
+		mesh.append(m_mesh->name());
+	}*/
 
 }
 
@@ -251,6 +249,6 @@ uint64 MeshRenderer::GetInstanceID()
 
 	// 같은 의미
 	//uint64 id = (_mesh->GetID() << 32) | _material->GetID();
-	InstanceID instanceID{ m_mesh->GetID(), m_materials[0]->GetID()};
+	InstanceID instanceID{ m_mesh->id, m_materials[0]->id };
 	return instanceID.id;
 }

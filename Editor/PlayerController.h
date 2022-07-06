@@ -19,9 +19,11 @@ public:
 	virtual void Update();
 	virtual void LateUpdate();
 
+	void CollisionTest(Ref<class BaseCollider> dest);
+
 public:
 	/* ----- GUI Function ----- */
-	virtual void DrawGUI();
+	virtual void EditorUpdate();
 
 
 	float GetSpeed() { return _speed; }

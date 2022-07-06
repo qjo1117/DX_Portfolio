@@ -45,7 +45,7 @@ void HierarchyEditor::Clear()
 void HierarchyEditor::ParentTree(const Ref<GameObject>& obj)
 {
 	uint32 node_flags = 0;
-	m_strName = obj->GetGUIName() + "##" + std::to_string(obj->GetID());
+	m_strName = Utils::Wstr2Str(obj->name) + "##" + std::to_string(obj->id);
 
 	if (obj->GetTransform()->GetChilds().size() == 0) {
 		node_flags |= ImGuiTreeNodeFlags_Leaf; // ImGuiTreeNodeFlags_Bullet

@@ -5,6 +5,12 @@
 #include <ImGui/imgui_impl_dx12.h>
 #include "IEditor.h"
 
+struct
+{
+	string str;
+	int32 count = 0;
+};
+
 /*---------------
 	EngineGUI
 ----------------*/
@@ -30,6 +36,7 @@ public:
 	Ref<MenuInfo>		Ref_FindMenuBar(Ref<MenuInfo>& p_info, const vector<string>& title, int32 index = 0);
 	void				Ref_MenuPresent(Ref<MenuInfo>& p_info);
 
+
 	/* ----- Log ------ */
 	void				ConsoleEditor();
 	void				Log(const string& log, uint8 state = LOG_STATE::LOG);
@@ -51,7 +58,7 @@ private:
 
 	/* ----- Log ------ */
 	uint8							m_eState = LOG_STATE::LOG | LOG_STATE::WARNING | LOG_STATE::ERROR_;
-	array<vector<string>, 3>		m_arrLogs;
+	array<unordered_map<string, int32>, 3>		m_arrLogs;
 
 	/* ------ Menu Tree ------ */
 	Ref<MenuInfo>					m_pMenuBar = make_shared<MenuInfo>();
@@ -77,8 +84,8 @@ T* EditorManager::GetWindow()
 	}
 
 	T* window = new T;
-	PushEditor(window);
-
 	window->Init();
+
+	PushEditor(window);
 	return window;
 }

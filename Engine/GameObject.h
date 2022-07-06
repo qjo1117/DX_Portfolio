@@ -129,7 +129,7 @@ inline void GameObject::AddComponent(Ref<T> component)
 template<typename T>
 inline Ref<T> GameObject::GetComponent()
 {
-	uint8 index = static_cast<uint8>(GetType());
+	uint8 index = static_cast<uint8>(objectType);
 
 	if (index < FIXED_COMPONENT_COUNT) {
 		return static_pointer_cast<T>(_components[index]);

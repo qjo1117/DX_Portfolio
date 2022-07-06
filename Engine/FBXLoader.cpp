@@ -336,7 +336,7 @@ void FBXLoader::CreateMaterials()
 		{
 			Ref<Material> material = make_shared<Material>();
 			wstring key = _meshes[i].materials[j].name;
-			material->SetName(key);
+			material->name = key;
 			material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Deferred"));
 
 			{
@@ -366,7 +366,7 @@ void FBXLoader::CreateMaterials()
 					material->SetTexture(2, specularTexture);
 			}
 
-			GET_SINGLE(Resources)->Add<Material>(material->GetName(), material);
+			GET_SINGLE(Resources)->Add<Material>(material->name, material);
 		}
 	}
 }

@@ -1,12 +1,14 @@
 #pragma once
+
 #include "BaseCollider.h"
 
 
-class SphereCollider : public BaseCollider
+class BoxCollider :
+    public BaseCollider
 {
 public:
-    SphereCollider();
-    virtual ~SphereCollider();
+    BoxCollider();
+    virtual ~BoxCollider();
 
     /* ----- override function ------ */
     virtual void FinalUpdate() override;
@@ -14,11 +16,9 @@ public:
     virtual bool Collision(Ref<BaseCollider> collider) override;
     virtual void EditorUpdate() override;
 
-    void SetRadius(float radius) { _radius = radius; }
-    float GetRadius() { return _radius; }
-
 private:
-    float _radius = 1.0f;
-    PRIVATE_PROPERTY(BoundingSphere, BoundSphere) = {};
+    PRIVATE_PROPERTY(BoundingOrientedBox, BoundBox) = {};
+    PRIVATE_PROPERTY(Ref<GameObject>, WireFrame) = nullptr;
+ 
 };
 

@@ -80,7 +80,7 @@ inline Ref<T> Resources::Load(const wstring& key, const wstring& path)
 	}
 
 	Ref<T> object = make_shared<T>();
-	object->SetName(key);
+	object->name = key;
 	object->Load(path);
 	keyObjMap[key] = object;
 
@@ -99,7 +99,7 @@ bool Resources::Add(const wstring& key, Ref<T> object)
 		return false;
 
 	keyObjMap[key] = object;
-	object->SetName(key);
+	object->name = key;
 
 	return true;
 }

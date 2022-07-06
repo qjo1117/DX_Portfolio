@@ -2,6 +2,8 @@
 #include "PlayerController.h"
 #include "Engine.h"
 #include "Transform.h"
+#include "EditorManager.h"
+#include "BaseCollider.h"
 
 PlayerController::PlayerController()
 {
@@ -13,10 +15,12 @@ PlayerController::~PlayerController()
 
 void PlayerController::Awake()
 {
+	GetGameObject()->GetCollider()->BindFunc.push_back([=](Ref<BaseCollider> dest) { CollisionTest(dest); });
 }
 
 void PlayerController::Start()
 {
+	
 }
 
 void PlayerController::Update()
@@ -55,7 +59,15 @@ void PlayerController::LateUpdate()
 {
 }
 
-void PlayerController::DrawGUI()
+void PlayerController::CollisionTest(Ref<class BaseCollider> dest)
+{
+	EDITOR->Log("Collision");
+	Vec3 dir = dest->GetTransform()->localPosition - GetTransform()->localPosition;
+	dir.Normalize();
+	GetTransform()->localPosition -= dir;
+}
+
+void PlayerController::EditorUpdate()
 {
 	if (ImGui::DragFloat("Speed", &_speed, 1.0f, 0.0f, 1000.0f)) {
 		_speed = _speed;

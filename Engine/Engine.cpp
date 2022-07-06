@@ -6,6 +6,7 @@
 #include "Resources.h"
 #include "PathManager.h"
 #include "InstancingManager.h"
+#include "ColliderManager.h"
 
 void Engine::Init(const WindowInfo& info)
 {
@@ -59,6 +60,7 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(Input)->Init(_winInfo.hWnd);
 	GET_SINGLE(Timer)->Init(_winInfo.hWnd);
 	GET_SINGLE(Resources)->Init();
+	GET_SINGLE(ColliderManager)->Init();
 
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->Init();
@@ -93,6 +95,8 @@ void Engine::Update()
 	GET_SINGLE(SceneManager)->Update();
 
 	LateUpdate();
+
+	GET_SINGLE(ColliderManager)->Update();
 
 	Render();
 }

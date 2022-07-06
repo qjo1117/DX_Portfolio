@@ -16,7 +16,7 @@ Light::Light() : Component(COMPONENT_TYPE::LIGHT)
 	m_shadowCamera->AddComponent(make_shared<Camera>());
 	m_shadowCamera->GetCamera()->SetCullingMaskLayerOnOff(static_cast<uint32>(LAYER_TYPE::UI), true);
 /*	_shadowCamera->GetTransform()->SetParent(GetGameObject()->GetTransform());	*/	// 개인적인 추가
-	m_shadowCamera->SetName(L"ShadowCamera");
+	m_shadowCamera->name = L"ShadowCamera";
 
 	m_shadowTex = GET_SINGLE(Resources)->Get<Texture>(L"ShadowTarget");
 }
