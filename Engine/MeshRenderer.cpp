@@ -71,9 +71,8 @@ void MeshRenderer::EditorUpdate()
 	}
 
 	if (ImGui::CollapsingHeader("MeshRenderer")) {
-		bool isShadow = _gameObject.lock()->IsShadow();
 		if (ImGui::Button("Shadow")) {
-			_gameObject.lock()->SetShadow(!isShadow);
+			_gameObject.lock()->isShadow = !_gameObject.lock()->isShadow;
 		}
 
 		ImGui::Text("Mesh : %s", Utils::Wstr2Str(m_mesh->name).data());

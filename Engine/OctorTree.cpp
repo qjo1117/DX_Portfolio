@@ -43,14 +43,14 @@ void OctorTree::Clear()
 	Init(_boundary, _capacity);
 }
 
-void OctorTree::Insert(Ref<class BaseCollider> collider)
+bool OctorTree::Insert(Ref<class BaseCollider> collider)
 {
 	if (!_boundary.CollisionBoxToPoint(collider->Bound.Center)) {
-		return;
+		return false;
 	}
 
 	// 값을 참조하기 위해 포인터 형식으로 Push_back진행
-	if (_capacity >= _count) {
+	if (_capacity > _count) {
 		_vecList.push_back(collider);
 		_count += 1;
 		OctorTree::TreeCount += 1;
@@ -62,9 +62,13 @@ void OctorTree::Insert(Ref<class BaseCollider> collider)
 		}
 
 		for (Ref<OctorTree>& octor : _childs) {
-			octor->Insert(collider);
+			if (octor->Insert(collider) == true) {
+				return true;
+			}
 		}
 	}
+
+	return true;
 }
 
 void OctorTree::QuarryRange(Octor& range, vector<Ref<class BaseCollider>>& vec)
@@ -85,6 +89,30 @@ void OctorTree::QuarryRange(Octor& range, vector<Ref<class BaseCollider>>& vec)
 			}
 		}
 	}
+}
+
+void OctorTree::QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class BaseCollider>>& vec)
+{
+	if (!PMath::CollisionAABB(_boundary.center, _boundary.extents, collider->Bound.Center, collider->Bound.Extents)) {
+		return;
+	}
+	else {
+		for (Ref<class BaseCollider>& obj : _vecList) {
+			if (collider == obj) {
+				continue;
+			}
+
+			if (collider->Bound.Intersects(obj->Bound) == true) {
+				vec.push_back(obj);
+			}
+			else if (_divided) {
+				for (Ref<OctorTree> octor : _childs) {
+					octor->QuarryRange(collider, vec);
+				}
+			}
+		}
+	}
+	
 }
 
 void OctorTree::SetParent(Ref<OctorTree> parent)

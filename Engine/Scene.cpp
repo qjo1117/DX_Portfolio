@@ -43,7 +43,7 @@ void Scene::Awake()
 										// 처리하는 부분이 추가되면 nullptr문제가 없을테니 빼자
 			continue;
 		}
-		if (object->GetActive() == false) {
+		if (object->isActive == false) {
 			continue;
 		}
 
@@ -162,7 +162,7 @@ void Scene::SortSceneObjects()
 			continue;
 		}
 
-		if (obj->GetActive() == false) {
+		if (obj->isActive == false) {
 			_vecNonActived.push_back(obj);
 			continue;
 		}
@@ -171,7 +171,7 @@ void Scene::SortSceneObjects()
 		}
 
 		/* ----- Shadow ----- */
-		if (obj->IsShadow() == false) {
+		if (obj->isShadow == false) {
 			_vecShadow.push_back(obj);
 		}
 
@@ -222,7 +222,7 @@ void Scene::RenderShadow()
 	GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SHADOW)->OMSetRenderTargets();
 
 	for (const Ref<GameObject> light : _gameObjects[static_cast<uint8>(LAYER_TYPE::LIGHT)]) {
-		if (light->GetActive() == false) {
+		if (light->isActive == false) {
 			continue;
 		}
 		if (light->GetLight()->GetLightType() != LIGHT_TYPE::DIRECTIONAL_LIGHT) {
@@ -276,7 +276,11 @@ void Scene::Render()
 	RenderLights();
 	RenderFinal();
 
+	GET_SINGLE(ColliderManager)->Render();
+
 	RenderFoward();
+
+
 }
 
 void Scene::RenderLights()
@@ -312,7 +316,7 @@ void Scene::RenderFoward()
 		if (camera->GetCamera() == nullptr) {
 			continue;
 		}
-		if (camera->GetActive() == false) {
+		if (camera->isActive == false) {
 			continue;
 		}
 		if (camera->GetCamera() == mainCamera) {
@@ -337,7 +341,7 @@ void Scene::PushLightData()
 		if (light->GetLight() == nullptr) {
 			continue;
 		}
-		if (light->GetActive() == false) {
+		if (light->isActive == false) {
 			continue;
 		}
 

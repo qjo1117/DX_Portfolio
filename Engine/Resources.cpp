@@ -740,6 +740,30 @@ void Resources::CreateDefaultShader()
 		Add<Shader>(L"Wirefram", shader);
 	}
 
+	/* ----- Collider (Forward) ----- */
+	{
+		ShaderInfo info =
+		{
+			SHADER_TYPE::FORWARD,
+			RASTERIZER_TYPE::WIREFRAME,
+			DEPTH_STENCIL_TYPE::LESS,
+			BLEND_TYPE::DEFAULT,
+			D3D_PRIMITIVE_TOPOLOGY_LINELIST
+		};
+		ShaderArg arg =
+		{
+			"VS_Main",
+			"",
+			"",
+			"",
+			"PS_Main"
+		};
+
+		Ref<Shader> shader = make_shared<Shader>();
+		shader->CreateGraphicsShader(L"wirefram.fx", info, arg);
+		Add<Shader>(L"Collider", shader);
+	}
+
 	/* ----- Texture (Forward) ----- */
 	{
 		ShaderInfo info =
@@ -1057,6 +1081,14 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"Tessellation", material);
 	}
 
+	/* ----- Collider ----- */
+	{
+		Ref<Shader> shader = Get<Shader>(L"Collider");
+		Ref<Material> material = make_shared<Material>();
+		material->SetShader(shader);
+		Add<Material>(L"Collider", material);
+	}
+
 	/* ----- Terrain ----- */
 	{
 		Ref<Shader> shader = Get<Shader>(L"Terrain");
@@ -1067,7 +1099,7 @@ void Resources::CreateDefaultMaterial()
 
 	/* ----- Wirefram ----- */
 	{
-		Ref<Shader> shader = Get<Shader>(L"Wirefram");
+		Ref<Shader> shader = Get<Shader>(L"Tessellation");
 		Ref<Material> material = make_shared<Material>();
 		material->SetShader(shader);
 		Add<Material>(L"Wirefram", material);
@@ -1122,7 +1154,7 @@ void Resources::CreateDefaultGameObject()
 			meshRenderer->SetMaterial(material);
 		}
 		skybox->AddComponent(meshRenderer);
-		skybox->SetCheckFrustum(false);
+		skybox->isFrustum = false;
 		skybox->SetLayer(LAYER_TYPE::SKYBOX);
 		Add<GameObject>(L"Skybox", skybox);
 	}

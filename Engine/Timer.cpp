@@ -3,11 +3,11 @@
 
 void Timer::Init(HWND hWnd)
 {
-	_hWnd = hWnd;
+	m_hWnd = hWnd;
 
 	/* ----- 하드웨어의 갱신 빈도수를 구한다 ----- */
-	::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&_frequency));
-	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&_prevCount)); // CPU 클럭
+	::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&m_frequency));
+	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&m_prevCount)); // CPU 클럭
 }
 
 void Timer::Update()
@@ -17,44 +17,44 @@ void Timer::Update()
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
 
 	/* ----- DeltaTime ----- */
-	_deltaTime = (currentCount - _prevCount) / static_cast<float>(_frequency);
-	_prevCount = currentCount;
+	m_deltaTime = (currentCount - m_prevCount) / static_cast<float>(m_frequency);
+	m_prevCount = currentCount;
 
-	_frameCount++;
-	_frameTime += _deltaTime;
+	m_frameCount++;
+	m_frameTime += m_deltaTime;
 
 	/* ----- Frame ----- */
-	if (_frameTime > 1.f) {
-		_fps = static_cast<uint32>(_frameCount / _frameTime);
+	if (m_frameTime > 1.f) {
+		m_fps = static_cast<uint32>(m_frameCount / m_frameTime);
 
-		_frameTime = 0.f;
-		_frameCount = 0;
+		m_frameTime = 0.f;
+		m_frameCount = 0;
 
 		//ShowFps();
 	}
 
 	/* ----- State ----- */
-	switch (_state) {
+	switch (m_state) {
 	case TIMER_STATE::STOP:
-		_deltaTime = 0.0f;
+		m_deltaTime = 0.0f;
 		break;
 	case TIMER_STATE::FAST:
-		_deltaTime *= _timeScale;
+		m_deltaTime *= m_timeScale;
 		break;
 	case TIMER_STATE::SLOW:
-		_deltaTime /= _timeScale;
+		m_deltaTime /= m_timeScale;
 		break;
 	}
 }
 
 void Timer::ShowFps()
 {
-	uint32 fps = _fps;
+	uint32 fps = m_fps;
 
 	WCHAR text[15] = L"";
 	::wsprintf(text, L"FPS : %d", fps);
 
-	::SetWindowTextW(_hWnd, text);
+	::SetWindowTextW(m_hWnd, text);
 }
 
 

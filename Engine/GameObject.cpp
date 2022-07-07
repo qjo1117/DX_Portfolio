@@ -57,7 +57,7 @@ void GameObject::Awake()
 
 void GameObject::Start()
 {
-	if (_isActive == false) {
+	if (m_isActive == false) {
 		return;
 	}
 
@@ -81,7 +81,7 @@ void GameObject::Start()
 
 void GameObject::Update()
 {
-	if (_isActive == false) {
+	if (m_isActive == false) {
 		return;
 	}
 
@@ -104,7 +104,7 @@ void GameObject::Update()
 
 void GameObject::LateUpdate()
 {
-	if (_isActive == false) {
+	if (m_isActive == false) {
 		return;
 	}
 
@@ -127,7 +127,7 @@ void GameObject::LateUpdate()
 
 void GameObject::FinalUpdate()
 {
-	if (_isActive == false) {
+	if (m_isActive == false) {
 		return;
 	}
 

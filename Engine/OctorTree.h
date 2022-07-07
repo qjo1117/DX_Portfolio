@@ -42,8 +42,9 @@ public:
 	void Clear();
 
 public:
-	void Insert(Ref<class BaseCollider> collider);
+	bool Insert(Ref<class BaseCollider> collider);
 	void QuarryRange(Octor& range, vector<Ref<class BaseCollider>>& vec);
+	void QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class BaseCollider>>& vec);
 	void SetParent(Ref<OctorTree> parent);
 
 private:

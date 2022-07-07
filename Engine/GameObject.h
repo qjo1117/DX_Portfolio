@@ -82,14 +82,6 @@ public:
 	void			SetLayer(uint32 type) { _layerType = type; }
 	void			SetLayer(LAYER_TYPE type) { SetLayer(static_cast<uint32>(type)); }
 
-	bool			GetCheckFrustum() { return _isFrustum; }
-	void			SetCheckFrustum(bool check) { _isFrustum = check; }
-
-	inline bool		GetActive() { return _isActive; }
-	void			SetActive(bool active) { _isActive = active; }
-
-	void			SetShadow(bool flag) { _isShadow = flag; }
-	bool			IsShadow() { return _isShadow; }
 private:
 	uint32 _layerType = static_cast<uint32>(LAYER_TYPE::DEFAULT);
 
@@ -97,10 +89,9 @@ private:
 	array<Ref<Component>, FIXED_COMPONENT_COUNT> _components;
 	map<string, Ref<MonoBehaviour>> _scripts;
 
-	bool _isFrustum = true;
-
-	bool _isActive = true;
-	bool _isShadow = true;
+	PRIVATE_PROPERTY(bool, isFrustum) = true;
+	PRIVATE_PROPERTY(bool, isActive) = true;
+	PRIVATE_PROPERTY(bool, isShadow) = true;
 public:
 	static uint32 ID;
 };

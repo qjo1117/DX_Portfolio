@@ -21,9 +21,7 @@ void InspectorEditor::Show()
 	static char strTemp[50] = {};
 	::sprintf_s(strTemp, "%s", Utils::Wstr2Str(go->name));
 
-	bool active = go->GetActive();
-	ImGui::Checkbox("##Check", &active);
-	go->SetActive(active);
+	ImGui::Checkbox("##Check", &go->isActive);
 	ImGui::SameLine();
 	static char _text[MAX_PATH / 2] = { 0 };
 	::strcpy_s(_text, Utils::Wstr2Str(go->name).data());

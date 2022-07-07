@@ -40,6 +40,9 @@
     <ClCompile Include="ResourceEditor.cpp">
       <Filter>Editor\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="DebugEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -88,6 +91,9 @@
       <Filter>Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="ResourceEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEditor.h">
       <Filter>Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>

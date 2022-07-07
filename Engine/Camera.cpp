@@ -38,12 +38,13 @@ void Camera::FinalUpdate()
 
 	if (m_CameraType == PROJECTION_TYPE::PERSPECTIVE) {
 		m_matProjection = ::XMMatrixPerspectiveFovLH(m_fov, m_width / m_height, m_Near, m_Far);
+		Camera::S_MatView = m_matView;
+		Camera::S_MatProjection = m_matProjection;
+		m_frustum.FinalUpdate();
 	}
 	else {
 		m_matProjection = ::XMMatrixOrthographicLH(m_width * m_scale, m_height * m_scale, m_Near, m_Far);
 	}
-
-	m_frustum.FinalUpdate();
 }
 
 void Camera::EditorUpdate()
@@ -75,7 +76,7 @@ void Camera::SortGameObject()
 			continue;
 		}
 
-		if (go->GetCheckFrustum()) {
+		if (go->isFrustum == true) {
 			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {
@@ -147,7 +148,7 @@ void Camera::SortShadowGameObject()
 		if (IsCulled(go->GetLayer())) {
 			continue;
 		}
-		if (go->GetCheckFrustum()) {
+		if (go->isFrustum == true) {
 			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {
@@ -175,7 +176,7 @@ void Camera::SortPickGameObject()
 		if (IsCulled(go->GetLayer())) {
 			continue;
 		}
-		if (go->GetCheckFrustum()) {
+		if (go->isFrustum == true) {
 			if (m_frustum.ContainSphere(
 				go->GetTransform()->GetWorldPosition(),
 				go->GetTransform()->GetBoundingSphereRadius()) == false) {

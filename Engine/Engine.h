@@ -16,6 +16,7 @@
 #include "Timer.h"
 #include "SceneManager.h"
 #include "Resources.h"
+#include "ColliderManager.h"
 
 
 #define EDITOR_MANAGER

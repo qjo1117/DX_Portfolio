@@ -3,10 +3,8 @@
 #include "Material.h"
 #include "Transform.h"
 #include "Light.h"
-#include "Resources.h"
 #include "PathManager.h"
 #include "InstancingManager.h"
-#include "ColliderManager.h"
 
 void Engine::Init(const WindowInfo& info)
 {
@@ -90,13 +88,13 @@ void Engine::Update()
 {
 	GET_SINGLE(InstancingManager)->ClearBuffer();
 
+	GET_SINGLE(ColliderManager)->Update();
+
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Timer)->Update();
 	GET_SINGLE(SceneManager)->Update();
 
 	LateUpdate();
-
-	GET_SINGLE(ColliderManager)->Update();
 
 	Render();
 }
