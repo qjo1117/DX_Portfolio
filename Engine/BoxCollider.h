@@ -17,7 +17,6 @@ public:
     virtual bool Collision(Ref<BaseCollider> collider) override;
     virtual void EditorUpdate() override;
 
-    virtual bool RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHit& hit, float distance = FLT_MAX);
 
 private:
     PRIVATE_PROPERTY(BoundingOrientedBox, BoundBox) = {};

@@ -43,6 +43,9 @@
     <ClCompile Include="DebugEditor.cpp">
       <Filter>Editor\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -94,6 +97,9 @@
       <Filter>Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="DebugEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEditor.h">
       <Filter>Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>

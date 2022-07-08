@@ -2,6 +2,14 @@
 
 #include "Component.h"
 
+enum class COLLIDER_STATE
+{
+	ENTER,
+	PRESS,
+	LEAVE,
+	END
+};
+
 enum class COLLIDER_TYPE
 {
 	SPHERE,
@@ -27,11 +35,14 @@ public:
 	virtual bool Collision(Ref<class BaseCollider> collider) = 0;
 	virtual void EditorUpdate() override {}
 
+	void AddBind(COLLIDER_STATE state, function<void(Ref<class BaseCollider>)> func);
 
 protected:
 	PROTECTED_PROPERTY(Vec3, Center) = Vec3::Zero;
 	PROTECTED_PROPERTY(COLLIDER_TYPE, ColliderType) = { };
 	PROTECTED_PROPERTY(BoundingBox, Bound) = { Vec3::Zero, Vec3::One };
-	PROTECTED_PROPERTY(vector<function<void(Ref<BaseCollider>)>>, BindFunc);
+	PROTECTED_PROPERTY(vector<function<void(Ref<BaseCollider>)>>, BindEnterFunc);
+	PROTECTED_PROPERTY(vector<function<void(Ref<BaseCollider>)>>, BindPressFunc);
+	PROTECTED_PROPERTY(vector<function<void(Ref<BaseCollider>)>>, BindLeaveFunc);
 };
 

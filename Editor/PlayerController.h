@@ -31,5 +31,6 @@ public:
 private:
 	float _speed = 100.0f;
 
+	Ref<class GameObject> m_castCheck;
 };
 

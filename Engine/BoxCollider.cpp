@@ -59,23 +59,3 @@ void BoxCollider::EditorUpdate()
 		ImGui::DragFloat3("Extent", &m_BoundBox.Extents.x, 0.1f, 0.0f, 1000.0f);
 	}
 }
-
-bool BoxCollider::RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHit& hit, float distance)
-{
-	Vec4 origin = Vec4{ rayOrin.x, rayOrin.y, rayOrin.z, 1.0f };		// ±¤¼±À» ½î´Â À§Ä¡
-	Vec4 direction = Vec4{ rayDir.x, rayDir.y, rayDir.z, 1.0f };		// ±¤¼±ÀÇ ¹æÇâ
-	float dist = direction.Length();
-
-	bool check = false;
-	for (float dir = 0.0f; dir <= distance; dir += 0.1f) {
-		if (BoundBox.Intersects(origin, direction, OUT dist)) {
-			check = true;
-			break;
-		}
-		origin += direction;
-	}
-
-	
-
-	return false;
-}

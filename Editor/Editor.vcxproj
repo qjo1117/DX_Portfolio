@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CollisionEditor.h" />
     <ClInclude Include="DebugEditor.h" />
     <ClInclude Include="DragonController.h" />
     <ClInclude Include="Editor.h" />
@@ -186,6 +187,7 @@
   <ItemGroup>
     <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="CollisionEditor.cpp" />
     <ClCompile Include="DebugEditor.cpp" />
     <ClCompile Include="DragonController.cpp" />
     <ClCompile Include="Editor.cpp" />

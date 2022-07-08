@@ -30,15 +30,38 @@ void ColliderManager::Update()
 	for (auto& collider : m_Collider) {
 		vector<Ref<BaseCollider>> vecCheck;
 		m_Tree->QuarryRange(collider->Collider.lock(), vecCheck);
-		collider->State.Enter = false;
 
 		for (auto& dest : vecCheck) {
 			if (collider->Collider.lock()->Collision(dest) == true) {
-				collider->State.Enter = true;
-				// 바인딩된 함수 호출
-				for (function<void(Ref<BaseCollider>)> func : collider->Collider.lock()->BindFunc) {
+				if (collider->State.Enter == false && collider->State.Press == false) {
+					collider->State.Enter = true;
+				}
+				else if (collider->State.Enter == true && collider->State.Press == false) {
+					collider->State.Enter = false;
+					collider->State.Press = true;
+				}
+			}
+
+			if (collider->State.Enter == true) {
+				for (function<void(Ref<BaseCollider>)> func : collider->Collider.lock()->BindEnterFunc) {
 					func(dest);
 				}
+			}
+			else if (collider->State.Press == true) {
+				for (function<void(Ref<BaseCollider>)> func : collider->Collider.lock()->BindPressFunc) {
+					func(dest);
+				}
+			}
+		}
+
+		if(vecCheck.size() == 0) {
+			if (collider->State.Enter == true || collider->State.Press == true) {
+				collider->State.Enter = false;
+				collider->State.Press = false;
+				collider->State.Leave = true;
+			}
+			else {
+				collider->State.Leave = false;
 			}
 		}
 	}
@@ -55,7 +78,7 @@ void ColliderManager::Render()
 
 			transform->PushData();
 			
-			if (collider->State.Enter == true) {
+			if (collider->State.Enter == true || collider->State.Press == true) {
 				m_material->SetInt(0, 1);
 			}
 			else {
@@ -67,7 +90,21 @@ void ColliderManager::Render()
 			break;
 
 		case COLLIDER_TYPE::SPHERE:
+		{
+			Ref<SphereCollider> sphere = dynamic_pointer_cast<SphereCollider>(collider->Collider.lock());
+			Ref<Transform> transform = collider->Collider.lock()->GetTransform();
 
+			transform->PushData();
+
+			if (collider->State.Enter == true || collider->State.Press == true) {
+				m_material->SetInt(0, 1);
+			}
+			else {
+				m_material->SetInt(0, 0);
+			}
+			m_material->PushGraphicsData();
+			m_sphereMesh->Render(1, 0);
+		}
 			break;
 		}
 	}
@@ -78,4 +115,37 @@ void ColliderManager::AddCollider(Ref<BaseCollider> collider)
 	Ref<ColliderInfo> info = make_shared<ColliderInfo>();
 	info->Collider = collider;
 	m_Collider.push_back(info);
+}
+
+bool ColliderManager::RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHit& hit, float maxDistance)
+{
+	Vec4 origin = Vec4{ rayOrin.x, rayOrin.y, rayOrin.z, 1.0f };		// 광선을 쏘는 위치
+	Vec4 direction = Vec4{ rayDir.x, rayDir.y, rayDir.z, 1.0f };		// 광선의 방향
+
+
+	if (RayCastToColliders(origin, direction, hit.distance, maxDistance) == true) {
+		hit.point = Vec3{ origin.x,origin.y,origin.z };
+		return true;
+	}
+
+	return false;
+}
+
+bool ColliderManager::RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, float maxDistance)
+{
+	float dist = rayDir.LengthSquared();
+	float temp = 0;
+	for (float dir = 0.0f; dir <= maxDistance; dir += dist) {
+		for (auto& collider : m_Collider) {
+			if (collider->Collider.lock()->Intersects(rayOrigin, rayDir, OUT temp)) {
+				if (temp > maxDistance) {
+					continue;
+				}
+				distance = dir;
+				return true;
+			}
+		}
+		rayOrigin += rayDir;
+	}
+	return false;
 }

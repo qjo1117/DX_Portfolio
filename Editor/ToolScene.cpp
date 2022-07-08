@@ -232,24 +232,57 @@ ToolScene::ToolScene()
 
 
 #pragma region Collider_Test
+	//{
+	//	for (int32 i = 0; i < 100; ++i) {
+	//		Ref<GameObject> box = make_shared<GameObject>();
+	//		box->name = L"Box" + to_wstring(i);
+	//		box->AddComponent(make_shared<Transform>());
+	//		box->AddComponent(make_shared<MeshRenderer>());
+
+	//		box->AddComponent(make_shared<BoxCollider>());
+	//		GET_SINGLE(ColliderManager)->AddCollider(box->GetCollider());
+
+	//		box->GetTransform()->localPosition = (-Vec3::Right * 150.0f * (i % 10)) + (Vec3::Up * 150.0f * (i / 10.0f));
+	//		box->GetTransform()->localScale = Vec3::One * 100.0f;
+
+	//		box->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+	//		box->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
+
+	//		AddGameObject(box, LAYER_TYPE::DEFAULT);
+	//	}
+	//}
+#pragma endregion
+
+#pragma region RayCast_Test
 	{
-		for (int32 i = 0; i < 100; ++i) {
-			Ref<GameObject> box = make_shared<GameObject>();
-			box->name = L"Box" + to_wstring(i);
-			box->AddComponent(make_shared<Transform>());
-			box->AddComponent(make_shared<MeshRenderer>());
+		Ref<GameObject> obj = make_shared<GameObject>();
+		obj->AddComponent(make_shared<Transform>());
+		obj->AddComponent(make_shared<MeshRenderer>());
+		obj->AddComponent(make_shared<BoxCollider>());
+		GET_SINGLE(ColliderManager)->AddCollider(obj->GetCollider());
 
-			box->AddComponent(make_shared<BoxCollider>());
-			GET_SINGLE(ColliderManager)->AddCollider(box->GetCollider());
+		obj->GetTransform()->localPosition = (-Vec3::Right * 150.0f);
+		obj->GetTransform()->localScale = Vec3::One * 100.0f;
 
-			box->GetTransform()->localPosition = (-Vec3::Right * 150.0f * (i % 10)) + (Vec3::Up * 150.0f * (i / 10.0f));
-			box->GetTransform()->localScale = Vec3::One * 100.0f;
+		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
+		AddGameObject(obj, LAYER_TYPE::DEFAULT);
+	}
 
-			box->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
-			box->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
+	{
+		Ref<GameObject> obj = make_shared<GameObject>();
+		obj->AddComponent(make_shared<Transform>());
+		obj->AddComponent(make_shared<MeshRenderer>());
+		obj->AddComponent(make_shared<SphereCollider>());
+		obj->AddComponent(make_shared<PlayerController>());
+		GET_SINGLE(ColliderManager)->AddCollider(obj->GetCollider());
 
-			AddGameObject(box, LAYER_TYPE::DEFAULT);
-		}
+		obj->GetTransform()->localPosition = (Vec3::Right * 150.0f);
+		obj->GetTransform()->localScale = Vec3::One * 100.0f;
+
+		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadSphereMesh();
+		AddGameObject(obj, LAYER_TYPE::DEFAULT);
 	}
 #pragma endregion
 

@@ -12,7 +12,7 @@ void Engine::Init(const WindowInfo& info)
 	// 메모리가 정상적으로 해제가 안되니 꼭꼭꼭 Window를 종료시키자.
 #pragma region DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(992);
+	//_CrtSetBreakAlloc(2664);
 	// 메모리 Leak이 있을때만 사용하면 됨
 
 #ifdef _DEBUG

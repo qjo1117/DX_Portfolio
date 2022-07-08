@@ -3,13 +3,7 @@
 #include "BaseCollider.h"
 #include "OctorTree.h"
 
-enum class COLLIDER_STATE
-{
-	ENTER,
-	PRESS,
-	LEAVE,
-	END
-};
+
 
 struct ColliderState
 {
@@ -37,10 +31,13 @@ public:
 
 	void AddCollider(Ref<BaseCollider> collider);
 
+	bool RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHit& hit, float maxDistance);
+private:
+	bool RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, float maxDistance);
+
 private:
 	PRIVATE_PROPERTY(vector<Ref<ColliderInfo>>, Collider);
 	PRIVATE_PROPERTY(Ref<OctorTree>, Tree);
-
 
 	PRIVATE_PROPERTY(Ref<class Mesh>, cubeMesh);
 	PRIVATE_PROPERTY(Ref<class Mesh>, sphereMesh);

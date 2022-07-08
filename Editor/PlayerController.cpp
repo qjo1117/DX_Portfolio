@@ -15,7 +15,10 @@ PlayerController::~PlayerController()
 
 void PlayerController::Awake()
 {
-	GetGameObject()->GetCollider()->BindFunc.push_back([=](Ref<BaseCollider> dest) { CollisionTest(dest); });
+	GetGameObject()->GetCollider()->AddBind(COLLIDER_STATE::PRESS, 
+		[=](Ref<BaseCollider> dest) { CollisionTest(dest); });
+
+
 }
 
 void PlayerController::Start()
@@ -25,34 +28,11 @@ void PlayerController::Start()
 
 void PlayerController::Update()
 {
-	if (INPUT->IsAnyKey()) {
-		return;
+	RayCastHit hit;
+	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition + Vec3::Forward * 110.0f, Vec3::Forward, hit, 100.0f) == true) {
+		string str = "RayCast";
+		EDITOR->Log(str);
 	}
-
-	Vec3 move = GetTransform()->GetLocalPosition();
-
-	if (INPUT->GetButton(KEY_TYPE::W)) {
-		move.z += _speed * DELTATIME;
-	}
-	if (INPUT->GetButton(KEY_TYPE::S)) {
-		move.z -= _speed * DELTATIME;
-	}
-	if (INPUT->GetButton(KEY_TYPE::A)) {
-		move.x -= _speed * DELTATIME;
-	}
-	if (INPUT->GetButton(KEY_TYPE::D)) {
-		move.x += _speed * DELTATIME;
-	}
-	GetTransform()->SetLocalPosition(move);
-
-	move = Vec3(0.0f, 0.0f, 0.0f);
-	if (INPUT->GetButton(KEY_TYPE::Q)) {
-		move.x += 1.0f;
-	}
-	if (INPUT->GetButton(KEY_TYPE::E)) {
-		move.x -= 1.0f;
-	}
-	GetTransform()->SetLocalRotation(move);
 }
 
 void PlayerController::LateUpdate()
