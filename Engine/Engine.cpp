@@ -50,8 +50,6 @@ void Engine::Init(const WindowInfo& info)
 	_graphicsDescHeap->Init(256);
 	_computeDescHeap->Init();
 
-
-
 	CreateRenderTargetGroups();
 	
 	GET_SINGLE(PathManager)->Init();
@@ -69,6 +67,8 @@ void Engine::Init(const WindowInfo& info)
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(LightParams), 1);
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 256);
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialParam), 256);
+
+
 }
 
 void Engine::Render()
@@ -88,10 +88,18 @@ void Engine::Update()
 {
 	GET_SINGLE(InstancingManager)->ClearBuffer();
 
-	GET_SINGLE(ColliderManager)->Update();
+	if (_isCollisionThread == false) {
+		_isCollisionThread = true;
+		_collisionThread = thread([]() {
+			while (GEngine->GetWindow().loop) {
+				GEngine->CollisionUpdate();
+			}
+		});
+	}
 
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Timer)->Update();
+
 	GET_SINGLE(SceneManager)->Update();
 
 	LateUpdate();
@@ -104,12 +112,30 @@ void Engine::LateUpdate()
 	// TODO
 }
 
+void Engine::CollisionUpdate()
+{
+	_currentFiexdTime += 1;
+	if (_maxFiexdTime > _currentFiexdTime) {
+		return;
+	}
+
+	GET_SINGLE(ColliderManager)->Update();
+	_currentFiexdTime = 0;
+}
+
 void Engine::End()
 {
+
+	_winInfo.loop = false;
+
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->End();
 #endif
 	GET_SINGLE(PathManager)->Clear();
+
+	if (_collisionThread.joinable() == true) {
+		_collisionThread.join();
+	}
 }
 
 void Engine::RenderBegin()

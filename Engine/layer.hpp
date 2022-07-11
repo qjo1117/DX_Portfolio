@@ -8,4 +8,7 @@ X(LIGHT)
 // TODO
 
 X(DEFAULT)
+X(ENEMY)
+X(PLAYER)
+
 X(END)

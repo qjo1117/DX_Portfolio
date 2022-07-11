@@ -72,7 +72,7 @@ void Camera::SortGameObject()
 	Vec3 cameraPos = GetTransform()->GetWorldPosition();
 
 	for (const Ref<GameObject>& go : gameObjects) {
-		if (IsCulled(go->GetLayer())) {
+		if (IsCulled(go->layerType)) {
 			continue;
 		}
 
@@ -115,7 +115,7 @@ void Camera::SortForwadObject()
 	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : gameObjects) {
-		if (IsCulled(go->GetLayer())) {
+		if (IsCulled(go->layerType)) {
 			continue;
 		}
 
@@ -145,7 +145,7 @@ void Camera::SortShadowGameObject()
 
 	for (const Ref<GameObject>& go : gameObjects) {
 
-		if (IsCulled(go->GetLayer())) {
+		if (IsCulled(go->layerType)) {
 			continue;
 		}
 		if (go->isFrustum == true) {
@@ -173,7 +173,7 @@ void Camera::SortPickGameObject()
 	S_MatProjection = m_matProjection;
 
 	for (const Ref<GameObject>& go : _vecShadow) {
-		if (IsCulled(go->GetLayer())) {
+		if (IsCulled(go->layerType)) {
 			continue;
 		}
 		if (go->isFrustum == true) {

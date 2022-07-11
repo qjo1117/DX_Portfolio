@@ -9,6 +9,7 @@
 #include "Terrain.h"
 #include "BaseCollider.h"
 #include "Animator.h"
+#include "ColliderManager.h"
 
 uint32 GameObject::ID = 0;
 

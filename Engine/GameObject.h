@@ -5,6 +5,8 @@
 #include "Object.h"
 #include "Resources.h"
 
+#include "ColliderManager.h"
+
 class Component;
 class Transform;
 class MeshRenderer;
@@ -78,12 +80,11 @@ public:
 	}
 
 	/* ----- Helper Function ----- */
-	uint32			GetLayer() { return _layerType; }
-	void			SetLayer(uint32 type) { _layerType = type; }
+	void			SetLayer(uint32 type) { m_layerType = type; }
 	void			SetLayer(LAYER_TYPE type) { SetLayer(static_cast<uint32>(type)); }
 
 private:
-	uint32 _layerType = static_cast<uint32>(LAYER_TYPE::DEFAULT);
+	PRIVATE_PROPERTY(uint32, layerType) = static_cast<uint32>(LAYER_TYPE::DEFAULT);
 
 	/* ----- Component Variable ----- */
 	array<Ref<Component>, FIXED_COMPONENT_COUNT> _components;
@@ -108,6 +109,9 @@ inline void GameObject::AddComponent(Ref<T> component)
 
 	uint8 index = static_cast<uint8>(component->GetType());
 	if (index < FIXED_COMPONENT_COUNT) {
+		if (index == static_cast<uint8>(COMPONENT_TYPE::COLLIDER)) {
+			GET_SINGLE(ColliderManager)->AddCollider(static_pointer_cast<BaseCollider>(GetFixedComponent(COMPONENT_TYPE::COLLIDER)));
+		}
 		_components[index] = component;
 	}
 	else {

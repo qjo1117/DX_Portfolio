@@ -15,12 +15,13 @@ public:
 	virtual void EditorUpdate() override;
 
 private:
-	int32 _sizeX = 15;
-	int32 _sizeZ = 15;
+	PRIVATE_PROPERTY(int32, sizeX) = 15;
+	PRIVATE_PROPERTY(int32, sizeZ) = 15;
 
-	float _maxTesselation = 4.0f;
+	PRIVATE_PROPERTY(float, maxTesselation) = 4.0f;
 
-	Ref<class Material> _material;
-	Ref<class Mesh> _mesh;
+	PRIVATE_PROPERTY(Ref<class Material>, material);
+	PRIVATE_PROPERTY(Ref<class Mesh>, mesh);
+	PRIVATE_PROPERTY(Ref<class Texture>, heightMap);
 };
 

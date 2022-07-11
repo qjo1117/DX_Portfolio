@@ -4,10 +4,14 @@
 
 class IEditor
 {
-public:
+protected:
 	IEditor() {}
 	virtual ~IEditor() {}
 
+public:
+	friend class EditorManager;
+
+public:
 	virtual void Init() = 0;
 	virtual void Show() = 0;
 	virtual void End() {};

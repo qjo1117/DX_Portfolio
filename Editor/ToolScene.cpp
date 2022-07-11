@@ -28,6 +28,7 @@
 #include "ColliderManager.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"
+#include "MeshCollider.h"
 
 #include "TestEditor.h"
 #include "HierarchyEditor.h"
@@ -58,19 +59,19 @@ ToolScene::ToolScene()
 #pragma endregion
 
 #pragma region Terrain
-	{
-		Ref<GameObject> go = make_shared<GameObject>();
-		go->AddComponent(make_shared<Transform>());
-		go->GetTransform()->SetLocalPosition(Vec3(-100.0f, -200.0f, 300.0f));
-		go->GetTransform()->SetLocalScale(Vec3(50.0f, 200.0f, 50.0f));
-		go->name = (L"Terrain");
-		go->isShadow = true;
+	//{
+	//	Ref<GameObject> go = make_shared<GameObject>();
+	//	go->AddComponent(make_shared<Transform>());
+	//	go->GetTransform()->SetLocalPosition(Vec3(-100.0f, -200.0f, 300.0f));
+	//	go->GetTransform()->SetLocalScale(Vec3(50.0f, 200.0f, 50.0f));
+	//	go->name = (L"Terrain");
+	//	go->isShadow = true;
 
-		go->AddComponent(make_shared<Terrain>());
-		go->GetTerrain()->Init(64, 64);
+	//	go->AddComponent(make_shared<Terrain>());
+	//	go->GetTerrain()->Init(64, 64);
 
-		AddGameObject(go, LAYER_TYPE::DEFAULT);
-	} 
+	//	AddGameObject(go, LAYER_TYPE::DEFAULT);
+	//} 
 #pragma endregion
 
 #pragma region Main Camera
@@ -232,41 +233,45 @@ ToolScene::ToolScene()
 
 
 #pragma region Collider_Test
-	//{
-	//	for (int32 i = 0; i < 100; ++i) {
-	//		Ref<GameObject> box = make_shared<GameObject>();
-	//		box->name = L"Box" + to_wstring(i);
-	//		box->AddComponent(make_shared<Transform>());
-	//		box->AddComponent(make_shared<MeshRenderer>());
+	{
+		//for (int32 i = 0; i < 50; ++i) {
+		//	Ref<GameObject> box = make_shared<GameObject>();
+		//	box->name = L"Box" + to_wstring(i);
+		//	box->AddComponent(make_shared<Transform>());
+		//	box->AddComponent(make_shared<MeshRenderer>());
 
-	//		box->AddComponent(make_shared<BoxCollider>());
-	//		GET_SINGLE(ColliderManager)->AddCollider(box->GetCollider());
+		//	box->AddComponent(make_shared<BoxCollider>());
+		//	GET_SINGLE(ColliderManager)->AddCollider(box->GetCollider());
 
-	//		box->GetTransform()->localPosition = (-Vec3::Right * 150.0f * (i % 10)) + (Vec3::Up * 150.0f * (i / 10.0f));
-	//		box->GetTransform()->localScale = Vec3::One * 100.0f;
+		//	box->GetTransform()->localPosition = (-Vec3::Right * 150.0f * (i % 10)) + (Vec3::Up * 150.0f * (i / 10.0f));
+		//	box->GetTransform()->localScale = Vec3::One * 100.0f;
 
-	//		box->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
-	//		box->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
+		//	box->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+		//	box->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
 
-	//		AddGameObject(box, LAYER_TYPE::DEFAULT);
-	//	}
-	//}
+		//	AddGameObject(box, LAYER_TYPE::DEFAULT);
+		//}
+	}
 #pragma endregion
 
 #pragma region RayCast_Test
 	{
-		Ref<GameObject> obj = make_shared<GameObject>();
-		obj->AddComponent(make_shared<Transform>());
-		obj->AddComponent(make_shared<MeshRenderer>());
-		obj->AddComponent(make_shared<BoxCollider>());
-		GET_SINGLE(ColliderManager)->AddCollider(obj->GetCollider());
+		for (int32 i = 0; i < 30; ++i) {
+			Ref<GameObject> obj = make_shared<GameObject>();
+			obj->AddComponent(make_shared<Transform>());
+			obj->AddComponent(make_shared<MeshRenderer>());
+			obj->AddComponent(make_shared<BoxCollider>());
 
-		obj->GetTransform()->localPosition = (-Vec3::Right * 150.0f);
-		obj->GetTransform()->localScale = Vec3::One * 100.0f;
+			obj->GetTransform()->localPosition = (-Vec3::Right * 150.0f) * (i % 10) + Vec3::Up * 130.0f * (i / 10);
+			obj->GetTransform()->localScale = Vec3::One * 100.0f;
 
-		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
-		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
-		AddGameObject(obj, LAYER_TYPE::DEFAULT);
+			obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+			obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
+			
+			obj->layerType = static_cast<uint32>(LAYER_TYPE::ENEMY);
+
+			AddGameObject(obj, LAYER_TYPE::DEFAULT);
+		}
 	}
 
 	{
@@ -275,13 +280,36 @@ ToolScene::ToolScene()
 		obj->AddComponent(make_shared<MeshRenderer>());
 		obj->AddComponent(make_shared<SphereCollider>());
 		obj->AddComponent(make_shared<PlayerController>());
-		GET_SINGLE(ColliderManager)->AddCollider(obj->GetCollider());
+
+		obj->name = L"Player";
 
 		obj->GetTransform()->localPosition = (Vec3::Right * 150.0f);
 		obj->GetTransform()->localScale = Vec3::One * 100.0f;
 
-		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
+		obj->layerType = static_cast<uint32>(LAYER_TYPE::PLAYER);
+
+		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Player"));
 		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadSphereMesh();
+
+		AddGameObject(obj, LAYER_TYPE::PLAYER);
+	}
+#pragma endregion
+
+#pragma region Plane
+	{
+		Ref<GameObject> obj = make_shared<GameObject>();
+		obj->AddComponent(make_shared<Transform>());
+		obj->AddComponent(make_shared<MeshRenderer>());
+		//obj->AddComponent(make_shared<MeshCollider>());
+
+		obj->name = L"Ground";
+
+		obj->GetTransform()->localPosition = (-Vec3::Up * 150.0f);
+		obj->GetTransform()->localScale = Vec3::One * 100.0f;
+
+		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Ground"));
+		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadTerrainMesh();
+
 		AddGameObject(obj, LAYER_TYPE::DEFAULT);
 	}
 #pragma endregion

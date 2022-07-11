@@ -84,6 +84,7 @@ T* EditorManager::GetWindow()
 	}
 
 	T* window = new T;
+	window->Title = Utils::Split(typeid(T).name(), ' ')[1];
 	window->Init();
 
 	PushEditor(window);

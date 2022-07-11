@@ -29,7 +29,7 @@ void InspectorEditor::Show()
 	go->name = Utils::Str2Wstr(_text);
 	ImGui::SameLine();
 
-	string layer = EnumToStr((LAYER_TYPE)go->GetLayer());				// 매크로 사용
+	string layer = EnumToStr((LAYER_TYPE)go->layerType);				// 매크로 사용
 	::sprintf_s(strTemp, 50, "/ Layer : %s", layer.data());
 	ImGui::Text(strTemp);
 

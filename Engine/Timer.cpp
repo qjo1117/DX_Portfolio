@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Timer.h"
+#include "Engine.h"
 
 void Timer::Init(HWND hWnd)
 {

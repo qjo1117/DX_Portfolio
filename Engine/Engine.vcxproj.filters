@@ -255,6 +255,9 @@
     <ClCompile Include="OctorTree.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
+    <ClCompile Include="MeshCollider.cpp">
+      <Filter>Object\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="OctorTree.h">
       <Filter>Utils\User</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshCollider.h">
+      <Filter>Object\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

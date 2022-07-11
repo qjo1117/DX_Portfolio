@@ -158,7 +158,7 @@ void Scene::SortSceneObjects()
 		Ref<GameObject>& obj = _objects[i];
 
 
-		if (IsCulled(obj->GetLayer())) {
+		if (IsCulled(obj->layerType)) {
 			continue;
 		}
 
@@ -369,8 +369,8 @@ void Scene::AddGameObject(Ref<GameObject> gameObject, uint32 layer)
 	}
 
 	// 만약 사용자가 따로 레이어를 설정한 경우에는 그에 맞게 넣어준다.
-	if (gameObject->GetLayer() != static_cast<uint8>(LAYER_TYPE::DEFAULT)) {
-		layer = gameObject->GetLayer();
+	if (gameObject->layerType != static_cast<uint8>(LAYER_TYPE::DEFAULT)) {
+		layer = gameObject->layerType;
 	}
 
 	_gameObjects[layer].push_back(gameObject);

@@ -28,8 +28,8 @@ void PlayerController::Start()
 
 void PlayerController::Update()
 {
-	RayCastHit hit;
-	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition + Vec3::Forward * 110.0f, Vec3::Forward, hit, 100.0f) == true) {
+	RayCastHitInfo hit;
+	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition + Vec3::Forward * 110.0f, Vec3::Forward, hit, LAYER_TYPE::DEFAULT, 100.0f) == true) {
 		string str = "RayCast";
 		EDITOR->Log(str);
 	}

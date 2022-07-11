@@ -14,10 +14,11 @@ enum class COLLIDER_TYPE
 {
 	SPHERE,
 	BOX,
+	MESH,
 	END
 };
 
-struct RayCastHit
+struct RayCastHitInfo
 {
 	Vec3 point = Vec3::Zero;
 	Vec3 normal = Vec3::Zero;

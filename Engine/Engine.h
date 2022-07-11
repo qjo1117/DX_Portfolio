@@ -36,6 +36,7 @@ public:
 	void Render();
 	void Update();
 	void LateUpdate();
+	void CollisionUpdate();
 	void End();
 
 	void ResizeWindow(int32 width, int32 height);
@@ -53,6 +54,7 @@ public:
 	Ref<RenderTargetGroup>		GetRTGroup(RENDER_TARGET_GROUP_TYPE type) { return _rtGroups[static_cast<uint8>(type)]; }
 
 	const WindowInfo& GetWindow() { return _winInfo; }
+
 private:
 	/* ----- Render Function ----- */
 	void RenderBegin();
@@ -61,6 +63,9 @@ private:
 private:
 	void CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 count);
 	void CreateRenderTargetGroups();
+
+private:
+
 
 private:
 	/* ----- View Variable ----- */
@@ -81,5 +86,12 @@ private:
 	array<Ref<RenderTargetGroup>, RENDER_TARGET_GROUP_COUNT>	_rtGroups;
 	vector<Ref<ConstantBuffer>>									_constantBuffers;
 
+	PRIVATE_PROPERTY(bool, isFrame) = false;
+
+	thread		_collisionThread;
+	bool		_isCollisionThread = false;
+	thread		_renderThread;
+	int32		_maxFiexdTime = 12;
+	int32		_currentFiexdTime = 0;
 };
 

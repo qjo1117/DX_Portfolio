@@ -1125,6 +1125,13 @@ void Resources::CreateDefaultMaterial()
 		Add<Material>(L"Player", material);
 	}
 
+	/* ----- Test Material(Ground) ----- */
+	{
+		Ref<Material> material = make_shared<Material>();
+		material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Deferred"));
+		Add<Material>(L"Ground", material);
+	}
+
 	/* ----- Test Material(Defulat) ----- */
 	{
 		Ref<Material> material = make_shared<Material>();
