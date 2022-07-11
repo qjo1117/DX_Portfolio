@@ -169,7 +169,7 @@ bool ColliderManager::RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT f
 	vector<Ref<ColliderInfo>> colliders = GetLayerObject(layer);
 
 	for (float dir = 0.0f; dir <= maxDistance; dir += dist) {
-		for (auto collider : m_Collider) {
+		for (auto collider : colliders) {
 			if (collider->Collider->Intersects(rayOrigin, rayDir, OUT temp)) {
 				if (temp > maxDistance) {
 					continue;

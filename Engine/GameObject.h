@@ -109,10 +109,10 @@ inline void GameObject::AddComponent(Ref<T> component)
 
 	uint8 index = static_cast<uint8>(component->GetType());
 	if (index < FIXED_COMPONENT_COUNT) {
+		_components[index] = component;
 		if (index == static_cast<uint8>(COMPONENT_TYPE::COLLIDER)) {
 			GET_SINGLE(ColliderManager)->AddCollider(static_pointer_cast<BaseCollider>(GetFixedComponent(COMPONENT_TYPE::COLLIDER)));
 		}
-		_components[index] = component;
 	}
 	else {
 		static char* namePointer = (char*)(&typeid(component).name()[28]);
