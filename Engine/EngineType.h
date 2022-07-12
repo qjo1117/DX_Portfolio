@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 struct WindowInfo
 {
 	HWND	hWnd; // 출력 윈도우

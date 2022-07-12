@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 
+#include "SceneManager.h"
+
 void HierarchyEditor::Init()
 {
 	m_objects.reserve(1000);

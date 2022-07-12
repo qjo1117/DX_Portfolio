@@ -12,6 +12,7 @@
 
 #include "Input.h"
 #include "EditorManager.h"
+#include "Engine.h"
 
 Terrain::Terrain() : Component(COMPONENT_TYPE::TERRAIN)
 {
@@ -33,8 +34,38 @@ void Terrain::Init(int32 sizeX, int32 sizeZ)
 	m_material->SetInt(2, m_sizeZ);
 	m_material->SetFloat(0, m_maxTesselation);
 
+	// ----------------------------------------------------------------
+
+	//Ref<Texture> texture = GET_SINGLE(Resources)->CreateTexture(L"TerrainHeightMap",
+	//	DXGI_FORMAT_R8G8B8A8_UNORM, 15, 15,
+	//	CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT), D3D12_HEAP_FLAG_NONE,
+	//	D3D12_RESOURCE_FLAG_NONE);
+
+	//m_heightMap = GET_SINGLE(Resources)->Get<Texture>(L"TerrainHeightMap");
+	//Vec2 vec = Vec2(m_heightMap->GetWidth(), m_heightMap->GetHeight());
+
 	m_heightMap = GET_SINGLE(Resources)->Get<Texture>(L"HeightMap_0");
 	Vec2 vec = Vec2(m_heightMap->GetWidth(), m_heightMap->GetHeight());
+
+	vector<D3D12_SUBRESOURCE_DATA> subResources;
+
+	HRESULT hr = ::PrepareUpload(
+		DEVICE.Get(),
+		m_heightMap->GetImage().GetImages(),
+		m_heightMap->GetImage().GetImageCount(),
+		m_heightMap->GetImage().GetMetadata(),
+		subResources
+	);
+
+
+	uint8* pointer = (uint8*)subResources[0].pData;
+	for (int32 i = 1; i < subResources[0].RowPitch; i += 3) {
+		m_Height.push_back(*(pointer + i));
+	}
+
+	// ----------------------------------------------------------------
+
+
 
 	m_material->SetVec2(0, Vec2(m_heightMap->GetWidth(), m_heightMap->GetHeight()));
 	m_material->SetVec2(1, Vec2(1000.0f, 5000.0f));
@@ -42,7 +73,7 @@ void Terrain::Init(int32 sizeX, int32 sizeZ)
 
 	Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
 	meshRenderer->mesh = (GET_SINGLE(Resources)->LoadTerrainMesh(sizeX, sizeZ));
-	meshRenderer->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Terrain"));
+	meshRenderer->SetMaterial(m_material);
 	
 	GetGameObject()->AddComponent(meshRenderer);
 }

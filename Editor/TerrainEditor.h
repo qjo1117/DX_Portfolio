@@ -1,5 +1,13 @@
 #pragma once
+
 #include "IEditor.h"
+
+enum class BRUSH_TYPE
+{
+	RAY,
+	END
+};
+
 class TerrainEditor :
     public IEditor
 {
@@ -24,5 +32,9 @@ public:
 	TerrainEditor* GetI() { return m_pInstance; }
 private:
 	inline static TerrainEditor* m_pInstance = nullptr;
+
+private:
+	BRUSH_TYPE m_type = BRUSH_TYPE::END;
+	float m_speed = 5.0f;
 };
 

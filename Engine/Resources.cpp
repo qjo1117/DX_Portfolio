@@ -610,7 +610,7 @@ Ref<Mesh> Resources::LoadTerrainMesh(int32 sizeX, int32 sizeZ)
 			vtx.pos = Vec3(static_cast<float>(x), 0.0f, static_cast<float>(z));
 			vtx.uv = Vec2(static_cast<float>(x), static_cast<float>(sizeZ - z));
 			vtx.normal = Vec3(0.0f, 1.0f, 0.0f);
-			vtx.tangent = Vec3(1.0f, 0.0f, 0.0f);
+			vtx.tangent = Vec3(0.0f, 1.0f, 0.0f);
 
 			vertexs.push_back(vtx);
 		}
@@ -1221,9 +1221,9 @@ void Resources::CreateDefaultGameObject()
 		light->AddComponent(make_shared<Transform>());
 		light->AddComponent(make_shared<Light>());
 		light->GetLight()->SetLightType(LIGHT_TYPE::POINT_LIGHT);
-		light->GetLight()->SetDiffuse(Vec3(0.5f, 0.5f, 0.5f));
-		light->GetLight()->SetAmbient(Vec3(0.1f, 0.1f, 0.1f));
-		light->GetLight()->SetSpecular(Vec3(0.1f, 0.1f, 0.1f));
+		light->GetLight()->SetDiffuse(Vec4(0.5f, 0.5f, 0.5f, 1.0f));
+		light->GetLight()->SetAmbient(Vec4(0.1f, 0.1f, 0.1f, 1.0f));
+		light->GetLight()->SetSpecular(Vec4(0.1f, 0.1f, 0.1f, 1.0f));
 		light->GetLight()->SetLightRange(500.0f);
 
 		Add<GameObject>(L"PointLight", light);

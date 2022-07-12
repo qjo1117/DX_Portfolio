@@ -71,6 +71,17 @@ inline static struct Register_##Class_##Func			\
 	}													\
 } Register_##Class_##Func	
 
+#define MENUITEM_PRESENT(Title, Class, Func)				\
+inline static struct Register_##Class_##Func				\
+{															\
+	Register_##Class_##Func()								\
+	{														\
+		EDITOR->RegisterMenuBar(Title, Class::Func);		\
+		Class::m_pInstance = EDITOR->GetWindow<Class>();	\
+	}														\
+} Register_##Class_##Func	
+
+
 
 /* ------------------------------------------------
                     PROPERTY

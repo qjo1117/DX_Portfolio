@@ -49,6 +49,9 @@
     <ClCompile Include="TerrainEditor.cpp">
       <Filter>Editor\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="DirectoryEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -106,6 +109,9 @@
       <Filter>Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="TerrainEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectoryEditor.h">
       <Filter>Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>

@@ -83,6 +83,19 @@ T* EditorManager::GetWindow()
 		return nullptr;
 	}
 
+	bool check = false;
+	IEditor* findIt = nullptr;
+	for (IEditor* editor : m_vecEditor) {
+		if (editor->Title == Utils::Split(typeid(T).name(), ' ')[1]) {
+			check = true;
+			findIt = editor;
+			break;
+		}
+	}
+	if (check == true) {
+		return reinterpret_cast<T*>(findIt);
+	}
+
 	T* window = new T;
 	window->Title = Utils::Split(typeid(T).name(), ' ')[1];
 	window->Init();

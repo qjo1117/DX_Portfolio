@@ -27,7 +27,8 @@ Light::~Light()
 
 void Light::FinalUpdate()
 {
-	m_lightInfo.position = GetTransform()->GetWorldPosition();
+	Vec3 pos = GetTransform()->GetWorldPosition();
+	m_lightInfo.position = Vec4(pos.x, pos.y, pos.z, 1.0f);
 	
 	m_shadowCamera->GetTransform()->localPosition = GetTransform()->localPosition;
 	m_shadowCamera->GetTransform()->localRotation = GetTransform()->localRotation;
@@ -57,7 +58,9 @@ void Light::EditorUpdate()
 		/* ----- LightInfo ----- */
 		if (ImGui::TreeNode("LightInfo")) {
 			const float dragSpeed = (ImGui::GetIO().KeyShift) ? 0.5f : 0.05f;
-			ImGui::DragFloat3("DirectionLight", (float*)&m_lightInfo.direction, dragSpeed, -2 * XM_PI, 2 * XM_PI);
+			if (ImGui::DragFloat3("DirectionLight", (float*)&m_lightInfo.direction, dragSpeed, -2 * XM_PI, 2 * XM_PI)) {
+				
+			}
 
 			if (m_lightInfo.lightType == static_cast<int32>(LIGHT_TYPE::DIRECTIONAL_LIGHT)) {
 

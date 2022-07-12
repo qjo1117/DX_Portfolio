@@ -67,6 +67,34 @@ Ref<Mesh> Mesh::CreateFromFBX(const FbxMeshInfo* meshInfo, FBXLoader& loader)
 	return mesh;
 }
 
+void Mesh::Modify(const vector<Vertex>& vertexBuffer)
+{
+	void* vertexDataBuffer = nullptr;
+	CD3DX12_RANGE range(0, 0);
+	_vertexBuffer->Map(0, &range, &vertexDataBuffer);
+	::memcpy(vertexDataBuffer, &vertexBuffer[0], vertexBuffer.size() * sizeof(Vertex));
+	_vertexBuffer->Unmap(0, nullptr);
+
+	_vertices = vertexBuffer;
+}
+
+void Mesh::Modify(const vector<uint32>& indexBuffer, int32 index)
+{
+	void* vertexDataBuffer = nullptr;
+	CD3DX12_RANGE range(0, 0);
+	_vecIndexInfo[index].buffer->Map(0, &range, &vertexDataBuffer);
+	::memcpy(vertexDataBuffer, &indexBuffer[0], indexBuffer.size() * sizeof(Vertex));
+	_vecIndexInfo[index].buffer->Unmap(0, nullptr);
+
+	_vecIndexInfo[index].indices = indexBuffer;
+}
+
+void Mesh::Modify(const vector<Vertex>& vertexBuffer, const vector<uint32>& indexBuffer)
+{
+	Modify(vertexBuffer);
+	Modify(indexBuffer);
+}
+
 void Mesh::Save(const wstring& path)
 {
 	wstring pullPath = path + m_name + FILE_EXPENSION;

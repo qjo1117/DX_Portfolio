@@ -9,7 +9,7 @@ public:
 	InspectorEditor() {}
 	virtual ~InspectorEditor() {}
 
-	MENUITEM("Menu/Inspector", InspectorEditor, Register);
+	MENUITEM_PRESENT("Menu/Inspector", InspectorEditor, Register);
 	static void Register()
 	{
 		if (m_pInstance == nullptr) {

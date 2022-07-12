@@ -189,6 +189,7 @@
     <ClInclude Include="..\Library\Include\ImGui\imstb_textedit.h" />
     <ClInclude Include="..\Library\Include\ImGui\imstb_truetype.h" />
     <ClInclude Include="..\Library\Include\ImGui\ImZoomSlider.h" />
+    <ClInclude Include="..\Library\Include\SimpleMath.h" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="BaseCollider.h" />
     <ClInclude Include="BoxCollider.h" />
@@ -199,8 +200,10 @@
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="DirectoryManager.h" />
     <ClInclude Include="EditorManager.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="EngineHeader.h" />
     <ClInclude Include="EnginePch.h" />
     <ClInclude Include="EngineType.h" />
     <ClInclude Include="Enum.h" />
@@ -211,6 +214,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="InstancingBuffer.h" />
     <ClInclude Include="InstancingManager.h" />
+    <ClInclude Include="IPlugin.h" />
     <ClInclude Include="json-forwards.h" />
     <ClInclude Include="Json.h" />
     <ClInclude Include="Light.h" />
@@ -218,9 +222,10 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="MeshData.h" />
-    <ClInclude Include="OctorTree.h" />
+    <ClInclude Include="OctoTree.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PathManager.h" />
+    <ClInclude Include="PluginManager.h" />
     <ClInclude Include="PMath.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshRenderer.h" />
@@ -234,7 +239,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="StructuredBuffer.h" />
     <ClInclude Include="SwapChain.h" />
@@ -318,6 +322,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Library\Include\SimpleMath.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="BaseCollider.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -327,6 +335,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Device.cpp" />
+    <ClCompile Include="DirectoryManager.cpp" />
     <ClCompile Include="EditorManager.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="EnginePch.cpp" />
@@ -339,6 +348,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="InstancingBuffer.cpp" />
     <ClCompile Include="InstancingManager.cpp" />
+    <ClCompile Include="IPlugin.cpp" />
     <ClCompile Include="jsoncpp.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
@@ -348,9 +358,10 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="MeshData.cpp" />
-    <ClCompile Include="OctorTree.cpp" />
+    <ClCompile Include="OctoTree.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PathManager.cpp" />
+    <ClCompile Include="PluginManager.cpp" />
     <ClCompile Include="PMath.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
@@ -369,7 +380,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SimpleMath.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="StructuredBuffer.cpp" />
     <ClCompile Include="SwapChain.cpp" />
@@ -381,8 +391,8 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Library\Include\SimpleMath.inl" />
     <None Include="layer.hpp" />
-    <None Include="SimpleMath.inl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resources\Shader\animation.fx" />

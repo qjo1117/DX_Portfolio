@@ -5,6 +5,9 @@
 #include "EditorManager.h"
 #include "BaseCollider.h"
 
+#include "Terrain.h"
+
+
 PlayerController::PlayerController()
 {
 }
@@ -29,9 +32,13 @@ void PlayerController::Start()
 void PlayerController::Update()
 {
 	RayCastHitInfo hit;
-	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition + Vec3::Forward * 110.0f, Vec3::Forward, hit, LAYER_TYPE::DEFAULT, 100.0f) == true) {
-		string str = "RayCast";
-		EDITOR->Log(str);
+	m_isGround = false;
+	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition, -Vec3::Up, hit, LAYER_TYPE::GROUND, 50.0f) == true) {
+		m_isGround = true;
+	}
+
+	if (m_isGround == false) {
+		GetTransform()->localPosition -= Vec3::Up * 9.8f * DELTATIME;
 	}
 }
 
@@ -42,9 +49,6 @@ void PlayerController::LateUpdate()
 void PlayerController::CollisionTest(Ref<class BaseCollider> dest)
 {
 	EDITOR->Log("Collision");
-	Vec3 dir = dest->GetTransform()->localPosition - GetTransform()->localPosition;
-	dir.Normalize();
-	GetTransform()->localPosition -= dir;
 }
 
 void PlayerController::EditorUpdate()

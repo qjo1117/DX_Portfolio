@@ -2,7 +2,9 @@
 #include "SphereCollider.h"
 #include "GameObject.h"
 #include "Transform.h"
+
 #include "BoxCollider.h"
+#include "MeshCollider.h"
 
 SphereCollider::SphereCollider() : BaseCollider(COLLIDER_TYPE::SPHERE)
 {
@@ -38,6 +40,22 @@ bool SphereCollider::Collision(Ref<BaseCollider> collider)
 
 	case COLLIDER_TYPE::BOX:
 		return BoundSphere.Intersects(dynamic_pointer_cast<BoxCollider>(collider)->BoundBox);
+		break;
+
+	case COLLIDER_TYPE::MESH:
+	{
+		Ref<MeshCollider> mesh = dynamic_pointer_cast<MeshCollider>(collider);
+		float dist = 0.0f;
+		if (m_Bound.Intersects(mesh->Bound) == false) {
+			return false;
+		}
+
+		for (const ColliderVertex& vertex : mesh->BoundMesh) {
+			if (m_BoundSphere.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+				return true;
+			}
+		}
+	}
 		break;
 	}
 

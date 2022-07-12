@@ -9,7 +9,7 @@ public:
 	HierarchyEditor() {}
 	virtual ~HierarchyEditor() {}
 
-	MENUITEM("Menu/Hierarchy", HierarchyEditor, Register);
+	MENUITEM_PRESENT("Menu/Hierarchy", HierarchyEditor, Register);
 	static void Register()
 	{
 		if (m_pInstance == nullptr) {

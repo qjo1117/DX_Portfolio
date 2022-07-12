@@ -27,5 +27,7 @@ public:
 
 private:
     PRIVATE_PROPERTY(vector<ColliderVertex>, BoundMesh) = {};
+    PRIVATE_PROPERTY(Vec3, Center) = Vec3::Zero;
+    PRIVATE_PROPERTY(Vec3, Scale) = Vec3::Zero;
 };
 

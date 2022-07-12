@@ -161,21 +161,21 @@ void EditorManager::ConsoleEditor()
 
     if (LOG_STATE::LOG & m_eState) {
         for (auto& log : m_arrLogs[0]) {
-            string text = "| Log | " + log.first + "/ Count : " + std::to_string(log.second);
+            string text = "| Log | " + log.first + " / Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 1.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();
     }
     if (LOG_STATE::WARNING & m_eState) {
         for (auto& log : m_arrLogs[1]) {
-            string text = "| Warning | " + log.first + "/ Count : " + std::to_string(log.second);
+            string text = "| Warning | " + log.first + " / Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 1.0f, 0.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();
     }
     if (LOG_STATE::ERROR_ & m_eState) {
         for (auto& log : m_arrLogs[2]) {
-            string text = "| Error | " + log.first + "/ Count : " + std::to_string(log.second);
+            string text = "| Error | " + log.first + " / Count : " + std::to_string(log.second);
             ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), text.c_str());
         }
         ImGui::Separator();

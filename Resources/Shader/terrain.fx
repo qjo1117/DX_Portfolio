@@ -137,7 +137,7 @@ DS_OUT DS_Main(const OutputPatch<HS_OUT, 3> input, float3 location: SV_DomainLoc
     float2 fullUV = float2(uv.x / (float) tileCountX, uv.y / (float) tileCountZ);
     float height = g_tex_2.SampleLevel(g_sam_0, fullUV, 0).x;       // SampleLevel은 PixelShader에서 사용하는것이 아니면 SampleLevel를 사용해야한다.
 
-    localPos.y = height;
+    localPos.y = height + localPos.y;
 
     float2 deltaUV = float2(1.0f / mapWidth, 1.0f / mapHeight);
     float2 deltaPos = float2(tileCountX * deltaUV.x, tileCountZ * deltaUV.y);

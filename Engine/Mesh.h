@@ -30,6 +30,10 @@ public:
 
 	static Ref<Mesh> CreateFromFBX(const struct FbxMeshInfo* meshInfo, class FBXLoader& loader);
 
+	void Modify(const vector<Vertex>& vertexBuffer);
+	void Modify(const vector<uint32>& indexBuffer, int32 index = 0);
+	void Modify(const vector<Vertex>& vertexBuffer, const vector<uint32>& indexBuffer);
+
 public:
 	/* ----- Serializer Function ------ */
 	void Save(const wstring& path) override;

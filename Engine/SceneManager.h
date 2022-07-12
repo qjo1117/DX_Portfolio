@@ -21,6 +21,7 @@ public:
 	void LoadScene(SCENE_TYPE type);
 
 	Ref<class GameObject> Pick(int32 screenX, int32 screenY);
+	Ref<class GameObject> Pick(int32 screenX, int32 screenY, class RayCastHitInfo& hit);
 
 public:
 	/* ----- Template Function ----- */

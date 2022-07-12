@@ -61,9 +61,13 @@ public:
 
 	void SetLightDirection(Vec3 direction);
 
-	void SetDiffuse(const Vec3& diffuse) { m_lightInfo.color.diffuse = diffuse; }
-	void SetAmbient(const Vec3& ambient) { m_lightInfo.color.ambient = ambient; }
-	void SetSpecular(const Vec3& specualr) { m_lightInfo.color.specular = specualr; }
+	void SetDiffuse(const Vec4& diffuse) { m_lightInfo.color.diffuse = diffuse; }
+	void SetAmbient(const Vec4& ambient) { m_lightInfo.color.ambient = ambient; }
+	void SetSpecular(const Vec4& specualr) { m_lightInfo.color.specular = specualr; }
+
+	void SetDiffuse(const Vec3& diffuse) { m_lightInfo.color.diffuse = Vec4(diffuse.x, diffuse.y, diffuse.z, 1.0f); }
+	void SetAmbient(const Vec3& ambient) { m_lightInfo.color.ambient = Vec4(ambient.x, ambient.y, ambient.z, 1.0f); }
+	void SetSpecular(const Vec3& specualr) { m_lightInfo.color.specular = Vec4(specualr.x, specualr.y, specualr.z, 1.0f); }
 
 	const Vec4& GetDiffuse() { return m_lightInfo.color.diffuse; }
 	const Vec4& GetAmbient() { return m_lightInfo.color.ambient; }

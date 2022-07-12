@@ -1,23 +1,7 @@
 #pragma once
 
 #include "BaseCollider.h"
-#include "OctorTree.h"
-
-
-
-struct ColliderState
-{
-public:
-	bool Enter = false;
-	bool Press = false;
-	bool Leave = false;
-};
-
-struct ColliderInfo
-{
-	Ref<BaseCollider> Collider;
-	ColliderState State = {};
-};
+#include "OctoTree.h"
 
 class ColliderManager
 {
@@ -33,13 +17,13 @@ public:
 
 	bool RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHitInfo& hit, LAYER_TYPE layer = LAYER_TYPE::END, float maxDistance = FLT_MAX);
 private:
-	bool RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, LAYER_TYPE layer, float maxDistance);
+	bool RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, OUT RayCastHitInfo& hit, LAYER_TYPE layer, float maxDistance);
 
-	vector<Ref<ColliderInfo>> GetLayerObject(LAYER_TYPE layer);
+	vector<Ref<BaseCollider>> GetLayerObject(LAYER_TYPE layer);
 
 private:
-	PRIVATE_PROPERTY(vector<Ref<ColliderInfo>>, Collider);
-	PRIVATE_PROPERTY(Ref<OctorTree>, Tree);
+	PRIVATE_PROPERTY(vector<Ref<BaseCollider>>, Collider);
+	PRIVATE_PROPERTY(Ref<OctoTree>, Tree);
 
 	PRIVATE_PROPERTY(Ref<class Mesh>, cubeMesh);
 	PRIVATE_PROPERTY(Ref<class Mesh>, sphereMesh);

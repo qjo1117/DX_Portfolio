@@ -120,9 +120,6 @@
     <ClCompile Include="PMath.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleMath.cpp">
-      <Filter>Utils\User</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
@@ -252,11 +249,23 @@
     <ClCompile Include="ColliderManager.cpp">
       <Filter>Core\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="OctorTree.cpp">
+    <ClCompile Include="OctoTree.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
     <ClCompile Include="MeshCollider.cpp">
       <Filter>Object\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="PluginManager.cpp">
+      <Filter>Core\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectoryManager.cpp">
+      <Filter>Core\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="IPlugin.cpp">
+      <Filter>Core\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\SimpleMath.cpp">
+      <Filter>Utils\User</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -318,9 +327,6 @@
       <Filter>Utils\Engine</Filter>
     </ClInclude>
     <ClInclude Include="PMath.h">
-      <Filter>Utils\User</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleMath.h">
       <Filter>Utils\User</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
@@ -461,19 +467,34 @@
     <ClInclude Include="ColliderManager.h">
       <Filter>Core\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="OctorTree.h">
+    <ClInclude Include="OctoTree.h">
       <Filter>Utils\User</Filter>
     </ClInclude>
     <ClInclude Include="MeshCollider.h">
       <Filter>Object\Component\Collider</Filter>
     </ClInclude>
+    <ClInclude Include="PluginManager.h">
+      <Filter>Core\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlugin.h">
+      <Filter>Core\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectoryManager.h">
+      <Filter>Core\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineHeader.h">
+      <Filter>Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\SimpleMath.h">
+      <Filter>Utils\User</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleMath.inl">
-      <Filter>Utils\User</Filter>
-    </None>
     <None Include="layer.hpp">
       <Filter>Core\Content</Filter>
+    </None>
+    <None Include="..\Library\Include\SimpleMath.inl">
+      <Filter>Utils\User</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

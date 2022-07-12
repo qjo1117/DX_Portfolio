@@ -133,6 +133,23 @@ void Texture::Create(DXGI_FORMAT format, uint32 width, uint32 height, const D3D1
 	);
 	assert(SUCCEEDED(hr));
 
+	_image.Initialize2D(format, width, height, 1, 1);
+
+	/* ----- Resource 데이터를 GPU전용데이터로 만들어 줄 준비를 한다. ----- */
+	vector<D3D12_SUBRESOURCE_DATA> subResources;
+
+	hr = ::PrepareUpload(
+		DEVICE.Get(),
+		_image.GetImages(),
+		_image.GetImageCount(),
+		_image.GetMetadata(),
+		subResources
+	);
+
+	uint8* pointer = (uint8*)subResources[0].pData;
+	for (int32 i = 0; i < width * height; ++i) {
+		*(pointer + i) = 0;
+	}
 
 	CreateFromResource(_tex2D);
 }

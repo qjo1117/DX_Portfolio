@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "MeshRenderer.h"
+#include "MeshCollider.h"
 
 BoxCollider::BoxCollider() : BaseCollider(COLLIDER_TYPE::BOX)
 {
@@ -49,6 +50,21 @@ bool BoxCollider::Collision(Ref<BaseCollider> collider)
 	case COLLIDER_TYPE::BOX:
 		return BoundBox.Intersects(dynamic_pointer_cast<BoxCollider>(collider)->BoundBox);
 		break;
+
+	case COLLIDER_TYPE::MESH:
+	{
+		Ref<MeshCollider> mesh = dynamic_pointer_cast<MeshCollider>(collider);
+		float dist = 0.0f;
+		if (m_Bound.Intersects(mesh->Bound) == false) {
+			return false;
+		}
+
+		for (const ColliderVertex& vertex : mesh->BoundMesh) {
+			if (m_BoundBox.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+				return true;
+			}
+		}
+	}
 	}
 }
 

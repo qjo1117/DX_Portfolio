@@ -20,6 +20,8 @@ private:
 
 	PRIVATE_PROPERTY(float, maxTesselation) = 4.0f;
 
+	PRIVATE_PROPERTY(vector<float>, Height);
+
 	PRIVATE_PROPERTY(Ref<class Material>, material);
 	PRIVATE_PROPERTY(Ref<class Mesh>, mesh);
 	PRIVATE_PROPERTY(Ref<class Texture>, heightMap);

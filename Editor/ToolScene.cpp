@@ -1,3 +1,4 @@
+
 #include "pch.h"
 #include "Utils.h"
 #include "ToolScene.h"
@@ -56,22 +57,6 @@ ToolScene::ToolScene()
 		skybox->isFrustum = false;
 		AddGameObject(skybox, LAYER_TYPE::SKYBOX);
 	}
-#pragma endregion
-
-#pragma region Terrain
-	//{
-	//	Ref<GameObject> go = make_shared<GameObject>();
-	//	go->AddComponent(make_shared<Transform>());
-	//	go->GetTransform()->SetLocalPosition(Vec3(-100.0f, -200.0f, 300.0f));
-	//	go->GetTransform()->SetLocalScale(Vec3(50.0f, 200.0f, 50.0f));
-	//	go->name = (L"Terrain");
-	//	go->isShadow = true;
-
-	//	go->AddComponent(make_shared<Terrain>());
-	//	go->GetTerrain()->Init(64, 64);
-
-	//	AddGameObject(go, LAYER_TYPE::DEFAULT);
-	//} 
 #pragma endregion
 
 #pragma region Main Camera
@@ -187,7 +172,7 @@ ToolScene::ToolScene()
 		Ref<GameObject> light = make_shared<GameObject>();
 		light->name = (L"Directional Light");
 		light->AddComponent(make_shared<Transform>());
-		light->GetTransform()->SetLocalPosition(Vec3(0.f, 3000.0f, 0.0f));
+		light->GetTransform()->SetLocalPosition(Vec3(0.f, 1000.0f, 0.0f));
 		light->AddComponent(make_shared<Light>());
 		light->GetLight()->SetLightDirection(Vec3(0.0f, -1.0f, 0.0f));
 		light->GetLight()->SetLightType(LIGHT_TYPE::DIRECTIONAL_LIGHT);
@@ -254,6 +239,26 @@ ToolScene::ToolScene()
 	}
 #pragma endregion
 
+#pragma region Plane
+	{
+		Ref<GameObject> obj = make_shared<GameObject>();
+		obj->AddComponent(make_shared<Transform>());
+		obj->AddComponent(make_shared<MeshCollider>());
+		obj->AddComponent(make_shared<Terrain>());
+		obj->GetTerrain()->Init(15, 15);
+
+		obj->name = L"Ground";
+		obj->isFrustum = false;
+
+		obj->GetTransform()->localPosition = (-Vec3::Up * 150.0f) - Vec3::Right * 700.0f + Vec3::Forward * 700.0f;
+		obj->GetTransform()->localScale = Vec3::One * 100.0f;
+
+
+		AddGameObject(obj, LAYER_TYPE::GROUND);
+	}
+#pragma endregion
+
+
 #pragma region RayCast_Test
 	{
 		for (int32 i = 0; i < 30; ++i) {
@@ -262,15 +267,13 @@ ToolScene::ToolScene()
 			obj->AddComponent(make_shared<MeshRenderer>());
 			obj->AddComponent(make_shared<BoxCollider>());
 
-			obj->GetTransform()->localPosition = (-Vec3::Right * 150.0f) * (i % 10) + Vec3::Up * 130.0f * (i / 10);
+			obj->GetTransform()->localPosition = (-Vec3::Right * 150.0f) * (i % 10) + Vec3::Up * 130.0f * (i / 10) - Vec3::Forward * 100.0f;
 			obj->GetTransform()->localScale = Vec3::One * 100.0f;
 
 			obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
 			obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
 			
-			obj->layerType = static_cast<uint32>(LAYER_TYPE::ENEMY);
-
-			AddGameObject(obj, LAYER_TYPE::DEFAULT);
+			AddGameObject(obj, LAYER_TYPE::ENEMY);
 		}
 	}
 
@@ -282,6 +285,7 @@ ToolScene::ToolScene()
 		obj->AddComponent(make_shared<PlayerController>());
 
 		obj->name = L"Player";
+		obj->isShadow = false;
 
 		obj->GetTransform()->localPosition = (Vec3::Right * 150.0f);
 		obj->GetTransform()->localScale = Vec3::One * 100.0f;
@@ -295,39 +299,62 @@ ToolScene::ToolScene()
 	}
 #pragma endregion
 
-#pragma region Plane
+#pragma region RayCastHit Test
 	{
 		Ref<GameObject> obj = make_shared<GameObject>();
 		obj->AddComponent(make_shared<Transform>());
 		obj->AddComponent(make_shared<MeshRenderer>());
-		//obj->AddComponent(make_shared<MeshCollider>());
+		obj->AddComponent(make_shared<SphereCollider>());
 
-		obj->name = L"Ground";
+		obj->name = L"PickSphere";
 
-		obj->GetTransform()->localPosition = (-Vec3::Up * 150.0f);
-		obj->GetTransform()->localScale = Vec3::One * 100.0f;
+		obj->GetTransform()->localScale = Vec3::One * 10.0f;
 
-		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Ground"));
-		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadTerrainMesh();
+		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Player"));
+		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadSphereMesh();
 
 		AddGameObject(obj, LAYER_TYPE::DEFAULT);
+
+		_pickSphere = obj;
 	}
 #pragma endregion
+
+#pragma region Animation
+	{
+		Ref<GameObject> parent = make_shared<GameObject>();
+		parent->AddComponent(make_shared<Transform>());
+		parent->name = L"Animation";
+		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Cat/Cartoon Cat.fbx");
+		vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
+
+		int32 index = 0;
+		for (auto& gameObject : gameObjects) {
+			gameObject->name = wstring(L"Cartoon Cat") + to_wstring(index++);
+			gameObject->isFrustum = false;
+			
+			gameObject->AddComponent(make_shared<MeshCollider>());
+			gameObject->GetTransform()->SetLocalPosition(Vec3(0.f, 0.f, 300.f));
+			gameObject->GetTransform()->SetLocalScale(Vec3(1.f, 1.f, 1.f));
+
+			gameObject->GetTransform()->SetParent(parent->GetTransform());
+			AddGameObject(gameObject);
+		}
+		AddGameObject(parent);
+	}
+#pragma endregion
+
 
 
 	GEngine->GetGraphicsCmdQueue()->WaitSync();
 
 	_defauleImage = GET_SINGLE(Resources)->Get<Texture>(L"Default");
 	_pickTexture = GET_SINGLE(Resources)->Get<Texture>(L"Star");
-
-	_pickTestDraw.resize(1280 * 640);
 }
 
 ToolScene::~ToolScene()
 {
-	_goPick = nullptr;
-	_player = nullptr;
 	_camera = nullptr;
+	_pickSphere = nullptr;
 }
 
 void ToolScene::Awake()
@@ -343,6 +370,18 @@ void ToolScene::Start()
 void ToolScene::Update()
 {
 	Scene::Update();
+
+	// Pick
+	if (INPUT->GetButtonDown(KEY_TYPE::LBUTTON) == true) {
+		if (ImGui::IsAnyItemActive()) {
+			return;
+		}
+		RayCastHitInfo hit;
+		Ref<GameObject> picked = GET_SINGLE(SceneManager)->Pick(INPUT->GetMousePos().x, INPUT->GetMousePos().y);
+		if (picked != nullptr) {
+			HierarchyEditor::GetI()->PickObject = picked;
+		}
+	}
 }
 
 void ToolScene::LateUpdate()

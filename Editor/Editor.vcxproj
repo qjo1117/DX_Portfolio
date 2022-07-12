@@ -173,6 +173,7 @@
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="CollisionEditor.h" />
     <ClInclude Include="DebugEditor.h" />
+    <ClInclude Include="DirectoryEditor.h" />
     <ClInclude Include="DragonController.h" />
     <ClInclude Include="Editor.h" />
     <ClInclude Include="framework.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="CollisionEditor.cpp" />
     <ClCompile Include="DebugEditor.cpp" />
+    <ClCompile Include="DirectoryEditor.cpp" />
     <ClCompile Include="DragonController.cpp" />
     <ClCompile Include="Editor.cpp" />
     <ClCompile Include="Game.cpp" />

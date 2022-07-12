@@ -30,6 +30,8 @@ public:
 	void SetSpeed(float speed) { _speed = speed; }
 private:
 	float _speed = 100.0f;
+	
+	bool m_isGround = false;
 
 	Ref<class GameObject> m_castCheck;
 };
