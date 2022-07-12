@@ -324,7 +324,7 @@ ToolScene::ToolScene()
 		Ref<GameObject> parent = make_shared<GameObject>();
 		parent->AddComponent(make_shared<Transform>());
 		parent->name = L"Animation";
-		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Cat/Cartoon Cat.fbx");
+		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Model/Cartoon Astronaut .fbx");
 		vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
 
 		int32 index = 0;

@@ -59,12 +59,13 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(Timer)->Init(_winInfo.hWnd);
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(ColliderManager)->Init();
-	GET_SINGLE(DirectoryManager)->Init();
+
 
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->Init();
 #endif
 
+	GET_SINGLE(DirectoryManager)->Init();
 	GET_SINGLE(PluginManager)->Init(*EDITOR, *this, *GET_SINGLE(SceneManager));
 
 	ResizeWindow(info.width, info.height);
@@ -72,8 +73,6 @@ void Engine::Init(const WindowInfo& info)
 	CreateConstantBuffer(CBV_REGISTER::b0, sizeof(LightParams), 1);
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 256);
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialParam), 256);
-
-
 }
 
 void Engine::Render()

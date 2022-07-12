@@ -52,6 +52,9 @@
     <ClCompile Include="DirectoryEditor.cpp">
       <Filter>Editor\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="PluginEditor.cpp">
+      <Filter>Editor\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h">
@@ -112,6 +115,9 @@
       <Filter>Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="DirectoryEditor.h">
+      <Filter>Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="PluginEditor.h">
       <Filter>Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>

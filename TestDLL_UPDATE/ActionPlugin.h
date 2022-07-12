@@ -6,15 +6,19 @@ class ActionPlugin :
     public IPlugin
 {
 public:
-	ActionPlugin(PluginManager& manager) : IPlugin(manager) { }
+	ActionPlugin(PluginManager& manager) : IPlugin(manager) { m_Title = L"ActionPlugin"; }
 	virtual ~ActionPlugin() {}
 
 	virtual PLUGINDECL bool Init() override;
 	virtual PLUGINDECL bool Update() override;
 	virtual PLUGINDECL bool Render() override;
 	virtual PLUGINDECL bool End() override;
-	virtual PLUGINDECL const std::string& GetName() { return "ActionPlugin"; }
 
+	virtual PLUGINDECL const std::wstring& GetName() override { return m_Title; }
+
+
+private:
+	Ref<class GameObject> m_player;
 };
 
 CREATE_PLUGIN(ActionPlugin)

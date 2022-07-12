@@ -26,10 +26,12 @@ public:
 	virtual PLUGINDECL bool Update() { return false; }
 	virtual PLUGINDECL bool Render() { return false; }
 	virtual PLUGINDECL bool End() { return false; }
-	virtual PLUGINDECL const std::string& GetName() { return "IPlugin"; }
+	virtual PLUGINDECL const std::wstring& GetName();
 
 protected:
 	PluginManager* m_pManager = nullptr;
+
+	wstring m_Title;
 };
 
 typedef IPlugin* (*CREATEPLUGIN)(PluginManager& manager);

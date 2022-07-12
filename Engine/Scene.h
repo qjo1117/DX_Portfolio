@@ -52,6 +52,8 @@ public:
 	void SortSceneObjects();
 	void ClearRenderList();
 
+	Ref<GameObject> FindGameObject(const wstring& name);
+
 private:
 	void PushLightData();
 

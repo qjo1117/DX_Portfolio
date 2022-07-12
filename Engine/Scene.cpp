@@ -1,3 +1,4 @@
+#include "Scene.h"
 #include "pch.h"
 #include "Scene.h"
 #include "GameObject.h"
@@ -215,6 +216,18 @@ void Scene::ClearRenderList()
 		_vecActived.reserve(size);
 		_vecNonActived.reserve(size);
 	}
+}
+
+Ref<GameObject> Scene::FindGameObject(const wstring& name)
+{
+	for (vector<Ref<GameObject>>& layer : _gameObjects) {
+		for (Ref<GameObject> obj : layer) {
+			if(obj->name == name) {
+				return obj;
+			}
+		}
+	}
+	return nullptr;
 }
 
 void Scene::RenderShadow()

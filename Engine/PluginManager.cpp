@@ -17,37 +17,37 @@ void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager
     m_pScene = &p_Scene;
 
     LoadPlugins();
-    for (auto& info : m_vecPlugins) {
-        info->pPlugin->Init();
+    for (auto& item : m_mapPlugins) {
+        item.second->pPlugin->Init();
     }
 
 }
 
 void PluginManager::Update()
 {
-    for (auto& info : m_vecPlugins) {
-        info->pPlugin->Update();
+    for (auto& item : m_mapPlugins) {
+        item.second->pPlugin->Update();
     }
 }
 
 void PluginManager::Render()
 {
-    for (auto& info : m_vecPlugins) {
-        info->pPlugin->Render();
+    for (auto& item : m_mapPlugins) {
+        item.second->pPlugin->Render();
     }
 }
 
 void PluginManager::End()
 {
-    for (auto& info : m_vecPlugins) {
-        info->pPlugin->End();
+    for (auto& item : m_mapPlugins) {
+        item.second->pPlugin->End();
 
-        SAFEDELETE(info->pPlugin);
-        ::FreeLibrary(info->hDll);
+        SAFEDELETE(item.second->pPlugin);
+        ::FreeLibrary(item.second->hDll);
 
-        info = nullptr;
+        item.second = nullptr;
     }
-    m_vecPlugins.clear();
+    m_mapPlugins.clear();
 
 }
 
@@ -96,13 +96,27 @@ bool PluginManager::LoadPlugin(const wstring& p_fileName)
         return false;
     }
 
+    if (FindPlugin(pPlugin->GetName()) != nullptr) {
+        delete pPlugin;
+        pPlugin = nullptr;
+        return true;
+    }
+
     Ref<PluginInfo> info = make_shared<PluginInfo>();
     info->pPlugin = pPlugin;
     info->hDll = hDll;
 
-    m_vecPlugins.push_back(info);
+    m_mapPlugins[pPlugin->GetName()] = info;
 
     return true;
+}
+
+Ref<PluginInfo> PluginManager::FindPlugin(const wstring& name)
+{
+    if (m_mapPlugins[name] == nullptr) {
+        return nullptr;
+    }
+    return m_mapPlugins[name];
 }
 
 void PluginManager::Log(const string& log)

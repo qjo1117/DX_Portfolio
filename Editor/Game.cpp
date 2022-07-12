@@ -13,7 +13,6 @@ void Game::Init(const WindowInfo& info)
 	GEngine->Init(info);
 
 	GET_SINGLE(SceneManager)->CreateScene<ToolScene>(SCENE_TYPE::TOOL);
-
 	GET_SINGLE(SceneManager)->LoadScene(SCENE_TYPE::TOOL);
 }
 

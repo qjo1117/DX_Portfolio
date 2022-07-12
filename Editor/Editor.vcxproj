@@ -182,6 +182,7 @@
     <ClInclude Include="InspectorEditor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerController.h" />
+    <ClInclude Include="PluginEditor.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceEditor.h" />
     <ClInclude Include="RotationXComponent.h" />
@@ -208,6 +209,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PlayerController.cpp" />
+    <ClCompile Include="PluginEditor.cpp" />
     <ClCompile Include="ResourceEditor.cpp" />
     <ClCompile Include="RotationXComponent.cpp" />
     <ClCompile Include="TerrainEditor.cpp" />
