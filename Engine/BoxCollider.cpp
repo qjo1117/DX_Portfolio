@@ -28,11 +28,11 @@ void BoxCollider::Awake()
 void BoxCollider::FinalUpdate()
 {
 	m_BoundBox.Center = GetTransform()->GetWorldPosition();
+	m_BoundBox.Extents = GetTransform()->localScale / 2;
 	m_BoundBox.Orientation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(GetTransform()->localRotation.x, GetTransform()->localRotation.y, GetTransform()->localRotation.z);
 
 	m_Bound.Center = m_BoundBox.Center;
 	m_Bound.Extents = m_BoundBox.Extents;
-
 }
 
 bool BoxCollider::Intersects(Vec4 rayOrigin, Vec4 rayDir, OUT float& distance)
@@ -59,8 +59,11 @@ bool BoxCollider::Collision(Ref<BaseCollider> collider)
 			return false;
 		}
 
-		for (const ColliderVertex& vertex : mesh->BoundMesh) {
-			if (m_BoundBox.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+		for (const Triangle& vertex : mesh->BoundMesh) {
+			Vec3 selfPos0 = mesh->Center + vertex.pos0 * mesh->Scale;
+			Vec3 selfPos1 = mesh->Center + vertex.pos1 * mesh->Scale;
+			Vec3 selfPos2 = mesh->Center + vertex.pos2 * mesh->Scale;
+			if (m_BoundBox.Intersects(selfPos0, selfPos1, selfPos2)) {
 				return true;
 			}
 		}

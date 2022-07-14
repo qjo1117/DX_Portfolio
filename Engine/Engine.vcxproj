@@ -222,7 +222,7 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="MeshCollider.h" />
     <ClInclude Include="MeshData.h" />
-    <ClInclude Include="OctoTree.h" />
+    <ClInclude Include="OcTree.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="PluginManager.h" />
@@ -358,7 +358,7 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MeshCollider.cpp" />
     <ClCompile Include="MeshData.cpp" />
-    <ClCompile Include="OctoTree.cpp" />
+    <ClCompile Include="OcTree.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="PluginManager.cpp" />
@@ -392,6 +392,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Library\Include\SimpleMath.inl" />
+    <None Include="ClassDiagram.cd" />
     <None Include="layer.hpp" />
   </ItemGroup>
   <ItemGroup>

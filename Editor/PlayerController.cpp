@@ -31,15 +31,15 @@ void PlayerController::Start()
 
 void PlayerController::Update()
 {
-	RayCastHitInfo hit;
-	m_isGround = false;
-	if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition, -Vec3::Up, hit, LAYER_TYPE::GROUND, 50.0f) == true) {
-		m_isGround = true;
-	}
+	//RayCastHitInfo hit;
+	//m_isGround = false;
+	//if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition, -Vec3::Up, hit, LAYER_TYPE::GROUND, 50.0f) == true) {
+	//	m_isGround = true;
+	//}
 
-	if (m_isGround == false) {
-		GetTransform()->localPosition -= Vec3::Up * 9.8f * DELTATIME;
-	}
+	//if (m_isGround == false) {
+	//	GetTransform()->localPosition -= Vec3::Up * 9.8f * DELTATIME;
+	//}
 }
 
 void PlayerController::LateUpdate()

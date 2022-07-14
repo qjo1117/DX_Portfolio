@@ -1,0 +1,585 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EditorManager" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAQCAACAAAAAAAAAgAggAABBAQBADAAXAAAA=</HashCode>
+      <FileName>EditorManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IEditor" Collapsed="true">
+    <Position X="15.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAgAAAAAAAAAAAAAAAAAAAAEABAEIAACAAAAAAA=</HashCode>
+      <FileName>IEditor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MenuInfo" Collapsed="true">
+    <Position X="15.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAEAAAAAAAA=</HashCode>
+      <FileName>IEditor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Input" Collapsed="true">
+    <Position X="17" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gEQBAEAAAAAIAggAAAAAAAAAAAAAAAgAAAACAAIAYAA=</HashCode>
+      <FileName>Input.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer" Collapsed="true">
+    <Position X="18.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgEBAAACEBAQAAICCACAAIAAAAAAAAIAASAAAQBAI=</HashCode>
+      <FileName>Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InstancingManager" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAUAAAAAAAAAAAAAEAAAAABBAAABAAAA=</HashCode>
+      <FileName>InstancingManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PathManager" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAwAACAAAAAAAAAAAAAAAAAIAAAABCAABAAAA=</HashCode>
+      <FileName>PathManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Resources" Collapsed="true">
+    <Position X="13.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMCgMAAQoACAFBAAAAACBEQAQEAgCAAIAAKCgAAAAA=</HashCode>
+      <FileName>Resources.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="15.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BNRCIDwBkSAAAhAAhdAAIQDISgAASBFgIBgASCgEBGg=</HashCode>
+      <FileName>Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="17" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAQgAAAADAAAAAAAAAkAABAAEIAAAAA=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileInfo" Collapsed="true">
+    <Position X="13.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>DirectoryManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DirectoryManager" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABaEQAAAAAAAAAAEBIRAAgQAAAAAAAACAABCEABAAAA=</HashCode>
+      <FileName>DirectoryManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IPlugin" Collapsed="true">
+    <Position X="13.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAACAAAAAgAAAAAQAAAQAAAAAAAAAABACAAAABAA=</HashCode>
+      <FileName>IPlugin.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PluginManager" Collapsed="true">
+    <Position X="18.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgYAAgAAAAAAAACEAAAAAAAAAAgAAAAAChRGAAhAQAA=</HashCode>
+      <FileName>PluginManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseCollider">
+    <Position X="22.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAYAAAAAAAAAEAAAAAAAAAAAAAABAAAAAAIQ=</HashCode>
+      <FileName>BaseCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ColliderManager" Collapsed="true">
+    <Position X="15.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAACAAAAAAAAAAAAAAAAAAAAABAAChBCAAAAAAI=</HashCode>
+      <FileName>ColliderManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Engine" Collapsed="true">
+    <Position X="61" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAEAICCAoAEEgAEApQDAgAAChJgCABACQESEgAA=</HashCode>
+      <FileName>Engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicsCommandQueue" Collapsed="true">
+    <Position X="64.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEECAAAAIQAEABAAAAQAAAAAAAAAAhACYAgIAAg=</HashCode>
+      <FileName>CommandQueue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ComputeCommandQueue" Collapsed="true">
+    <Position X="61" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAACAAAAAAAEABAABAAAAAEAAAABABACIAAIAAg=</HashCode>
+      <FileName>CommandQueue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConstantBuffer" Collapsed="true">
+    <Position X="64.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAAAgwAAAQAAAwAQEAUAQAIAAAAAAABAAAACAIhAAAA=</HashCode>
+      <FileName>ConstantBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Device" Collapsed="true">
+    <Position X="59.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAIAgAgAAAACAAAAAAg=</HashCode>
+      <FileName>Device.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InstancingBuffer" Collapsed="true">
+    <Position X="61" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQsAAAgBIAAAAAAAAgBgAEAAAAAAgAAAAACAABAAAA=</HashCode>
+      <FileName>InstancingBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenderTargetGroup" Collapsed="true">
+    <Position X="62.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAQgBBAAAQAAABAAAAAAAAAACEAEACQAAAAGUAA=</HashCode>
+      <FileName>RenderTargetGroup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RootSignature" Collapsed="true">
+    <Position X="64.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQCAAAAEAAACAAAAAAAAgAAAEAACAAQAAAA=</HashCode>
+      <FileName>RootSignature.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StructuredBuffer" Collapsed="true">
+    <Position X="59.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAwAAAIgIIAAggAQACACAAAACAAAAAAAAAACBIJIACU=</HashCode>
+      <FileName>StructuredBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SwapChain" Collapsed="true">
+    <Position X="61" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAABAAAAAAAQCAAAAAAAAIAAAiAAABAAA=</HashCode>
+      <FileName>SwapChain.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicsDescriptorHeap" Collapsed="true">
+    <Position X="59.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAIACBAggAAAABAAAAAAoACAABQAAA=</HashCode>
+      <FileName>TableDescriptorHeap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ComputeDescriptorHeap" Collapsed="true">
+    <Position X="62.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAIACBAgAAAAABAAAAAAgECAAAAAAA=</HashCode>
+      <FileName>TableDescriptorHeap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="54.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BFQAAQACACAIsCAAAABgJAAQAgBACBAAAAACQAIEAMA=</HashCode>
+      <FileName>GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Object" Collapsed="true">
+    <Position X="19.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAQAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Object.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animator" Collapsed="true">
+    <Position X="29.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQEQCIAAAAAAAAQAAQAABgAEAAASAAAgAAA0AQAAAA=</HashCode>
+      <FileName>Animator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera" Collapsed="true">
+    <Position X="34.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IIAiIAAAwAAwAAAAVYAEAABQAIAACBAAAAAACAgAACA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component" Collapsed="true">
+    <Position X="22.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAACAAACQAAAhEIAAACABACAEAAAhAgAAAAEA=</HashCode>
+      <FileName>Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Light" Collapsed="true">
+    <Position X="27.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YFAAAAgAAAABACCAQAAEAgIAAhAAmBQAABgEBAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleSystem" Collapsed="true">
+    <Position X="32" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAwIACAAAAAAABAAAEQAIAgCABCBAACBAAAAAAAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshRenderer" Collapsed="true">
+    <Position X="36.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAFAAAAAAACAMIAAEAAAAAABABDBEABAAAAAAAAA=</HashCode>
+      <FileName>MeshRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MonoBehaviour" Collapsed="true">
+    <Position X="38.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABCAAAIAAAAAAIAAAAAAACAAAAAAAAAAAAEA=</HashCode>
+      <FileName>MonoBehaviour.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Terrain" Collapsed="true">
+    <Position X="41" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAEAAAAAAAACBCAAEACAAAAAAA=</HashCode>
+      <FileName>Terrain.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Transform" Collapsed="true">
+    <Position X="43.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAEoIABAAAAgaAgEgIEIBwAKQBAKBAAAEAAAoQggII=</HashCode>
+      <FileName>Transform.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BoxCollider">
+    <Position X="24.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAEAAAAACAACBAAAAAAAAAQAMA=</HashCode>
+      <FileName>BoxCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Triangle" Collapsed="true">
+    <Position X="59.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAI=</HashCode>
+      <FileName>MeshCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshCollider">
+    <Position X="22.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAEEAAAAAAACBAAAAAAAAAAAMQ=</HashCode>
+      <FileName>MeshCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SphereCollider">
+    <Position X="19.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAIAAAAABIAAEAAAAAAAACBAAAAAAAAiAAIA=</HashCode>
+      <FileName>SphereCollider.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Material" Collapsed="true">
+    <Position X="45.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEgAgIACAAAEAgAIAAAAAACAACAAABAABABAAgCoABg=</HashCode>
+      <FileName>Material.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MeshData" Collapsed="true">
+    <Position X="50" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAQBAAAAiAAACAAACCAAAAAAAAA=</HashCode>
+      <FileName>MeshData.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mesh" Collapsed="true">
+    <Position X="56.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAoIEAEAUAAEgAgAEhCECgEABBAMQAARgAQAAAAAA=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shader" Collapsed="true">
+    <Position X="47.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAQAAACAAAGgCEABAAkAqAEAEAJCgEBABAAgAQCAgAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="52.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAkAgAAAIAAAgQBAACIAAAhQiAgQREAAAIIQAEAAAAA=</HashCode>
+      <FileName>Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Frustum" Collapsed="true">
+    <Position X="62.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAIAAACABAAAAAAAAAAAA=</HashCode>
+      <FileName>Frustum.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="__unnamed_struct_042e_1" Collapsed="true">
+    <Position X="13.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>EditorManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="PluginInfo" Collapsed="true">
+    <Position X="17" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PluginManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ColliderState" Collapsed="true">
+    <Position X="15.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>BaseCollider.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RayCastHitInfo" Collapsed="true">
+    <Position X="18.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAgAAEAAAAAAAAAAEAAAAAA=</HashCode>
+      <FileName>BaseCollider.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="InstancingParams" Collapsed="true">
+    <Position X="62.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACAAAAAAAAAAA=</HashCode>
+      <FileName>InstancingBuffer.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="RenderTarget" Collapsed="true">
+    <Position X="61" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>RenderTargetGroup.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="LightColor" Collapsed="true">
+    <Position X="64.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="LightInfo" Collapsed="true">
+    <Position X="59.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAIAAAAAAAIAAAAAAAAACAAQAAAABCAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="LightParams" Collapsed="true">
+    <Position X="61" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ParticleInfo" Collapsed="true">
+    <Position X="59.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAgAAAQAAAABAAAAAAAAAAAAAACAEA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ComputeShaderdInfo" Collapsed="true">
+    <Position X="59.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>ParticleSystem.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MaterialParam" Collapsed="true">
+    <Position X="62.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAgAIFAEAAACAAACABAAAAAAAAAEoAAA=</HashCode>
+      <FileName>Material.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MeshRenderInfo" Collapsed="true">
+    <Position X="64.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAABAAAA=</HashCode>
+      <FileName>MeshData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="IndexBufferInfo" Collapsed="true">
+    <Position X="61" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAABAAACAAQAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Mesh.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ShaderInfo" Collapsed="true">
+    <Position X="64.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAABCAQAAAAQAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ShaderArg" Collapsed="true">
+    <Position X="62.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgIAADAAAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="CREATEPLUGIN" Collapsed="true">
+    <Position X="13.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IPlugin.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="FILE_TYPE" Collapsed="true">
+    <Position X="17" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAQAAAAAAgAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>DirectoryManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="COLLIDER_STATE" Collapsed="true">
+    <Position X="13.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAQBgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseCollider.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="COLLIDER_TYPE" Collapsed="true">
+    <Position X="15.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAIAAAAAAABAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseCollider.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="CONSTANT_BUFFER_TYPE" Collapsed="true">
+    <Position X="61" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAEAAAAgAAEAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>ConstantBuffer.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0427_1" Collapsed="true">
+    <Position X="59.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>ConstantBuffer.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RENDER_TARGET_GROUP_TYPE" Collapsed="true">
+    <Position X="59.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAABAAgAAAAEABAAAAEAAAAAA=</HashCode>
+      <FileName>RenderTargetGroup.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_046d_1" Collapsed="true">
+    <Position X="64.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAgAABAAAAAAAAAAQAAI=</HashCode>
+      <FileName>RenderTargetGroup.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="OBJECT_TYPE" Collapsed="true">
+    <Position X="59.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAUBAAAAAgAAAAAAAAgAABAAAgAE=</HashCode>
+      <FileName>Object.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_045d_1" Collapsed="true">
+    <Position X="62.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Object.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PROJECTION_TYPE" Collapsed="true">
+    <Position X="62.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQAAAAA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LIGHT_TYPE" Collapsed="true">
+    <Position X="64.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Light.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="__unnamed_enum_0451_1" Collapsed="true">
+    <Position X="61" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Material.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SHADER_TYPE" Collapsed="true">
+    <Position X="61" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wAAAAAAAAAAAgAAAAAAAABAAAAAACEAAAAAAAAAABAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RASTERIZER_TYPE" Collapsed="true">
+    <Position X="64.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAgAAAAAAAAAAAABAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DEPTH_STENCIL_TYPE" Collapsed="true">
+    <Position X="62.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAABgAAAYAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BLEND_TYPE" Collapsed="true">
+    <Position X="59.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAIgAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PLANE_TYPE" Collapsed="true">
+    <Position X="61" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAABAAAAAAAgAAAAAAAAAAAgAAAABAAAAQEAAAAAAAA=</HashCode>
+      <FileName>Frustum.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>

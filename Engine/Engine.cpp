@@ -15,6 +15,7 @@ void Engine::Init(const WindowInfo& info)
 #pragma region DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(2664);
+	//_CrtSetBreakAlloc(51430);
 	// 메모리 Leak이 있을때만 사용하면 됨
 
 #ifdef _DEBUG
@@ -57,6 +58,8 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(PathManager)->Init();
 	GET_SINGLE(Input)->Init(_winInfo.hWnd);
 	GET_SINGLE(Timer)->Init(_winInfo.hWnd);
+	GET_SINGLE(DirectoryManager)->Init();
+
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(ColliderManager)->Init();
 
@@ -65,7 +68,6 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(EditorManager)->Init();
 #endif
 
-	GET_SINGLE(DirectoryManager)->Init();
 	GET_SINGLE(PluginManager)->Init(*EDITOR, *this, *GET_SINGLE(SceneManager));
 
 	ResizeWindow(info.width, info.height);

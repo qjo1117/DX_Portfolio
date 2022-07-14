@@ -14,6 +14,8 @@
 #include "ParticleSystem.h"
 #include "MeshData.h"
 
+#include "DirectoryManager.h"
+
 void Resources::Init()
 {
 
@@ -1138,6 +1140,13 @@ void Resources::CreateDefaultMaterial()
 		material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Deferred"));
 		Add<Material>(L"Defualt", material);
 	}
+
+	/* ----- Test Material(Deferred) ----- */
+	{
+		Ref<Material> material = make_shared<Material>();
+		material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Deferred"));
+		Add<Material>(L"Deferred", material);
+	}
 }
 
 void Resources::CreateDefaultGameObject()
@@ -1252,89 +1261,22 @@ void Resources::CreateDefaultComponent()
 void Resources::CreateDefaultTexture()
 {
 	wstring path = TEXTURE_PATH;
-	/* ---- DefaultImage ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Default", path + L"DefaultImage.png");
-	}
-	/* ---- Metal ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Metal", path + L"Metal.jpg");
-	}
-	/* ---- Metal_Normal ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Metal_Normal", path + L"Metal_Normal.jpg");
-	}
-	/* ---- Marble ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Marble", path + L"Marble.jpg");
-	}
-	/* ---- Marble_Normal ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Marble_Normal", path + L"Marble_Normal.jpg");
-	}
-	/* ---- Stylized ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Stylized", path + L"Stylized.jpg");
-	}
-	/* ---- Stylized_Normal ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Stylized_Normal", path + L"Stylized_Normal.jpg");
-	}
-	/* ---- SkyBox_1 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"SkyBox_1", path + L"SkyBox_1.jpg");
-	}
-	/* ---- Bubble ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Bubble", path + L"\\Particle\\Bubble.png");
-	}
-	/* ---- Butterfly ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Butterfly", path + L"\\Particle\\Butterfly.png");
-	}
-	/* ---- Star ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Star", path + L"\\Particle\\Star.png");
-	}
-	/* ---- Grass_0 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Grass_0", path + L"\\Terrain\\Grass_0.png");
-	}
-	/* ---- Grass_1 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Grass_1", path + L"\\Terrain\\Grass_1.png");
-	}
-	/* ---- Grass_2 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Grass_2", path + L"\\Terrain\\Grass_2.png");
-	}
 
-	/* ---- HeightMap_0 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"HeightMap_0", path + L"\\Terrain\\HeightMap_0.png");
-	}
-	/* ---- HeightMap_1 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"HeightMap_1", path + L"\\Terrain\\HeightMap_1.png");
-	}
-	/* ---- HeightMap_2 ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"HeightMap_2", path + L"\\Terrain\\HeightMap_2.png");
-	}
-
-	/* ---- SkyBox.dds ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"SnowCube", path + L"snowcube1024.dds");
-	}
-
-	/* ---- Rice ----- */
-	{
-		Ref<Texture> tex = Load<Texture>(L"Rice", path + L"Rice.png");
+	vector<Ref<FileInfo>> fileInfos;
+	GET_SINGLE(DirectoryManager)->FindFileInfo(GET_SINGLE(DirectoryManager)->GetFileInfo(), fileInfos, ".jpg");
+	GET_SINGLE(DirectoryManager)->FindFileInfo(GET_SINGLE(DirectoryManager)->GetFileInfo(), fileInfos, ".png");
+	GET_SINGLE(DirectoryManager)->FindFileInfo(GET_SINGLE(DirectoryManager)->GetFileInfo(), fileInfos, ".dds");
+	for (Ref<FileInfo> info : fileInfos) {
+		Load<Texture>(Utils::Str2Wstr(Utils::Split(info->Name, '.')[0]), info->GetPathInfo().wstring().data());
 	}
 
 	/* ---- Nullptr ----- */
 	{
 		_resources[static_cast<uint8>(OBJECT_TYPE::TEXTURE)].insert(make_pair(L"Null", nullptr));
+	}
+	/* ---- Defulat ----- */
+	{
+		Load<Texture>(L"Default", path + L"DefaultImage.png");
 	}
 }
 

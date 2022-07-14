@@ -1,13 +1,12 @@
 #pragma once
 
 #include "BaseCollider.h"
-#include "OctoTree.h"
+#include "OcTree.h"
 
 class ColliderManager
 {
 public:
 	DECLARE_SINGLE(ColliderManager);
-
 
 	void Init();
 	void Update();
@@ -23,7 +22,7 @@ private:
 
 private:
 	PRIVATE_PROPERTY(vector<Ref<BaseCollider>>, Collider);
-	PRIVATE_PROPERTY(Ref<OctoTree>, Tree);
+	PRIVATE_PROPERTY(Ref<OcTree>, Tree);
 
 	PRIVATE_PROPERTY(Ref<class Mesh>, cubeMesh);
 	PRIVATE_PROPERTY(Ref<class Mesh>, sphereMesh);

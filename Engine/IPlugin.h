@@ -26,7 +26,7 @@ public:
 	virtual PLUGINDECL bool Update() { return false; }
 	virtual PLUGINDECL bool Render() { return false; }
 	virtual PLUGINDECL bool End() { return false; }
-	virtual PLUGINDECL const std::wstring& GetName();
+	virtual PLUGINDECL const std::wstring& GetName() { return m_Title; }
 
 protected:
 	PluginManager* m_pManager = nullptr;
@@ -37,7 +37,7 @@ protected:
 typedef IPlugin* (*CREATEPLUGIN)(PluginManager& manager);
 
 #define CREATE_PLUGIN(Plugin)											\
-extern "C" PLUGINDECL IPlugin* CreatePlugin(PluginManager& manager)				\
+extern "C" PLUGINDECL IPlugin* CreatePlugin(PluginManager& manager)		\
 {																		\
 	return new Plugin(manager);											\
 }												  

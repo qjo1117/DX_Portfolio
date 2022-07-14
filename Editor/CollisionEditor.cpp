@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CollisionEditor.h"
-#include "OctoTree.h"
+#include "OcTree.h"
 #include "ColliderManager.h"
 
 
@@ -67,7 +67,7 @@ void CollisionEditor::End()
 }
 
 // 전체 순회후 Node추가
-void CollisionEditor::SetNode(int32 level, int32 parent, Ref<OctoTree> octorTree)
+void CollisionEditor::SetNode(int32 level, int32 parent, Ref<OcTree> octorTree)
 {
 	// 리스트에 정보가 없으면 리턴
 	if (octorTree->vecList.size() == 0) {
@@ -93,7 +93,7 @@ void CollisionEditor::SetNode(int32 level, int32 parent, Ref<OctoTree> octorTree
 	}
 
 	count = 0;
-	for (Ref<OctoTree> node : octorTree->GetChilds()) {
+	for (Ref<OcTree> node : octorTree->GetChilds()) {
 		if (node == nullptr) {
 			return;
 		}

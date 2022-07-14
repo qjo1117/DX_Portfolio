@@ -31,7 +31,7 @@ public:
 	//	}
 	//}
 
-	void SetNode(int32 level, int32 parent, Ref<OctoTree> octorTree);
+	void SetNode(int32 level, int32 parent, Ref<OcTree> octorTree);
 	void Clear();
 
 private:

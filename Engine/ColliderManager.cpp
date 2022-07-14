@@ -15,7 +15,7 @@
 
 void ColliderManager::Init()
 {
-	m_Tree = make_shared<OctoTree>();
+	m_Tree = make_shared<OcTree>();
 	m_Tree->Init(10000.0f, 10000.0f, 10000.0f);			// 넓은 범위로 검사한다.
 
 	m_cubeMesh = GET_SINGLE(Resources)->LoadCubeMesh();
@@ -27,34 +27,51 @@ void ColliderManager::Update()
 {
 	m_Tree->Clear();
 	
-	for (auto collider : m_Collider) {
+	// 처음 시작할때 트리를 재구성합니다.
+	for (Ref<BaseCollider> collider : m_Collider) {
 		if (collider->GetGameObject()->isActive == true) {
 			if (m_Tree->Insert(collider) == false) {
 				assert("Error");
 			}
+			collider->Check = false;
 		}
 	}
 	
-	for (auto collider : m_Collider) {
+	// 그리고 콜라이더를 순회합니다.
+	for (Ref<BaseCollider> collider : m_Collider) {
+		if (collider->Check == true) {
+			continue;
+		}
+
+		// 트리에서 큰 범위로써의 충돌검사를 진행합니다.
 		vector<Ref<BaseCollider>> vecCheck;
 		m_Tree->QuarryRange(collider, vecCheck);
 
-		for (auto target : vecCheck) {
+		// 큰 범위로 충돌체크된 콜라이더를 각각 세부적으로 충돌체크를 진행합니다.
+		for (Ref<BaseCollider> target : vecCheck) {
+			// 충돌이 되었을 경우 각 상태를 정의합니다.
 			if (collider->Collision(target) == true) {
 				if (collider->State.Enter == false && collider->State.Press == false) {
 					collider->State.Enter = true;
 					collider->State.Press = false;
 					target->State.Enter = true;
 					target->State.Press = false;
+
+					collider->Check = true;
+					target->Check = true;
 				}
 				else if (collider->State.Enter == true && collider->State.Press == false) {
 					collider->State.Enter = false;
 					collider->State.Press = true;
 					target->State.Enter = false;
 					target->State.Press = true;
+
+					collider->Check = true;
+					target->Check = true;
 				}
 			}
 
+			// 충돌이 되었을 경우 각 상태에 맞게 함수를 호출합니다.
 			if (collider->State.Enter == true) {
 				for (function<void(Ref<BaseCollider>)> func : collider->BindEnterFunc) {
 					func(target);
@@ -65,9 +82,20 @@ void ColliderManager::Update()
 					func(target);
 				}
 			}
+
+			if (target->State.Enter == true) {
+				for (function<void(Ref<BaseCollider>)> func : target->BindEnterFunc) {
+					func(collider);
+				}
+			}
+			else if (target->State.Press == true) {
+				for (function<void(Ref<BaseCollider>)> func : target->BindPressFunc) {
+					func(collider);
+				}
+			}
 		}
 
-		if(vecCheck.size() == 0) {
+		if(vecCheck.size() == 0 && collider->Check == false) {
 			if (collider->State.Enter == true || collider->State.Press == true) {
 				collider->State.Enter = false;
 				collider->State.Press = false;

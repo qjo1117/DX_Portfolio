@@ -1,11 +1,9 @@
 #pragma once
 
-struct Octor
+struct OcBounding
 {
 	Vec3 center = Vec3::Zero;
 	Vec3 extents = Vec3::One;
-
-
 };
 
 enum class OCTOR_TREE_TYPE
@@ -24,7 +22,7 @@ enum class OCTOR_TREE_TYPE
 int32 EnumToInt32(OCTOR_TREE_TYPE type);
 
 
-class OctoTree
+class OcTree
 {
 public:
 	void Init(float width, float height, float depth, int32 capacity = 8);
@@ -35,9 +33,9 @@ public:
 public:
 	bool Insert(Ref<class BaseCollider> collider);
 	void QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class BaseCollider>>& vec);
-	void SetParent(Ref<OctoTree> parent);
+	void SetParent(Ref<OcTree> parent);
 
-	const array<Ref<OctoTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>& GetChilds() { return _childs; }
+	const array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>& GetChilds() { return _childs; }
 
 private:
 	void SubDivid();
@@ -53,9 +51,9 @@ private:
 	}
 
 private:
-	array<Ref<OctoTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>  _childs;
+	array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>  _childs;
 
-	PRIVATE_PROPERTY(Ref<OctoTree>, parent);
+	PRIVATE_PROPERTY(Ref<OcTree>, parent);
 	PRIVATE_PROPERTY(vector<Ref<class BaseCollider>>, vecList);
 
 

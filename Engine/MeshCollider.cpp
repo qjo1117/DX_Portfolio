@@ -20,7 +20,27 @@ MeshCollider::~MeshCollider()
 
 void MeshCollider::Awake()
 {
+	vector<Vertex>& vertexs = GetGameObject()->GetMeshRenderer()->mesh->GetVertices();
+	vector<uint32>& indexs = GetGameObject()->GetMeshRenderer()->mesh->GetIndices();
 
+	int32 size = indexs.size();
+
+	Vec3 scale;
+	for (int32 i = 0; i < size - 2; i += 3) {
+		Triangle triangle;
+		triangle.pos0 = vertexs[indexs[i]].pos;
+		triangle.pos1 = vertexs[indexs[i + 1]].pos;
+		triangle.pos2 = vertexs[indexs[i + 2]].pos;
+		m_BoundMesh.push_back(triangle);
+
+		scale.x = max(triangle.pos0.x, max(triangle.pos1.x, triangle.pos2.x));
+		scale.y = max(triangle.pos0.y, max(triangle.pos1.y, triangle.pos2.y));
+		scale.z = max(triangle.pos0.z, max(triangle.pos1.z, triangle.pos2.z));
+	}
+
+	m_Bound.Center = GetTransform()->GetWorldPosition();
+	m_Bound.Extents = scale;
+	m_Scale = scale * GetTransform()->localScale;
 }
 
 void MeshCollider::FinalUpdate()
@@ -32,37 +52,10 @@ void MeshCollider::FinalUpdate()
 		return;
 	}
 
-	m_Scale = transform->localScale;
 	m_Center = transform->GetWorldPosition();
 
-	vector<Vertex>& vertexs = GetGameObject()->GetMeshRenderer()->mesh->GetVertices();
-	vector<uint32>& indexs = GetGameObject()->GetMeshRenderer()->mesh->GetIndices();
-
-	m_BoundMesh.clear();
-
-	Vec3 maxScale = Vec3::Zero;
-	int32 size = indexs.size();
-	for (int32 i = 0; i < size; i += 3) {
-		m_BoundMesh.push_back(ColliderVertex{
-			m_Center + vertexs[indexs[i]].pos * m_Scale,
-			m_Center + vertexs[indexs[i + 1]].pos,
-			m_Center + vertexs[indexs[i + 2]].pos * m_Scale });
-
-		int32 index = m_BoundMesh.size() - 1;
-		maxScale.x = max(maxScale.x, m_BoundMesh[index].pos0.x);
-		maxScale.z = max(maxScale.z, m_BoundMesh[index].pos0.z);
-
-		maxScale.x = max(maxScale.x, m_BoundMesh[index].pos1.x);
-		maxScale.z = max(maxScale.z, m_BoundMesh[index].pos1.z);
-
-		maxScale.x = max(maxScale.x, m_BoundMesh[index].pos2.x);
-		maxScale.z = max(maxScale.z, m_BoundMesh[index].pos2.z);
-	}
-
 	m_Bound.Center = m_Center;
-	m_Bound.Center.x += maxScale.x;
-	m_Bound.Center.z += maxScale.z;
-	m_Bound.Extents = maxScale;
+	m_Bound.Extents = m_Scale;
 }
 
 bool MeshCollider::Intersects(Vec4 rayOrigin, Vec4 rayDir, OUT float& distance)
@@ -72,9 +65,12 @@ bool MeshCollider::Intersects(Vec4 rayOrigin, Vec4 rayDir, OUT float& distance)
 		return false;
 	}
 
-	for (const ColliderVertex& vertex : m_BoundMesh) {
+	for (const Triangle& vertex : m_BoundMesh) {
+		Vec3 selfPos0 = m_Center + vertex.pos0 * m_Scale;
+		Vec3 selfPos1 = m_Center + vertex.pos1 * m_Scale;
+		Vec3 selfPos2 = m_Center + vertex.pos2 * m_Scale;
 		if (TriangleTests::Intersects(rayOrigin, rayDir,
-			vertex.pos0 , vertex.pos1, vertex.pos2, distance)) {
+			selfPos0, selfPos1, selfPos2, distance)) {
 			return true;
 		}
 	}
@@ -92,8 +88,13 @@ bool MeshCollider::Collision(Ref<BaseCollider> collider)
 			return false;
 		}
 
-		for (const ColliderVertex& vertex : m_BoundMesh) {
-			if (box->BoundBox.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+		for (const Triangle& vertex : m_BoundMesh) {
+			Vec3 scale = GetTransform()->localScale;
+
+			Vec3 selfPos0 = m_Center + vertex.pos0 * scale;
+			Vec3 selfPos1 = m_Center + vertex.pos1 * scale;
+			Vec3 selfPos2 = m_Center + vertex.pos2 * scale;
+			if (box->BoundBox.Intersects(selfPos0, selfPos1, selfPos2)) {
 				return true;
 			}
 		}
@@ -108,13 +109,46 @@ bool MeshCollider::Collision(Ref<BaseCollider> collider)
 			return false;
 		}
 
-		for (const ColliderVertex& vertex : m_BoundMesh) {
-			if (box->BoundSphere.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+		for (const Triangle& vertex : m_BoundMesh) {
+			Vec3 scale = GetTransform()->localScale;
+			Vec3 selfPos0 = m_Center + vertex.pos0 * scale;
+			Vec3 selfPos1 = m_Center + vertex.pos1 * scale;
+			Vec3 selfPos2 = m_Center + vertex.pos2 * scale;
+			if (box->BoundSphere.Intersects(selfPos0, selfPos1, selfPos2)) {
 				return true;
 			}
 		}
 	}
 		break;
+	case COLLIDER_TYPE::MESH:
+	{
+		Ref<MeshCollider> box = dynamic_pointer_cast<MeshCollider>(collider);
+		float dist = 0.0f;
+		if (m_Bound.Intersects(box->Bound) == false) {
+			return false;
+		}
+
+		for (const Triangle& vertex : m_BoundMesh) {
+			for (const Triangle& targetVertex : box->BoundMesh) {
+				Vec3 scale = GetTransform()->localScale;
+				Vec3 selfPos0 = m_Center + vertex.pos0 * scale;
+				Vec3 selfPos1 = m_Center + vertex.pos1 * scale;
+				Vec3 selfPos2 = m_Center + vertex.pos2 * scale;
+
+				Vec3 target_Center = box->Center;
+
+				Vec3 targetPos0 = target_Center + targetVertex.pos0 * scale;
+				Vec3 targetPos1 = target_Center + targetVertex.pos1 * scale;
+				Vec3 targetPos2 = target_Center + targetVertex.pos2 * scale;
+
+				if (TriangleTests::Intersects(selfPos0, selfPos1, selfPos2,
+					targetPos0, targetPos1, targetPos2) == true) {
+					return true;
+				}
+			}
+		}
+	}
+	break;
 	}
 
 

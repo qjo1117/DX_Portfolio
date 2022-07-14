@@ -45,9 +45,9 @@ void DirectoryManager::Update()
 		m_pFileInfo->Time = fs::last_write_time(m_pFileInfo->PathInfo);
 	}
 
-	if (CheckFileInfo(m_pFileInfo) == -1) {
-		CreateFileInfos();
-	}
+	//if (CheckFileInfo(m_pFileInfo) == -1) {
+	//	CreateFileInfos();
+	//}
 
 }
 

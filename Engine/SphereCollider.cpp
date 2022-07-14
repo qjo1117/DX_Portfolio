@@ -20,7 +20,7 @@ void SphereCollider::FinalUpdate()
 
 	m_BoundSphere.Center = transform->GetWorldPosition();
 	Vec3 scale = transform->GetLocalScale();
-	m_BoundSphere.Radius = scale.x / 2.0f;
+	m_BoundSphere.Radius = max(scale.x, max(scale.y, scale.z)) / 2.0f;
 
 	m_Bound.Center = m_BoundSphere.Center;
 	m_Bound.Extents = Vec3::One * m_BoundSphere.Radius;
@@ -50,8 +50,11 @@ bool SphereCollider::Collision(Ref<BaseCollider> collider)
 			return false;
 		}
 
-		for (const ColliderVertex& vertex : mesh->BoundMesh) {
-			if (m_BoundSphere.Intersects(vertex.pos0, vertex.pos1, vertex.pos2)) {
+		for (const Triangle& vertex : mesh->BoundMesh) {
+			Vec3 selfPos0 = mesh->Center + vertex.pos0 * mesh->Scale;
+			Vec3 selfPos1 = mesh->Center + vertex.pos1 * mesh->Scale;
+			Vec3 selfPos2 = mesh->Center + vertex.pos2 * mesh->Scale;
+			if (m_BoundSphere.Intersects(selfPos0, selfPos1, selfPos2)) {
 				return true;
 			}
 		}

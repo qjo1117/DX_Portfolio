@@ -2,7 +2,7 @@
 
 #include "BaseCollider.h"
 
-class ColliderVertex
+class Triangle
 {
 public:
     Vec3 pos0 = Vec3::Zero;
@@ -26,7 +26,7 @@ public:
 
 
 private:
-    PRIVATE_PROPERTY(vector<ColliderVertex>, BoundMesh) = {};
+    PRIVATE_PROPERTY(vector<Triangle>, BoundMesh) = {};
     PRIVATE_PROPERTY(Vec3, Center) = Vec3::Zero;
     PRIVATE_PROPERTY(Vec3, Scale) = Vec3::Zero;
 };

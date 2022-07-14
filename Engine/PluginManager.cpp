@@ -4,7 +4,7 @@
 #include "IPlugin.h"
 #include "Engine.h"
 #include "SceneManager.h"
-
+#include "PathManager.h"
 
 
 void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager& p_Scene)
@@ -56,10 +56,8 @@ void PluginManager::LoadPlugins()
 	vector<Ref<FileInfo>> vecFileInfos;
 	GET_SINGLE(DirectoryManager)->FindFileInfo(GET_SINGLE(DirectoryManager)->GetFileInfo(), vecFileInfos, ".dll");
 
-    string rootPath = GET_SINGLE(DirectoryManager)->GetFileInfo()->PathInfo.string();
     for (Ref<FileInfo>& fileInfo : vecFileInfos) {
-        wstring fullPath = Utils::Str2Wstr(rootPath + "Output\\" + fileInfo->Name);
-        LoadPlugin(fullPath);
+        LoadPlugin(fileInfo->PathInfo.wstring());
     }
 }
 
@@ -91,17 +89,20 @@ bool PluginManager::LoadPlugin(const wstring& p_fileName)
         return false;
     }
 
+    // 함수를 호출하고 실패했을 경우 종료
     IPlugin* pPlugin = pFunc(*GetI());
     if (pPlugin == nullptr) {
         return false;
     }
 
+    // 현재 Plugin이 존재할 경우 종료
     if (FindPlugin(pPlugin->GetName()) != nullptr) {
         delete pPlugin;
         pPlugin = nullptr;
         return true;
     }
 
+    // 만약 없을 경우 추가
     Ref<PluginInfo> info = make_shared<PluginInfo>();
     info->pPlugin = pPlugin;
     info->hDll = hDll;

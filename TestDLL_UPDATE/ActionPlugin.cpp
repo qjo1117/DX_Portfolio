@@ -14,7 +14,7 @@
 
 PLUGINDECL bool ActionPlugin::Init()
 {
-	m_pManager->Log("Action");
+	m_pManager->Log("Action Init");
 
 
 	return true;
@@ -22,7 +22,7 @@ PLUGINDECL bool ActionPlugin::Init()
 
 PLUGINDECL bool ActionPlugin::Update()
 {
-	m_pManager->Log("Action");
+	m_pManager->Log("Action Update");
 	if (m_player == nullptr) {
 		m_player = m_pManager->GetScene()->GetCurrentScene()->FindGameObject(L"Player");
 	}

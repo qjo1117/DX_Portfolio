@@ -249,7 +249,7 @@
     <ClCompile Include="ColliderManager.cpp">
       <Filter>Core\Collider</Filter>
     </ClCompile>
-    <ClCompile Include="OctoTree.cpp">
+    <ClCompile Include="OcTree.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
     <ClCompile Include="MeshCollider.cpp">
@@ -467,7 +467,7 @@
     <ClInclude Include="ColliderManager.h">
       <Filter>Core\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="OctoTree.h">
+    <ClInclude Include="OcTree.h">
       <Filter>Utils\User</Filter>
     </ClInclude>
     <ClInclude Include="MeshCollider.h">
@@ -496,6 +496,7 @@
     <None Include="..\Library\Include\SimpleMath.inl">
       <Filter>Utils\User</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Resources\Shader\skybox.fx">

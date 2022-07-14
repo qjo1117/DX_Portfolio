@@ -14,9 +14,6 @@ public:
 	virtual PLUGINDECL bool Render() override;
 	virtual PLUGINDECL bool End() override;
 
-	virtual PLUGINDECL const std::wstring& GetName() override { return m_Title; }
-
-
 private:
 	Ref<class GameObject> m_player;
 };
