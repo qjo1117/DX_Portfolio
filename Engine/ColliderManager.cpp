@@ -171,6 +171,14 @@ void ColliderManager::Render()
 	}
 }
 
+void ColliderManager::End()
+{
+	m_Tree->Clear();
+	for (Ref<BaseCollider> collider : m_Collider) {
+		collider = nullptr; // REF_RELASE
+	}
+}
+
 void ColliderManager::AddCollider(Ref<BaseCollider> collider)
 {
 	lock_guard<mutex> lockGuard(m);

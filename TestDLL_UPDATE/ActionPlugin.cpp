@@ -23,12 +23,12 @@ PLUGINDECL bool ActionPlugin::Init()
 PLUGINDECL bool ActionPlugin::Update()
 {
 	m_pManager->Log("Action Update");
-	if (m_player == nullptr) {
-		m_player = m_pManager->GetScene()->GetCurrentScene()->FindGameObject(L"Player");
-	}
-	else {
-		m_player->GetTransform()->localPosition.x += 1.0f;
-	}
+	//if (m_player == nullptr) {
+	//	m_player = m_pManager->GetScene()->GetCurrentScene()->FindGameObject(L"Player");
+	//}
+	//else {
+	//	m_player->GetTransform()->localPosition.x += 1.0f;
+	//}
 
 	return true;
 }

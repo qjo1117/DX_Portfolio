@@ -26,12 +26,14 @@ public:
 	virtual void EditorUpdate();
 
 
-	float GetSpeed() { return _speed; }
-	void SetSpeed(float speed) { _speed = speed; }
+	float GetSpeed() { return m_speed; }
+	void SetSpeed(float speed) { m_speed = speed; }
 private:
-	float _speed = 100.0f;
+	float m_speed = 100.0f;
 	
 	bool m_isGround = false;
+
+	Vec3 m_point = Vec3::Zero;
 
 	Ref<class GameObject> m_castCheck;
 };

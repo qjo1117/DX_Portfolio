@@ -9,6 +9,7 @@ public:
     virtual ~SphereCollider();
 
     /* ----- override function ------ */
+    virtual void Awake() override;
     virtual void FinalUpdate() override;
     virtual bool Intersects(Vec4 rayOrigin, Vec4 rayDir, OUT float& distance) override;
     virtual bool Collision(Ref<BaseCollider> collider) override;

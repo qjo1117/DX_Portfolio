@@ -117,53 +117,53 @@ ToolScene::ToolScene()
 
 #pragma region UI_Test
 	{
-		//Ref<GameObject> uiTest = make_shared<GameObject>();
-		//uiTest->AddComponent(make_shared<Transform>());
-		//uiTest->GetTransform()->SetLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
-		//uiTest->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
-		//uiTest->name = (L"RenderTarget");
+		Ref<GameObject> uiTest = make_shared<GameObject>();
+		uiTest->AddComponent(make_shared<Transform>());
+		uiTest->GetTransform()->SetLocalPosition(Vec3(0.0f, 0.0f, 0.0f));
+		uiTest->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
+		uiTest->name = (L"RenderTargetView");
 
-		//for (int32 i = 0; i < 8; ++i) {
-		//	Ref<GameObject> renderTarget = make_shared<GameObject>();
-		//	renderTarget->name = (L"RenderTarget" + std::to_wstring(i));
-		//	renderTarget->AddComponent(make_shared<Transform>());
-		//	renderTarget->GetTransform()->SetLocalPosition(Vec3(-350.0f + (i * 100.0f), 350.0f, 500.0f));
-		//	renderTarget->GetTransform()->SetLocalScale(Vec3(100.0f, 100.0f, 100.0f));
+		for (int32 i = 0; i < 6; ++i) {
+			Ref<GameObject> renderTarget = make_shared<GameObject>();
+			renderTarget->name = (L"RenderTargetView" + std::to_wstring(i));
+			renderTarget->AddComponent(make_shared<Transform>());
+			renderTarget->GetTransform()->SetLocalPosition(Vec3(-350.0f + (i * 100.0f), 350.0f, 500.0f));
+			renderTarget->GetTransform()->SetLocalScale(Vec3(100.0f, 100.0f, 100.0f));
 
-		//	Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
-		//	meshRenderer->mesh = (GET_SINGLE(Resources)->LoadRectangleMesh());
+			Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
+			meshRenderer->mesh = (GET_SINGLE(Resources)->LoadRectangleMesh());
 
-		//	{
-		//		Ref<Texture> texture;
-		//		if (i < 3) {
-		//			texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->GetRTTexture(i);
-		//		}
-		//		else if (i < 5) {
-		//			texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->GetRTTexture(i - 3);
-		//		}
-		//		else if (i < 6) {
-		//			texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SHADOW)->GetRTTexture(0);
-		//		}
-		//		else if (i < 7) {
-		//			texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::PICK)->GetRTTexture(0);
-		//		}
-		//		else {
-		//			texture = GET_SINGLE(Resources)->Get<Texture>(L"UAVTexture");
-		//		}
+			{
+				Ref<Texture> texture;
+				if (i < 3) {
+					texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->GetRTTexture(i);
+				}
+				else if (i < 5) {
+					texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::LIGHTING)->GetRTTexture(i - 3);
+				}
+				else if (i < 6) {
+					texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SHADOW)->GetRTTexture(0);
+				}
+				else if (i < 7) {
+					texture = GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::PICK)->GetRTTexture(0);
+				}
+				else {
+					texture = GET_SINGLE(Resources)->Get<Texture>(L"UAVTexture");
+				}
 
-		//		Ref<Material> material = make_shared<Material>();
-		//		material->SetTexture(0, texture);
-		//		material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Texture"));
-		//		meshRenderer->SetMaterial(material);
-		//	}
+				Ref<Material> material = make_shared<Material>();
+				material->SetTexture(0, texture);
+				material->SetShader(GET_SINGLE(Resources)->Get<Shader>(L"Texture"));
+				meshRenderer->SetMaterial(material);
+			}
 
-		//	renderTarget->GetTransform()->SetParent(uiTest->GetTransform());
-		//	renderTarget->AddComponent(meshRenderer);
-		//	_renderTargetView.push_back(renderTarget);
-		//	AddGameObject(renderTarget, LAYER_TYPE::UI);
-		//}
+			renderTarget->GetTransform()->SetParent(uiTest->GetTransform());
+			renderTarget->AddComponent(meshRenderer);
+			_renderTargetView.push_back(renderTarget);
+			AddGameObject(renderTarget, LAYER_TYPE::UI);
+		}
 
-		//AddGameObject(uiTest, LAYER_TYPE::DEFAULT);
+		AddGameObject(uiTest, LAYER_TYPE::DEFAULT);
 	}
 #pragma endregion
 
@@ -265,7 +265,9 @@ ToolScene::ToolScene()
 
 #pragma region RayCast_Test
 	{
-		for (int32 i = 0; i < 30; ++i) {
+		Ref<GameObject> parent = make_shared<GameObject>();
+		parent->AddComponent(make_shared<Transform>());
+		for (int32 i = 0; i < 10; ++i) {
 			Ref<GameObject> obj = make_shared<GameObject>();
 			obj->AddComponent(make_shared<Transform>());
 			obj->AddComponent(make_shared<MeshRenderer>());
@@ -277,8 +279,12 @@ ToolScene::ToolScene()
 			obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Defualt"));
 			obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadCubeMesh();
 			
+			obj->GetTransform()->SetParent(parent->GetTransform());
+
 			AddGameObject(obj, LAYER_TYPE::ENEMY);
 		}
+
+		AddGameObject(parent, LAYER_TYPE::ENEMY);
 	}
 
 	{

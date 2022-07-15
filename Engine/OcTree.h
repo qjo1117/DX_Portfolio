@@ -35,7 +35,7 @@ public:
 	void QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class BaseCollider>>& vec);
 	void SetParent(Ref<OcTree> parent);
 
-	const array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>& GetChilds() { return _childs; }
+	const array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>& GetChilds() { return m_vecChilds; }
 
 private:
 	void SubDivid();
@@ -51,18 +51,18 @@ private:
 	}
 
 private:
-	array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>  _childs;
+	array<Ref<OcTree>, static_cast<int32>(OCTOR_TREE_TYPE::END)>  m_vecChilds;
 
 	PRIVATE_PROPERTY(Ref<OcTree>, parent);
 	PRIVATE_PROPERTY(vector<Ref<class BaseCollider>>, vecList);
 
 
-	BoundingBox						_bounding;
+	BoundingBox						m_bounding;
 	int32							_capacity = 8;
 	int32							_count = 0;
 
 
-	bool							_divided = false;
+	bool							m_isDivided = false;
 	static int32					TreeCount;
 };
 

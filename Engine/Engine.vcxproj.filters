@@ -267,6 +267,9 @@
     <ClCompile Include="..\Library\Include\SimpleMath.cpp">
       <Filter>Utils\User</Filter>
     </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
+      <Filter>Object\Component\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="..\Library\Include\SimpleMath.h">
       <Filter>Utils\User</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Object\Component\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

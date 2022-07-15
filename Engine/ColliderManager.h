@@ -11,6 +11,7 @@ public:
 	void Init();
 	void Update();
 	void Render();
+	void End();
 
 	void AddCollider(Ref<BaseCollider> collider);
 

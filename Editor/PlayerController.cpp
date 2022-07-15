@@ -31,15 +31,18 @@ void PlayerController::Start()
 
 void PlayerController::Update()
 {
-	//RayCastHitInfo hit;
-	//m_isGround = false;
-	//if (GET_SINGLE(ColliderManager)->RayCast(GetTransform()->localPosition, -Vec3::Up, hit, LAYER_TYPE::GROUND, 50.0f) == true) {
-	//	m_isGround = true;
-	//}
+	RayCastHitInfo hit;
+	if (INPUT->GetButton(KEY_TYPE::LBUTTON) == true) {
+		if (GET_SINGLE(SceneManager)->Pick(INPUT->GetMousePos().x, INPUT->GetMousePos().y, hit) != nullptr) {
+			m_point = hit.point;
+		}
+	}
 
-	//if (m_isGround == false) {
-	//	GetTransform()->localPosition -= Vec3::Up * 9.8f * DELTATIME;
-	//}
+	if (m_point != GetTransform()->localPosition) {
+		Vec3 sub = m_point - GetTransform()->localPosition;
+		sub.Normalize();
+		GetTransform()->localPosition += sub * m_speed * DELTATIME;
+	}
 }
 
 void PlayerController::LateUpdate()
@@ -53,8 +56,7 @@ void PlayerController::CollisionTest(Ref<class BaseCollider> dest)
 
 void PlayerController::EditorUpdate()
 {
-	if (ImGui::DragFloat("Speed", &_speed, 1.0f, 0.0f, 1000.0f)) {
-		_speed = _speed;
+	if (ImGui::DragFloat("Speed", &m_speed, 1.0f, 0.0f, 1000.0f)) {
 	}
 	
 }

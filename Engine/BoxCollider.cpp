@@ -27,9 +27,11 @@ void BoxCollider::Awake()
 
 void BoxCollider::FinalUpdate()
 {
+
 	m_BoundBox.Center = GetTransform()->GetWorldPosition();
 	m_BoundBox.Extents = GetTransform()->localScale / 2;
-	m_BoundBox.Orientation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(GetTransform()->localRotation.x, GetTransform()->localRotation.y, GetTransform()->localRotation.z);
+	m_BoundBox.Orientation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(GetTransform()->localRotation.y, 
+		GetTransform()->localRotation.x, GetTransform()->localRotation.z);
 
 	m_Bound.Center = m_BoundBox.Center;
 	m_Bound.Extents = m_BoundBox.Extents;

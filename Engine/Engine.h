@@ -43,17 +43,17 @@ public:
 
 public:
 	/* ----- Helper Function ----- */
-	Ref<Device>					GetDevice() { return _device; }
-	Ref<GraphicsCommandQueue>	GetGraphicsCmdQueue() { return _graphicsCmdQueue; }
-	Ref<ComputeCommandQueue>	GetComputeCmdQueue() { return _computeCmdQueue; }
-	Ref<SwapChain>				GetSwapChain() { return _swapChain; }
-	Ref<RootSignature>			GetRootSignature() { return _rootSignature; }
-	Ref<GraphicsDescriptorHeap>	GetGraphicsDescHeap() { return _graphicsDescHeap; }
-	Ref<ComputeDescriptorHeap>	GetComputeDescHeap() { return _computeDescHeap; }
-	Ref<ConstantBuffer>			GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return _constantBuffers[static_cast<uint8>(type)]; }
-	Ref<RenderTargetGroup>		GetRTGroup(RENDER_TARGET_GROUP_TYPE type) { return _rtGroups[static_cast<uint8>(type)]; }
+	Ref<Device>					GetDevice() { return m_device; }
+	Ref<GraphicsCommandQueue>	GetGraphicsCmdQueue() { return m_graphicsCmdQueue; }
+	Ref<ComputeCommandQueue>	GetComputeCmdQueue() { return m_computeCmdQueue; }
+	Ref<SwapChain>				GetSwapChain() { return m_swapChain; }
+	Ref<RootSignature>			GetRootSignature() { return m_rootSignature; }
+	Ref<GraphicsDescriptorHeap>	GetGraphicsDescHeap() { return m_graphicsDescHeap; }
+	Ref<ComputeDescriptorHeap>	GetComputeDescHeap() { return m_computeDescHeap; }
+	Ref<ConstantBuffer>			GetConstantBuffer(CONSTANT_BUFFER_TYPE type) { return m_constantBuffers[static_cast<uint8>(type)]; }
+	Ref<RenderTargetGroup>		GetRTGroup(RENDER_TARGET_GROUP_TYPE type) { return m_rtGroups[static_cast<uint8>(type)]; }
 
-	const WindowInfo& GetWindow() { return _winInfo; }
+	const WindowInfo& GetWindow() { return m_winInfo; }
 
 private:
 	/* ----- Render Function ----- */
@@ -70,28 +70,28 @@ private:
 private:
 	/* ----- View Variable ----- */
 	// 그려질 화면 크기 관련
-	WindowInfo		_winInfo;
-	D3D12_VIEWPORT	_viewport = {};
-	D3D12_RECT		_scissorRect = {};
+	WindowInfo		m_winInfo;
+	D3D12_VIEWPORT	m_viewport = {};
+	D3D12_RECT		m_scissorRect = {};
 
 	/* ----- Graphics Variable ----- */
-	Ref<Device>													_device;
-	Ref<GraphicsCommandQueue>									_graphicsCmdQueue;
-	Ref<ComputeCommandQueue>									_computeCmdQueue;
-	Ref<SwapChain>												_swapChain;
-	Ref<RootSignature>											_rootSignature;
-	Ref<GraphicsDescriptorHeap>									_graphicsDescHeap;
-	Ref<ComputeDescriptorHeap>									_computeDescHeap;
+	Ref<Device>													m_device;
+	Ref<GraphicsCommandQueue>									m_graphicsCmdQueue;
+	Ref<ComputeCommandQueue>									m_computeCmdQueue;
+	Ref<SwapChain>												m_swapChain;
+	Ref<RootSignature>											m_rootSignature;
+	Ref<GraphicsDescriptorHeap>									m_graphicsDescHeap;
+	Ref<ComputeDescriptorHeap>									m_computeDescHeap;
 
-	array<Ref<RenderTargetGroup>, RENDER_TARGET_GROUP_COUNT>	_rtGroups;
-	vector<Ref<ConstantBuffer>>									_constantBuffers;
+	array<Ref<RenderTargetGroup>, RENDER_TARGET_GROUP_COUNT>	m_rtGroups;
+	vector<Ref<ConstantBuffer>>									m_constantBuffers;
 
 	PRIVATE_PROPERTY(bool, isFrame) = false;
 
-	thread		_collisionThread;
-	bool		_isCollisionThread = false;
-	thread		_renderThread;
-	int32		_maxFiexdTime = 12;
-	int32		_currentFiexdTime = 0;
+	thread		m_collisionThread;
+	bool		m_isCollisionThread = false;
+	thread		m_renderThread;
+	int32		m_maxFiexdTime = 12;
+	int32		m_currentFiexdTime = 0;
 };
 

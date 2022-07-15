@@ -87,21 +87,33 @@ inline static struct Register_##Class_##Func				\
                     PROPERTY
 ------------------------------------------------ */
 
-#define PROPERTY(_get, _set) _declspec(property(get = _get, put = _set))
+
 #define G_PROPERTY(_get) _declspec(property(get = _get))
 #define S_PROPERTY(_set) _declspec(property(set = _set))
+
+#define SETEVENTMEMBER(type, member, Event)									\
+public:																		\
+	void Set##member(const type& p_val) { m_##member = p_val; Event(); }     
+
+
+#define PROPERTY(_get, _set) _declspec(property(get = _get, put = _set))
+
+#define GETMEMBER(type, member)										\
+public:																\
+	type& Get##member() { return m_##member; }			
 
 #define SETMEMBER(type, member)										\
 public:																\
 	void Set##member(const type& p_val) { m_##member = p_val; }     
 
-#define SETEVENTMEMBER(type, member, Event)										\
-public:																\
-	void Set##member(const type& p_val) { m_##member = p_val; Event(); }     
+#define PRIVATE_PROPERTY(type, member)								\
+public:                                                             \
+	SETMEMBER(type, member)											\
+	GETMEMBER(type, member)											\
+	PROPERTY(Get##member,  Set##member) type& ##member;				\
+private:                                                            \
+	type m_##member         
 
-#define GETMEMBER(type, member)										\
-public:																\
-	type& Get##member() { return m_##member; }				
 
 /* ----- 김치삼 교수님께서 알려주신 PROPERTY (개조 버전) ----- */
 
@@ -111,15 +123,7 @@ public:                                                             \
 	GETMEMBER(type, member)											\
 	PROPERTY(Get##member, Set##member) type& ##member;				\
 public:                                                             \
-	type m_##member                                                 
-
-#define PRIVATE_PROPERTY(type, member)								\
-public:                                                             \
-	SETMEMBER(type, member)											\
-	GETMEMBER(type, member)											\
-	PROPERTY(Get##member,  Set##member) type& ##member;				\
-private:                                                            \
-	type m_##member                                                
+	type m_##member                                                                                        
 
 #define PROTECTED_PROPERTY(type, member)							\
 public:                                                             \

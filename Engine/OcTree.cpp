@@ -6,9 +6,9 @@ int32 OcTree::TreeCount = 0;
 
 void OcTree::Init(float width, float height, float depth, int32 capacity)
 {
-	_bounding = { Vec3::Zero, Vec3{width, height, depth} };
+	m_bounding = { Vec3::Zero, Vec3{width, height, depth} };
 	_capacity = capacity;
-	_divided = false;
+	m_isDivided = false;
 	m_vecList.clear();
 	_count = 0;
 }
@@ -16,11 +16,11 @@ void OcTree::Init(float width, float height, float depth, int32 capacity)
 
 void OcTree::Init(Vec3 pos, Vec3 extents, int32 capacity)
 {
-	_bounding.Center = pos;
-	_bounding.Extents = extents;
+	m_bounding.Center = pos;
+	m_bounding.Extents = extents;
 
 	_capacity = capacity;
-	_divided = false;
+	m_isDivided = false;
 	m_vecList.clear();
 	_count = 0;
 }
@@ -36,21 +36,21 @@ void OcTree::Clear()
 	}
 	m_vecList.clear();
 
-	for (Ref<OcTree> collider : _childs) {
+	for (Ref<OcTree> collider : m_vecChilds) {
 		if (collider) {
 			collider->Clear();
 		}
 		collider = nullptr;
 	}
 
-	Init(_bounding.Center, _bounding.Extents);
+	Init(m_bounding.Center, m_bounding.Extents);
 
 	OcTree::TreeCount = 0;
 }
 
 bool OcTree::Insert(Ref<class BaseCollider> collider)
 {
-	if (_bounding.Intersects(collider->Bound) == false) {
+	if (m_bounding.Intersects(collider->Bound) == false) {
 		return false;
 	}
 
@@ -62,12 +62,12 @@ bool OcTree::Insert(Ref<class BaseCollider> collider)
 		return true;
 	}
 	else {
-		if (_divided == false) {
+		if (m_isDivided == false) {
 			SubDivid();
-			_divided = true;
+			m_isDivided = true;
 		}
 
-		for (Ref<OcTree>& octor : _childs) {
+		for (Ref<OcTree>& octor : m_vecChilds) {
 			if (octor->Insert(collider) == true) {
 				return true;
 			}
@@ -80,7 +80,7 @@ bool OcTree::Insert(Ref<class BaseCollider> collider)
 
 void OcTree::QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class BaseCollider>>& vec)
 {
-	if (CollisionBoxToPoint(_bounding, collider->Bound.Center) == false) {
+	if (m_bounding.Intersects(collider->Bound) == false) {
 		return;
 	}
 	else {
@@ -92,8 +92,8 @@ void OcTree::QuarryRange(Ref<class BaseCollider> collider, vector<Ref<class Base
 			if (collider->Bound.Intersects(obj->Bound) == true) {
 				vec.push_back(obj);
 			}
-			else if (_divided) {
-				for (Ref<OcTree> octor : _childs) {
+			if (m_isDivided == true) {
+				for (Ref<OcTree> octor : m_vecChilds) {
 					octor->QuarryRange(collider, vec);
 				}
 			}
@@ -115,62 +115,62 @@ void OcTree::SubDivid()
 
 	// LEFT_UP_FORWARD		왼쪽 위 앞
 
-	center = Vec3{	_bounding.Center.x - (_bounding.Extents.x / 2),
-					_bounding.Center.y + (_bounding.Extents.y / 2),
-					_bounding.Center.z + (_bounding.Extents.z / 2) };
-	extents = Vec3(_bounding.Extents) / 2.0f;
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_FORWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_FORWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x - (m_bounding.Extents.x / 2),
+					m_bounding.Center.y + (m_bounding.Extents.y / 2),
+					m_bounding.Center.z + (m_bounding.Extents.z / 2) };
+	extents = Vec3(m_bounding.Extents) / 2.0f;
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_FORWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_FORWARD)]->Init(center, extents, _capacity);
 
 	// RIGHT_UP_FORWARD		오른쪽 위 앞
-	center = Vec3{	_bounding.Center.x + (_bounding.Extents.x / 2),
-					_bounding.Center.y + (_bounding.Extents.y / 2),
-					_bounding.Center.z + (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_FORWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_FORWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x + (m_bounding.Extents.x / 2),
+					m_bounding.Center.y + (m_bounding.Extents.y / 2),
+					m_bounding.Center.z + (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_FORWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_FORWARD)]->Init(center, extents, _capacity);
 
 	// LEFT_DOWN_FORWARD	왼쪽 아래 앞
-	center = Vec3{	_bounding.Center.x - (_bounding.Extents.x / 2),
-					_bounding.Center.y - (_bounding.Extents.y / 2),
-					_bounding.Center.z + (_bounding.Extents.z / 2) }; 
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_FORWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_FORWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x - (m_bounding.Extents.x / 2),
+					m_bounding.Center.y - (m_bounding.Extents.y / 2),
+					m_bounding.Center.z + (m_bounding.Extents.z / 2) }; 
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_FORWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_FORWARD)]->Init(center, extents, _capacity);
 
 	// RIGHT_DOWN_FORWARD	오른쪽 아래 앞
-	center = Vec3{	_bounding.Center.x + (_bounding.Extents.x / 2),
-					_bounding.Center.y - (_bounding.Extents.y / 2),
-					_bounding.Center.z + (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_FORWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_FORWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x + (m_bounding.Extents.x / 2),
+					m_bounding.Center.y - (m_bounding.Extents.y / 2),
+					m_bounding.Center.z + (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_FORWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_FORWARD)]->Init(center, extents, _capacity);
 
 
 	// LEFT_UP_BACKWARD		왼쪽 위 뒤
-	center = Vec3{	_bounding.Center.x - (_bounding.Extents.x / 2),
-					_bounding.Center.y + (_bounding.Extents.y / 2),
-					_bounding.Center.z - (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_BACKWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_BACKWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x - (m_bounding.Extents.x / 2),
+					m_bounding.Center.y + (m_bounding.Extents.y / 2),
+					m_bounding.Center.z - (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_BACKWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_UP_BACKWARD)]->Init(center, extents, _capacity);
 
 	// RIGHT_UP_BACKWARD		오른쪽 위 뒤
-	center = Vec3{	_bounding.Center.x + (_bounding.Extents.x / 2),
-					_bounding.Center.y + (_bounding.Extents.y / 2),
-					_bounding.Center.z - (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_BACKWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_BACKWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x + (m_bounding.Extents.x / 2),
+					m_bounding.Center.y + (m_bounding.Extents.y / 2),
+					m_bounding.Center.z - (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_BACKWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_UP_BACKWARD)]->Init(center, extents, _capacity);
 
 	// LEFT_DOWN_BACKWARD	왼쪽 아래 뒤
-	center = Vec3{	_bounding.Center.x - (_bounding.Extents.x / 2),
-					_bounding.Center.y - (_bounding.Extents.y / 2),
-					_bounding.Center.z - (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_BACKWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_BACKWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x - (m_bounding.Extents.x / 2),
+					m_bounding.Center.y - (m_bounding.Extents.y / 2),
+					m_bounding.Center.z - (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_BACKWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::LEFT_DOWN_BACKWARD)]->Init(center, extents, _capacity);
 
 	// RIGHT_DOWN_BACKWARD	오른쪽 아래 뒤
-	center = Vec3{	_bounding.Center.x + (_bounding.Extents.x / 2),
-					_bounding.Center.y - (_bounding.Extents.y / 2),
-					_bounding.Center.z - (_bounding.Extents.z / 2) };
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_BACKWARD)] = make_shared<OcTree>();
-	_childs[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_BACKWARD)]->Init(center, extents, _capacity);
+	center = Vec3{	m_bounding.Center.x + (m_bounding.Extents.x / 2),
+					m_bounding.Center.y - (m_bounding.Extents.y / 2),
+					m_bounding.Center.z - (m_bounding.Extents.z / 2) };
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_BACKWARD)] = make_shared<OcTree>();
+	m_vecChilds[EnumToInt32(OCTOR_TREE_TYPE::RIGHT_DOWN_BACKWARD)]->Init(center, extents, _capacity);
 }
 
 int32 EnumToInt32(OCTOR_TREE_TYPE type)
