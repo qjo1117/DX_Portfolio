@@ -39,6 +39,7 @@ void ColliderManager::Update()
 	
 	// 그리고 콜라이더를 순회합니다.
 	for (Ref<BaseCollider> collider : m_Collider) {
+		// 이미 체크한건 배제합니다.
 		if (collider->Check == true) {
 			continue;
 		}
@@ -70,6 +71,23 @@ void ColliderManager::Update()
 					target->Check = true;
 				}
 			}
+			// 만약 충돌이 안됬을 경우 상태를 정의합니다.
+			else {
+				if (collider->State.Enter == true || collider->State.Press == true &&
+					target->State.Enter == true || target->State.Press == true) {
+					collider->State.Enter = false;
+					collider->State.Press = false;
+					collider->State.Leave = true;
+
+					target->State.Enter = false;
+					target->State.Press = false;
+					target->State.Leave = true;
+				}
+				else {
+					collider->State.Leave = false;
+					target->State.Leave = false;
+				}
+			}
 
 			// 충돌이 되었을 경우 각 상태에 맞게 함수를 호출합니다.
 			if (collider->State.Enter == true) {
@@ -79,6 +97,11 @@ void ColliderManager::Update()
 			}
 			else if (collider->State.Press == true) {
 				for (function<void(Ref<BaseCollider>)> func : collider->BindPressFunc) {
+					func(target);
+				}
+			}
+			else if (collider->State.Leave == true) {
+				for (function<void(Ref<BaseCollider>)> func : collider->BindLeaveFunc) {
 					func(target);
 				}
 			}
@@ -93,9 +116,15 @@ void ColliderManager::Update()
 					func(collider);
 				}
 			}
+			else if (target->State.Leave == true) {
+				for (function<void(Ref<BaseCollider>)> func : target->BindLeaveFunc) {
+					func(collider);
+				}
+			}
 		}
 
-		if(vecCheck.size() == 0 && collider->Check == false) {
+		// 아예 충돌자체가 안될 경우 상태를 갱신합니다.
+		if (vecCheck.size() == 0) {
 			if (collider->State.Enter == true || collider->State.Press == true) {
 				collider->State.Enter = false;
 				collider->State.Press = false;

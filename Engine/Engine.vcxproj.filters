@@ -61,6 +61,12 @@
     <Filter Include="Core\Collider">
       <UniqueIdentifier>{bf7be6d1-5bef-4cb4-a572-8e28f6f7ad48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Sound">
+      <UniqueIdentifier>{145673c1-b050-43fe-a686-01f249dc9863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Fmod">
+      <UniqueIdentifier>{137b15f1-674b-4153-87f4-774e1787780c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -269,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="Rigidbody.cpp">
       <Filter>Object\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Core\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +502,18 @@
     </ClInclude>
     <ClInclude Include="Rigidbody.h">
       <Filter>Object\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Core\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Fmod\fmod_common.h">
+      <Filter>Utils\Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Fmod\fmod.h">
+      <Filter>Utils\Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Fmod\fmod.hpp">
+      <Filter>Utils\Fmod</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

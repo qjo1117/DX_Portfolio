@@ -23,6 +23,7 @@ void PathManager::Init()
 	assert(CreatePath(SHADER_PATH_KEY, L"Shader\\"));
 	assert(CreatePath(FBX_PATH_KEY, L"FBX\\"));
 	assert(CreatePath(SCENE_PATH_KEY, L"Scene\\"));
+	assert(CreatePath(SOUND_PATH_KEY, L"Sound\\"));
 
 }
 

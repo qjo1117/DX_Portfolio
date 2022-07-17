@@ -1,3 +1,4 @@
+#include "PluginManager.h"
 #include "pch.h"
 #include "PluginManager.h"
 #include "DirectoryManager.h"
@@ -5,6 +6,7 @@
 #include "Engine.h"
 #include "SceneManager.h"
 #include "PathManager.h"
+#include "SoundManager.h"
 
 
 void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager& p_Scene, Input& p_input, Resources& p_resource)
@@ -17,6 +19,7 @@ void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager
     m_pScene = &p_Scene;
     m_pInput = &p_input;
     m_pResource = &p_resource;
+    m_pSound = &*SoundManager::GetI();
 
     LoadPlugins();
     for (auto& item : m_mapPlugins) {
@@ -178,5 +181,10 @@ Input* PluginManager::GetInput()
 Resources* PluginManager::GetResources()
 {
     return m_pResource;
+}
+
+SoundManager* PluginManager::GetSound()
+{
+    return m_pSound;
 }
 

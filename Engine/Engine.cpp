@@ -7,6 +7,7 @@
 #include "InstancingManager.h"
 #include "PluginManager.h"
 #include "DirectoryManager.h"
+#include "SoundManager.h"
 
 void Engine::Init(const WindowInfo& info)
 {
@@ -59,6 +60,7 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(Input)->Init(m_winInfo.hWnd);
 	GET_SINGLE(Timer)->Init(m_winInfo.hWnd);
 	GET_SINGLE(DirectoryManager)->Init();
+	GET_SINGLE(SoundManager)->Init();
 
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(ColliderManager)->Init();
@@ -140,6 +142,9 @@ void Engine::End()
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->End();
 #endif
+
+	GET_SINGLE(SoundManager)->End();
+
 	GET_SINGLE(PathManager)->Clear();
 	GET_SINGLE(PluginManager)->End();
 	GET_SINGLE(DirectoryManager)->End();

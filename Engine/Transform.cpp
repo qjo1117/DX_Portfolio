@@ -116,22 +116,19 @@ Vec3 Transform::DecomposeRotationMatrix(const Matrix& rotation)
 	XMStoreFloat4(&v[3], rotation.Translation());
 
 	Vec3 ret;
-	if (CloseEnough(v[0].z, -1.0f))
-	{
+	if (CloseEnough(v[0].z, -1.0f) == true) {
 		float x = 0;
 		float y = XM_PI / 2;
 		float z = x + atan2(v[1].x, v[2].x);
 		ret = Vec3{ x, y, z };
 	}
-	else if (CloseEnough(v[0].z, 1.0f))
-	{
+	else if (CloseEnough(v[0].z, 1.0f) == true) {
 		float x = 0;
 		float y = -XM_PI / 2;
 		float z = -x + atan2(-v[1].x, -v[2].x);
 		ret = Vec3{ x, y, z };
 	}
-	else
-	{
+	else {
 		float y1 = -asin(v[0].z);
 		float y2 = XM_PI - y1;
 
@@ -141,12 +138,10 @@ Vec3 Transform::DecomposeRotationMatrix(const Matrix& rotation)
 		float z1 = atan2f(v[0].y / cos(y1), v[0].x / cos(y1));
 		float z2 = atan2f(v[0].y / cos(y2), v[0].x / cos(y2));
 
-		if ((std::abs(x1) + std::abs(y1) + std::abs(z1)) <= (std::abs(x2) + std::abs(y2) + std::abs(z2)))
-		{
+		if ((std::abs(x1) + std::abs(y1) + std::abs(z1)) <= (std::abs(x2) + std::abs(y2) + std::abs(z2))) {
 			ret = Vec3{ x1, y1, z1 };
 		}
-		else
-		{
+		else {
 			ret = Vec3{ x2, y2, z2 };
 		}
 	}

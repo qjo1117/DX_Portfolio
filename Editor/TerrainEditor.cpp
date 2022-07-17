@@ -75,7 +75,7 @@ void TerrainEditor::Show()
 	}
 
 
-	if (GET_SINGLE(ColliderManager)->RayCast(rayOrigin, rayDir, OUT hit, LAYER_TYPE::GROUND, 10000.0f)) {
+	//if (GET_SINGLE(ColliderManager)->RayCast(rayOrigin, rayDir, OUT hit, LAYER_TYPE::GROUND, 10000.0f)) {
 		//picked = hit.collider->GetGameObject();
 
 		//D3D12_RANGE range{0,0};
@@ -126,7 +126,7 @@ void TerrainEditor::Show()
 		//);
 
 		//GEngine->GetGraphicsCmdQueue()->FlushResourceCommandQueue();
-	}
+	//}
 
 }
 

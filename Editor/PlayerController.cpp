@@ -18,7 +18,7 @@ PlayerController::~PlayerController()
 
 void PlayerController::Awake()
 {
-	GetGameObject()->GetCollider()->AddBind(COLLIDER_STATE::PRESS, 
+	GetGameObject()->GetCollider()->AddBind(COLLIDER_STATE::LEAVE, 
 		[=](Ref<BaseCollider> dest) { CollisionTest(dest); });
 
 
@@ -51,7 +51,7 @@ void PlayerController::LateUpdate()
 
 void PlayerController::CollisionTest(Ref<class BaseCollider> dest)
 {
-
+	EDITOR->Log("Collision Test");
 }
 
 void PlayerController::EditorUpdate()

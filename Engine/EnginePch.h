@@ -67,6 +67,9 @@ using namespace Microsoft::WRL;
 #pragma comment(lib, "FBX\\release\\zlib-md.lib")
 #endif
 
+#pragma comment(lib, "Fmod\\fmod_vc.lib")
+#pragma comment(lib, "Fmod\\fmodL_vc.lib")
+
 // °¢Á¾ typedef
 using int8		= __int8;
 using int16		= __int16;

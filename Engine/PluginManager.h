@@ -34,6 +34,7 @@ public:
 	class SceneManager* GetScene();
 	class Input* GetInput();
 	class Resources* GetResources();
+	class SoundManager* GetSound();
 
 	map<wstring, Ref<PluginInfo>>& Plugins() { return m_mapPlugins; }
 
@@ -47,6 +48,7 @@ private:
 	class SceneManager*		m_pScene = nullptr;
 	class Input*			m_pInput = nullptr;
 	class Resources*		m_pResource = nullptr;
+	class SoundManager*		m_pSound = nullptr;
 };
 
 

@@ -26,6 +26,7 @@
 #define SHADER_PATH_KEY             "Shader"
 #define FBX_PATH_KEY                "FBX"
 #define SCENE_PATH_KEY              "Scene"
+#define SOUND_PATH_KEY					"Sound"
 
 #define TEXTURE_PATH                GET_SINGLE(PathManager)->FindPath(TEXTURE_PATH_KEY)
 #define SHADER_PATH                 GET_SINGLE(PathManager)->FindPath(SHADER_PATH_KEY)
