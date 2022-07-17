@@ -42,16 +42,20 @@
                     SingleTon
 ------------------------------------------------ */
 
-#define DECLARE_SINGLE(type)		\
-private:							\
-	type() {}						\
-	~type() {}						\
-public:								\
-	static type* GetI()				\
-	{								\
-		static type instance;		\
-		return &instance;			\
-	}								\
+
+
+#define DECLARE_SINGLE(type)					\
+private:										\
+	type() {}									\
+	~type() {}									\
+public:											\
+	static type* GetI()							\
+	{											\
+		static type instance;					\
+		return &instance;						\
+	}											\
+
+
 
 #define GET_SINGLE(type)		type::GetI()
 

@@ -16,6 +16,8 @@ public:
 	void AddCollider(Ref<BaseCollider> collider);
 
 	bool RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHitInfo& hit, LAYER_TYPE layer = LAYER_TYPE::END, float maxDistance = FLT_MAX);
+	bool RayCastSphere(Vec3 rayOrin, Vec3 rayDir, float radius, OUT RayCastHitInfo& hit, LAYER_TYPE layer = LAYER_TYPE::END, float maxDistance = FLT_MAX);
+	bool RayCastBox(Vec3 rayOrin, Vec3 rayDir, Vec3 extents, OUT RayCastHitInfo& hit, LAYER_TYPE layer = LAYER_TYPE::END, float maxDistance = FLT_MAX);
 private:
 	bool RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, OUT RayCastHitInfo& hit, LAYER_TYPE layer, float maxDistance);
 

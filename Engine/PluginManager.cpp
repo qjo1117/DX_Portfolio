@@ -7,7 +7,7 @@
 #include "PathManager.h"
 
 
-void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager& p_Scene)
+void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager& p_Scene, Input& p_input, Resources& p_resource)
 {
     m_strName = L"Plugin Manager";
 
@@ -15,6 +15,8 @@ void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager
     m_pEditor = &p_Editor;
     m_pEngine = &p_Engine;
     m_pScene = &p_Scene;
+    m_pInput = &p_input;
+    m_pResource = &p_resource;
 
     LoadPlugins();
     for (auto& item : m_mapPlugins) {
@@ -58,6 +60,19 @@ void PluginManager::LoadPlugins()
 
     for (Ref<FileInfo>& fileInfo : vecFileInfos) {
         LoadPlugin(fileInfo->PathInfo.wstring());
+    }
+}
+
+void PluginManager::UnLoadPlugins()
+{
+    int32 size = m_mapPlugins.size();
+    int32 count = 0;
+    for (auto& item : m_mapPlugins) {
+        UnLoadPlugin(item.first);
+        count += 1;
+        if (size >= count) {
+            break;
+        }
     }
 }
 
@@ -109,6 +124,8 @@ bool PluginManager::LoadPlugin(const wstring& p_fileName)
 
     m_mapPlugins[pPlugin->GetName()] = info;
 
+    m_mapPlugins[pPlugin->GetName()]->pPlugin->Awake();
+
     return true;
 }
 
@@ -118,6 +135,19 @@ Ref<PluginInfo> PluginManager::FindPlugin(const wstring& name)
         return nullptr;
     }
     return m_mapPlugins[name];
+}
+
+void PluginManager::UnLoadPlugin(const wstring& p_fileName)
+{
+    if (m_mapPlugins[p_fileName]->pPlugin) {
+        delete m_mapPlugins[p_fileName]->pPlugin;
+    }
+    m_mapPlugins[p_fileName]->pPlugin = nullptr;
+
+    FreeModule(m_mapPlugins[p_fileName]->hDll);
+
+    m_mapPlugins.erase(p_fileName);
+
 }
 
 void PluginManager::Log(const string& log)
@@ -138,5 +168,15 @@ Engine* PluginManager::GetEngine()
 SceneManager* PluginManager::GetScene()
 {
     return m_pScene;
+}
+
+Input* PluginManager::GetInput()
+{
+    return m_pInput;
+}
+
+Resources* PluginManager::GetResources()
+{
+    return m_pResource;
 }
 

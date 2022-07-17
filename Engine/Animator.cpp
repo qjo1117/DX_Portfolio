@@ -1,4 +1,5 @@
 #include "pch.h"
+
 #include "Animator.h"
 #include "Resources.h"
 #include "Timer.h"
@@ -9,65 +10,73 @@
 
 Animator::Animator() : Component(COMPONENT_TYPE::ANIMATOR)
 {
-	_computeMaterial = GET_SINGLE(Resources)->Get<Material>(L"ComputeAnimation");
-	_boneFinalMatrix = make_shared<StructuredBuffer>();
+	m_computeMaterial = GET_SINGLE(Resources)->Get<Material>(L"ComputeAnimation");
+	m_boneFinalMatrix = make_shared<StructuredBuffer>();
 }
 
 Animator::~Animator()
 {
 }
 
+void Animator::EditorUpdate()
+{
+	if (ImGui::DragInt("Clips", &m_clipIndex, 0, m_animClips->size())) {
+		Play(m_clipIndex);
+	}
+
+}
+
 void Animator::FinalUpdate()
 {
-	_updateTime += DELTATIME;
+	m_updateTime += DELTATIME;
 
-	const AnimClipInfo& animClip = _animClips->at(_clipIndex);
-	if (_updateTime >= animClip.duration) {
-		_updateTime = 0.0f;
+	const AnimClipInfo& animClip = m_animClips->at(m_clipIndex);
+	if (m_updateTime >= animClip.duration) {
+		m_updateTime = 0.0f;
 	}
 
 	const int32 ratio = static_cast<int32>(animClip.frameCount / animClip.duration);
-	_frame = static_cast<int32>(_updateTime * ratio);
-	_frame = min(_frame, animClip.frameCount - 1);
-	_nextFrame = min(_frame + 1, animClip.frameCount - 1);
-	_frameRatio = static_cast<float>(_frame - _frame);
+	m_frame = static_cast<int32>(m_updateTime * ratio);
+	m_frame = min(m_frame, animClip.frameCount - 1);
+	m_nextFrame = min(m_frame + 1, animClip.frameCount - 1);
+	m_frameRatio = static_cast<float>(m_frame - m_frame);
 }
 
 
 void Animator::SetAnimClip(const vector<AnimClipInfo>* animClip)
 {
-	_animClips = animClip;
+	m_animClips = animClip;
 }
 
 void Animator::PushData()
 {
-	uint32 boneCount = static_cast<uint32>(_bones->size());
-	if (_boneFinalMatrix->GetElementCount() < boneCount) {
-		_boneFinalMatrix->Init(sizeof(Matrix), boneCount);
+	uint32 boneCount = static_cast<uint32>(m_bones->size());
+	if (m_boneFinalMatrix->GetElementCount() < boneCount) {
+		m_boneFinalMatrix->Init(sizeof(Matrix), boneCount);
 	}
 
 	/* ------ Compute Shader ------ */
 	Ref<Mesh> mesh = GetGameObject()->GetMeshRenderer()->mesh;
-	mesh->GetBoneFrameDataBuffer(_clipIndex)->PushComputeSRVData(SRV_REGISTER::t8);
+	mesh->GetBoneFrameDataBuffer(m_clipIndex)->PushComputeSRVData(SRV_REGISTER::t8);
 	mesh->GetBoneOffsetBuffer()->PushComputeSRVData(SRV_REGISTER::t9);
 
-	_boneFinalMatrix->PushComputeUAVData(UAV_REGISTER::u0);
+	m_boneFinalMatrix->PushComputeUAVData(UAV_REGISTER::u0);
 
-	_computeMaterial->SetInt(0, boneCount);
-	_computeMaterial->SetInt(1, _frame);
-	_computeMaterial->SetInt(2, _nextFrame);
-	_computeMaterial->SetFloat(0, _frameRatio);
+	m_computeMaterial->SetInt(0, boneCount);
+	m_computeMaterial->SetInt(1, m_frame);
+	m_computeMaterial->SetInt(2, m_nextFrame);
+	m_computeMaterial->SetFloat(0, m_frameRatio);
 
 	uint32 groupCount = (boneCount / 256) + 1;
-	_computeMaterial->Dispatch(groupCount, 1, 1);
+	m_computeMaterial->Dispatch(groupCount, 1, 1);
 
-	_boneFinalMatrix->PushGraphicsData(SRV_REGISTER::t7);
+	m_boneFinalMatrix->PushGraphicsData(SRV_REGISTER::t7);
 }
 
 void Animator::Play(uint32 index)
 {
-	assert(index < _animClips->size());
-	_clipIndex = index;
-	_updateTime = 0.f;
+	assert(index < m_animClips->size());
+	m_clipIndex = index;
+	m_updateTime = 0.f;
 }
 

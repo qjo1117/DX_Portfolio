@@ -51,7 +51,7 @@ void PlayerController::LateUpdate()
 
 void PlayerController::CollisionTest(Ref<class BaseCollider> dest)
 {
-	EDITOR->Log("Collision");
+
 }
 
 void PlayerController::EditorUpdate()

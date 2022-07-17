@@ -7,6 +7,9 @@
     <Filter Include="Plugin">
       <UniqueIdentifier>{9d718173-d7c4-4ff7-8508-65d4ba96cfb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{75ec0824-35ff-4e6d-8bab-7434d696a933}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,6 +27,48 @@
     <ClInclude Include="..\Engine\IPlugin.h">
       <Filter>Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imgui_impl_win32.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imgui_internal.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\ImGuizmo.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\ImSequencer.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imstb_rectpack.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imstb_textedit.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imstb_truetype.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\ImZoomSlider.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\GraphEditor.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imconfig.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\ImCurveEdit.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\ImGradient.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imgui.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\ImGui\imgui_impl_dx12.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -34,6 +79,42 @@
     </ClCompile>
     <ClCompile Include="ActionPlugin.cpp">
       <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_tables.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_widgets.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\ImGuizmo.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\ImSequencer.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\GraphEditor.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\ImCurveEdit.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\ImGradient.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_demo.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_draw.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_impl_dx12.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\ImGui\imgui_impl_win32.cpp">
+      <Filter>IMGUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

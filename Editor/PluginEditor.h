@@ -24,5 +24,9 @@ public:
 
 private:
 	inline static PluginEditor* m_pInstance = nullptr;
+
+private:
+	wstring m_strSelector;
+	bool m_isReBuild = false;
 };
 

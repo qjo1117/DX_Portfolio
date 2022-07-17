@@ -244,10 +244,10 @@ ToolScene::ToolScene()
 		Ref<GameObject> obj = make_shared<GameObject>();
 		obj->AddComponent(make_shared<Transform>());
 		obj->AddComponent(make_shared<MeshRenderer>());
+		obj->AddComponent(make_shared<Terrain>());
 		obj->AddComponent(make_shared<MeshCollider>());
 
-		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Deferred"));
-		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadTerrainMesh(15, 15);
+		obj->GetTerrain()->Init(30, 30);
 		//obj->AddComponent(make_shared<Terrain>());
 		//obj->GetTerrain()->Init(15, 15);
 
@@ -255,8 +255,7 @@ ToolScene::ToolScene()
 		obj->isFrustum = false;
 
 		obj->GetTransform()->localPosition = (-Vec3::Up * 150.0f) - Vec3::Right * 700.0f + Vec3::Forward * 700.0f;
-		obj->GetTransform()->localScale = Vec3::One * 100.0f;
-
+		obj->GetTransform()->localScale = Vec3::One * 50.0f;
 
 		AddGameObject(obj, LAYER_TYPE::GROUND);
 	}
@@ -331,17 +330,8 @@ ToolScene::ToolScene()
 
 #pragma region Animation
 	{
-		//Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Robot.fbx");
-		//vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
-
-		//gameObjects[0]->name = wstring(L"Astronaut");
-		//gameObjects[0]->isFrustum = false;
-
-		//gameObjects[0]->AddComponent(make_shared<MeshCollider>());
-		//gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
-		//gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
-		//gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
-		//AddGameObject(gameObjects[0]);
+		Ref<GameObject> meshData = GET_SINGLE(Resources)->Get<GameObject>(L"OrangeBot");
+		AddGameObject(meshData);
 
 
 		//int32 index = 0;

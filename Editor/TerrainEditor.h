@@ -36,5 +36,6 @@ private:
 private:
 	BRUSH_TYPE m_type = BRUSH_TYPE::END;
 	float m_speed = 5.0f;
+	float m_radius = 50.0f;
 };
 

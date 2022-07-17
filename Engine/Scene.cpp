@@ -1,4 +1,4 @@
-#include "Scene.h"
+
 #include "pch.h"
 #include "Scene.h"
 #include "GameObject.h"
@@ -18,7 +18,7 @@ Scene::Scene() :
 	_light(_gameObjects[static_cast<uint8>(LAYER_TYPE::LIGHT)]),
 	_camera(_gameObjects[static_cast<uint8>(LAYER_TYPE::CAMERA)])
 {
-	_objects.reserve(1000 * static_cast<uint8>(LAYER_TYPE::END));
+	m_objects.reserve(1000 * static_cast<uint8>(LAYER_TYPE::END));
 	for (uint32 i = 0; i < static_cast<uint8>(LAYER_TYPE::END); ++i) {
 		_gameObjects[i].reserve(1000);
 	}
@@ -32,14 +32,14 @@ Scene::~Scene()
 			obj = nullptr;
 		}
 	}
-	for (Ref<GameObject>& obj : _objects) {
+	for (Ref<GameObject>& obj : m_objects) {
 		obj = nullptr;
 	}
 }
 
 void Scene::Awake()
 {
-	for (const Ref<GameObject>& object : _objects) {
+	for (const Ref<GameObject>& object : m_objects) {
 		if (object == nullptr) {		// 이건 바로 삭제하지않고 FinalUpdate부분에서 삭제 요청 처리를
 										// 처리하는 부분이 추가되면 nullptr문제가 없을테니 빼자
 			continue;
@@ -153,10 +153,10 @@ void Scene::SortSceneObjects()
 {
 	ClearRenderList();
 
-	uint32 size = _objects.size();
+	uint32 size = m_objects.size();
 	uint32 activeSize = size;
 	for (uint32 i = 0; i < size; ++i) {
-		Ref<GameObject>& obj = _objects[i];
+		Ref<GameObject>& obj = m_objects[i];
 
 
 		if (IsCulled(obj->layerType)) {
@@ -207,7 +207,7 @@ void Scene::ClearRenderList()
 	_vecActived.clear();
 	_vecNonActived.clear();
 
-	int32 size = _objects.size();
+	int32 size = m_objects.size();
 
 	if (size < _vecRender.size()) {
 		_vecShadow.reserve(size);
@@ -371,6 +371,11 @@ void Scene::PushLightData()
 
 void Scene::AddGameObject(Ref<GameObject> gameObject, uint32 layer)
 {
+	auto findIt = std::find(m_objects.begin(), m_objects.end(), gameObject);
+	if (findIt != m_objects.end()) {
+		m_objects.erase(findIt);
+	}
+
 	/* ----- 주의사항 ----- */
 	// Camera, Light는 따로 순회해서 처리해야하는 작업이 있으므로 따로 빼서 LAYER에 강제로 넣어준다.
 
@@ -387,7 +392,7 @@ void Scene::AddGameObject(Ref<GameObject> gameObject, uint32 layer)
 	}
 
 	_gameObjects[layer].push_back(gameObject);
-	_objects.push_back(gameObject);
+	m_objects.push_back(gameObject);
 	gameObject->SetLayer(layer);
 }
 
@@ -395,10 +400,10 @@ void Scene::SortParantGameObject()
 {
 	_parentBaseObjects.clear();
 
-	uint32 size = _objects.size();
+	uint32 size = m_objects.size();
 	for (uint32 i = 0; i < size; ++i) {
-		if (_objects[i]->GetTransform()->GetParent().lock() == nullptr) {
-			_parentBaseObjects.push_back(_objects[i]);
+		if (m_objects[i]->GetTransform()->GetParent().lock() == nullptr) {
+			_parentBaseObjects.push_back(m_objects[i]);
 		}
 	}
 
@@ -425,8 +430,13 @@ void Scene::RemoveObject(Ref<GameObject> gameObject, LAYER_TYPE layer)
 		}
 	}
 
-	auto findGo = std::find(_objects.begin(), _objects.end(), gameObject);
-	_objects.erase(findGo);
+	auto findGo = std::find(m_objects.begin(), m_objects.end(), gameObject);
+	m_objects.erase(findGo);
+}
+
+Ref<GameObject> Scene::Instantiate()
+{
+	return GET_SINGLE(Resources)->Get<GameObject>(L"PointLight");
 }
 
 bool Scene::RemoveObject(Ref<GameObject> gameObject, uint32 layer)

@@ -8,21 +8,21 @@
 
 void SceneManager::Update()
 {
-	if (_currentScene == nullptr) {
+	if (m_currentScene == nullptr) {
 		return;
 	}
-	_currentScene->Update();
-	_currentScene->LateUpdate();
-	_currentScene->FinalUpdate();
+	m_currentScene->Update();
+	m_currentScene->LateUpdate();
+	m_currentScene->FinalUpdate();
 
-	Ref<Scene>& scene = _currentScene;
+	Ref<Scene>& scene = m_currentScene;
 
 }
 
 void SceneManager::Render()
 {
-	if (_currentScene) {
-		_currentScene->Render();
+	if (m_currentScene) {
+		m_currentScene->Render();
 	}
 
 }
@@ -32,16 +32,16 @@ void SceneManager::LoadScene(SCENE_TYPE type)
 	/* ----- Scene이 존재하는지 체크하고 있으면 씬전환을 한다. ----- */
 	assert(_scenes[static_cast<uint32>(type)]);
 
-	if (_currentScene == nullptr) {
-		_currentScene = _scenes[static_cast<uint32>(type)];
+	if (m_currentScene == nullptr) {
+		m_currentScene = _scenes[static_cast<uint32>(type)];
 	}
 	else {
 		// TODO : 내용물 초기화
-		_currentScene = _scenes[static_cast<uint32>(type)];
+		m_currentScene = _scenes[static_cast<uint32>(type)];
 	}
-	_type = type;
-	_currentScene->Awake();
-	_currentScene->Start();
+	m_type = type;
+	m_currentScene->Awake();
+	m_currentScene->Start();
 }
 
 Ref<class GameObject> SceneManager::Pick(int32 screenX, int32 screenY, RayCastHitInfo& hit)

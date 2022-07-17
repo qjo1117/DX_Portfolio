@@ -40,13 +40,13 @@ public:
 
 public:
 	/* ----- Helper Function ----- */
-	Ref<Scene>	GetCurrentScene() { return _currentScene; }
-	SCENE_TYPE			GetType() { return _type; }
+	Ref<Scene>	GetCurrentScene() { return m_currentScene; }
+	SCENE_TYPE			GetType() { return m_type; }
 private:
 	/* ----- Scene Variable ----- */
-	Ref<Scene> _currentScene;
+	Ref<Scene> m_currentScene;
 	array<Ref<Scene>, static_cast<uint32>(SCENE_TYPE::END)> _scenes;
-	SCENE_TYPE _type;
+	SCENE_TYPE m_type;
 };
 
 

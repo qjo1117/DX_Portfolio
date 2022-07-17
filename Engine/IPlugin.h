@@ -22,6 +22,7 @@ public:
 	IPlugin(PluginManager& manager) : m_pManager(&manager) { }
 	virtual ~IPlugin() { }
 
+	virtual PLUGINDECL bool Awake() { return false; }
 	virtual PLUGINDECL bool Init() { return false; }
 	virtual PLUGINDECL bool Update() { return false; }
 	virtual PLUGINDECL bool Render() { return false; }

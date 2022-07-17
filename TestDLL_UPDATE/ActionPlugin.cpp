@@ -3,18 +3,37 @@
 
 #include "../Engine/EditorManager.h"
 #include "../Engine/PluginManager.h"
+#include "../Engine/Input.h"
 #include "../Engine/SceneManager.h"
+#include "../Engine/Resources.h"
 #include "../Engine/Scene.h"
-#include "../Engine/Timer.h"
 
 #include "../Engine/GameObject.h"
-#include "../Engine/Transform.h"
 #include "../Engine/MeshRenderer.h"
+#include "../Engine/MeshCollider.h"
+#include "../Engine/Transform.h"
+#include "../Engine/Animator.h"
+#include "../Engine/MeshData.h"
 #include "../Engine/Light.h"
+
+
+
+PLUGINDECL bool ActionPlugin::Awake()
+{
+	m_pManager->Log("Action Load");
+
+	//m_light = m_pManager->GetResources()->Get<GameObject>(L"PointLight");
+	//m_pManager->GetScene()->GetCurrentScene()->AddGameObject(m_light);
+	//m_light->GetLight()->lightInfo.color.diffuse = Vec4{ 1.0f, 0.0f,0.0f ,1.0f };
+	//m_light->GetLight()->lightInfo.range = 100.0f;
+
+	return true;
+}
 
 PLUGINDECL bool ActionPlugin::Init()
 {
 	m_pManager->Log("Action Init");
+
 
 
 	return true;
@@ -23,12 +42,6 @@ PLUGINDECL bool ActionPlugin::Init()
 PLUGINDECL bool ActionPlugin::Update()
 {
 	m_pManager->Log("Action Update");
-	//if (m_player == nullptr) {
-	//	m_player = m_pManager->GetScene()->GetCurrentScene()->FindGameObject(L"Player");
-	//}
-	//else {
-	//	m_player->GetTransform()->localPosition.x += 1.0f;
-	//}
 
 	return true;
 }
@@ -42,7 +55,6 @@ PLUGINDECL bool ActionPlugin::Render()
 
 PLUGINDECL bool ActionPlugin::End()
 {
-
 
 	return true;
 }

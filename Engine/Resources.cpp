@@ -15,6 +15,7 @@
 #include "MeshData.h"
 
 #include "DirectoryManager.h"
+#include "MeshCollider.h"
 
 void Resources::Init()
 {
@@ -26,7 +27,6 @@ void Resources::Init()
 	CreateDefaultMaterial();
 	CreateDefaultGameObject();
 	CreateDefaultComponent();
-
 
 }
 
@@ -1238,6 +1238,39 @@ void Resources::CreateDefaultGameObject()
 		Add<GameObject>(L"PointLight", light);
 	}
 #pragma endregion
+
+#pragma region Animation Mesh
+	{
+		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Cat\\Cartoon Cat.fbx");
+		vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
+		
+		gameObjects[0]->name = wstring(L"OrangeBot");
+		gameObjects[0]->isFrustum = false;
+		
+		gameObjects[0]->AddComponent(make_shared<MeshCollider>());
+		gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
+		gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
+		gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
+
+		Add<GameObject>(L"OrangeBot", gameObjects[0]);
+	}
+
+	//{
+	//	Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"IronMan.fbx");
+	//	vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
+
+	//	gameObjects[0]->name = wstring(L"IronMan");
+	//	gameObjects[0]->isFrustum = false;
+
+	//	gameObjects[0]->AddComponent(make_shared<MeshCollider>());
+	//	gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
+	//	gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
+	//	gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
+
+	//	Add<GameObject>(L"IronMan", gameObjects[0]);
+	//}
+#pragma endregion
+
 }
 
 void Resources::CreateDefaultComponent()

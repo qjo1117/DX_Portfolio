@@ -62,12 +62,13 @@ public:
 	void AddGameObject(Ref<GameObject> gameObject, LAYER_TYPE layer = LAYER_TYPE::DEFAULT);
 	void RemoveObject(Ref<GameObject> gameObject, LAYER_TYPE layer = LAYER_TYPE::END);
 
+
 	const wstring& GetName() { return _name; }
 	void SetName(const wstring& name) { _name = name; }
 
 	array<vector<Ref<GameObject>>, static_cast<uint32>(LAYER_TYPE::END)>& GetGameObjects() { return _gameObjects; }
 	vector<Ref<GameObject>>&	GetGameObjects(LAYER_TYPE type) { return _gameObjects[static_cast<int32>(type)]; }
-	vector<Ref<GameObject>>&	GetAllGameObjects() { return _objects; }
+	vector<Ref<GameObject>>&	GetAllGameObjects() { return m_objects; }
 
 	vector<Ref<GameObject>>&	GetDeferred() { return _vecDeferred; }
 	vector<Ref<GameObject>>&	GetForward() { return _vecForward; }
@@ -82,6 +83,8 @@ protected:
 	bool RemoveObject(Ref<GameObject> gameObject, uint32 layer);
 	void AddGameObject(Ref<GameObject> gameObject, uint32 layer);
 
+	Ref<GameObject> Instantiate();
+
 private:
 	/* ----- ParantSort Function ----- */
 	void	SortParantGameObject();
@@ -89,7 +92,7 @@ private:
 private:
 	/* ----- Scene Object Mapping Variable ----- */
 	array<vector<Ref<GameObject>>, static_cast<uint32>(LAYER_TYPE::END)> _gameObjects;
-	vector<Ref<GameObject>> _objects;		// 한번에 전체순회
+	vector<Ref<GameObject>> m_objects;		// 한번에 전체순회
 	vector<Ref<GameObject>> _parentBaseObjects;
 	wstring _name;
 

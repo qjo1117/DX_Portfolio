@@ -197,6 +197,36 @@ bool ColliderManager::RayCast(Vec3 rayOrin, Vec3 rayDir, OUT RayCastHitInfo& hit
 	return false;
 }
 
+bool ColliderManager::RayCastSphere(Vec3 rayOrin, Vec3 rayDir, float radius, OUT RayCastHitInfo& hit, LAYER_TYPE layer, float maxDistance)
+{
+	Ref<SphereCollider> sphere = make_shared<SphereCollider>();
+	sphere->BoundSphere.Radius = radius;
+
+	float dist = rayDir.LengthSquared();
+
+	vector<Ref<BaseCollider>> colliders = GetLayerObject(layer);
+
+	for (float i = 0; i < maxDistance; ++i) {
+		sphere->BoundSphere.Center = rayOrin;
+		for (Ref<BaseCollider>& collider : colliders) {
+			if (collider->Collision(sphere) == true) {
+				hit.collider = collider;
+				hit.distance = i;
+				hit.normal = -rayDir;
+				hit.point = rayOrin + rayDir;
+				return true;
+			}
+		}
+		rayOrin += rayDir;
+	}
+	return false;
+}
+
+bool ColliderManager::RayCastBox(Vec3 rayOrin, Vec3 rayDir, Vec3 extents, OUT RayCastHitInfo& hit, LAYER_TYPE layer, float maxDistance)
+{
+	return false;
+}
+
 bool ColliderManager::RayCastToColliders(OUT Vec4& rayOrigin, Vec4 rayDir, OUT float& distance, OUT RayCastHitInfo& hit, LAYER_TYPE layer, float maxDistance)
 {
 	float dist = rayDir.LengthSquared();

@@ -26,6 +26,7 @@ struct Vertex
 	Vec3 tangent;
 	Vec4 weights;
 	Vec4 indices;
+
 };
 
 struct TransformParams

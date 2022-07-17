@@ -34,16 +34,6 @@ void Terrain::Init(int32 sizeX, int32 sizeZ)
 	m_material->SetInt(2, m_sizeZ);
 	m_material->SetFloat(0, m_maxTesselation);
 
-	// ----------------------------------------------------------------
-
-	//Ref<Texture> texture = GET_SINGLE(Resources)->CreateTexture(L"TerrainHeightMap",
-	//	DXGI_FORMAT_R8G8B8A8_UNORM, 15, 15,
-	//	CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT), D3D12_HEAP_FLAG_NONE,
-	//	D3D12_RESOURCE_FLAG_NONE);
-
-	//m_heightMap = GET_SINGLE(Resources)->Get<Texture>(L"TerrainHeightMap");
-	//Vec2 vec = Vec2(m_heightMap->GetWidth(), m_heightMap->GetHeight());
-
 	m_heightMap = GET_SINGLE(Resources)->Get<Texture>(L"HeightMap_0");
 	Vec2 vec = Vec2(m_heightMap->GetWidth(), m_heightMap->GetHeight());
 

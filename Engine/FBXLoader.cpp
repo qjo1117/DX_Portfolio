@@ -38,6 +38,7 @@ void FBXLoader::LoadFbx(const wstring& path)
 	// 로드된 데이터 파싱 (Mesh/Material/Skin)
 	ParseNode(_scene->GetRootNode());
 
+
 	// 우리 구조에 맞게 Texture / Material 생성
 	CreateTextures();
 	CreateMaterials();
@@ -59,7 +60,7 @@ void FBXLoader::Import(const wstring& path)
 	_scene = FbxScene::Create(_manager, "");
 
 	// 나중에 Texture 경로 계산할 때 쓸 것
-	_resourceDirectory = fs::path(path).parent_path().wstring() + L"\\" + fs::path(path).filename().stem().wstring() + L".fbm";
+	_resourceDirectory = fs::path(path).parent_path().wstring();
 
 	_importer = FbxImporter::Create(_manager, "");
 
@@ -159,6 +160,8 @@ void FBXLoader::LoadMesh(FbxMesh* mesh)
 
 	// Animation
 	LoadAnimationData(mesh, &meshInfo);
+
+
 }
 
 void FBXLoader::LoadMaterial(FbxSurfaceMaterial* surfaceMaterial)
@@ -559,86 +562,6 @@ void FBXLoader::LoadKeyframe(int32 animIndex, FbxNode* node, FbxCluster* cluster
 	}
 
 
-//#pragma region FILE_SAVE
-//	{
-//		wstring path = _path;
-//		path[path.find(L".")] = '\0';
-//		std::ofstream file(path + FILE_EXPENSION);
-//		Json::Value jsonInfo;
-//		Json::Value childInfo;
-//
-//		uint32 frameCount = 0;
-//		vector<Ref<FbxAnimClipInfo>>& animClips = _animClips;
-//		for (Ref<FbxAnimClipInfo>& ac : animClips)
-//		{
-//			AnimClipInfo info = {};
-//
-//			info.animName = ac->name;
-//			info.duration = ac->endTime.GetSecondDouble() - ac->startTime.GetSecondDouble();
-//
-//			int32 startFrame = static_cast<int32>(ac->startTime.GetFrameCount(ac->mode));
-//			int32 endFrame = static_cast<int32>(ac->endTime.GetFrameCount(ac->mode));
-//			info.frameCount = endFrame - startFrame;
-//
-//			info.keyFrames.resize(ac->keyFrames.size());
-//
-//			const int32 boneCount = static_cast<int32>(ac->keyFrames.size());
-//			for (int32 b = 0; b < boneCount; b++) {
-//				auto& vec = ac->keyFrames[b];
-//
-//				const int32 size = static_cast<int32>(vec.size());
-//				frameCount = max(frameCount, static_cast<uint32>(size));
-//				info.keyFrames[b].resize(size);
-//
-//				for (int32 f = 0; f < size; f++) {
-//					FbxKeyFrameInfo& kf = vec[f];
-//					// FBX에서 파싱한 정보들로 채워준다
-//					KeyFrameInfo& kfInfo = info.keyFrames[b][f];
-//					kfInfo.time = kf.time;
-//					kfInfo.frame = static_cast<int32>(size);
-//					kfInfo.scale.x = static_cast<float>(kf.matTransform.GetS().mData[0]);
-//					kfInfo.scale.y = static_cast<float>(kf.matTransform.GetS().mData[1]);
-//					kfInfo.scale.z = static_cast<float>(kf.matTransform.GetS().mData[2]);
-//
-//					kfInfo.rotation.x = static_cast<float>(kf.matTransform.GetQ().mData[0]);
-//					kfInfo.rotation.y = static_cast<float>(kf.matTransform.GetQ().mData[1]);
-//					kfInfo.rotation.z = static_cast<float>(kf.matTransform.GetQ().mData[2]);
-//					kfInfo.rotation.w = static_cast<float>(kf.matTransform.GetQ().mData[3]);
-//
-//					kfInfo.translate.x = static_cast<float>(kf.matTransform.GetT().mData[0]);
-//					kfInfo.translate.y = static_cast<float>(kf.matTransform.GetT().mData[1]);
-//					kfInfo.translate.z = static_cast<float>(kf.matTransform.GetT().mData[2]);
-//					
-//					/* ----- 정보 입력 ------ */
-//					Json::Value scale;
-//					Utils::JsonSaveToVec3(scale, kfInfo.scale);
-//
-//					Json::Value rotation;
-//					Utils::JsonSaveToVec4(rotation, kfInfo.rotation);
-//
-//					Json::Value translate;
-//					Utils::JsonSaveToVec3(translate, kfInfo.translate);
-//
-//					childInfo["Translate"] = translate;
-//					childInfo["Rotation"] = rotation;
-//					childInfo["Scale"] = scale;
-//					childInfo["Time"] = kfInfo.time;
-//					childInfo["Frame"] = kfInfo.frame;
-//
-//					jsonInfo.append(childInfo);
-//					childInfo.clear();
-//				}
-//
-//			}
-//		}
-//
-//		Json::StreamWriterBuilder builder;
-//		unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
-//		writer->write(jsonInfo, &file);
-//
-//		file.close();
-//	}
-//#pragma endregion
 }
 
 int32 FBXLoader::FindBoneIndex(string name)

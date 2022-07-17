@@ -59,6 +59,8 @@ private:
 
 	vector<string>	m_vecExtension;
 
+	PRIVATE_PROPERTY(bool, isCheck) = false;
+
 	uint32 m_iCount = 0;
 	vector<Ref<FileInfo>> m_vecUpdateList;
 };
