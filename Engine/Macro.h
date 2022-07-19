@@ -45,20 +45,23 @@
 
 
 
-#define DECLARE_SINGLE(type)					\
-private:										\
-	type() {}									\
-	~type() {}									\
-public:											\
-	static type* GetI()							\
-	{											\
-		static type instance;					\
-		return &instance;						\
-	}											\
-
+#define DECLARE_SINGLE(type)																\
+private:																					\
+type() {}																					\
+~type() {}																					\
+public:																						\
+	static type* GetI()																		\
+	{																						\
+		static type instance;																\
+		if (GSingle && (*GSingle)[#type] == nullptr) {										\
+					(*GSingle)[#type] = &instance;											\
+		}																					\
+		return &instance;																	\
+	}																						\
 
 
 #define GET_SINGLE(type)		type::GetI()
+#define GET_SINGLE_DLL(type)	m_pManager->GetSingle<type>()
 
 #define WEAK(T) T.lock()
 

@@ -103,4 +103,5 @@ template<typename T>
 using WRef = weak_ptr<T>;
 
 
-extern unique_ptr<class Engine> GEngine;
+extern unique_ptr<class Engine>								GEngine;
+extern unique_ptr<unordered_map<std::string, void*>>		GSingle;

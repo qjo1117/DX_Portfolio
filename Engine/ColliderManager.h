@@ -6,7 +6,7 @@
 class ColliderManager
 {
 public:
-	DECLARE_SINGLE(ColliderManager);
+	DECLARE_SINGLE(ColliderManager)
 
 	void Init();
 	void Update();

@@ -1,4 +1,3 @@
-#include "PluginManager.h"
 #include "pch.h"
 #include "PluginManager.h"
 #include "DirectoryManager.h"
@@ -9,17 +8,11 @@
 #include "SoundManager.h"
 
 
-void PluginManager::Init(EditorManager& p_Editor, Engine& p_Engine, SceneManager& p_Scene, Input& p_input, Resources& p_resource)
+void PluginManager::Init()
 {
     m_strName = L"Plugin Manager";
 
-
-    m_pEditor = &p_Editor;
-    m_pEngine = &p_Engine;
-    m_pScene = &p_Scene;
-    m_pInput = &p_input;
-    m_pResource = &p_resource;
-    m_pSound = &*SoundManager::GetI();
+    m_pSingle = GSingle.get();
 
     LoadPlugins();
     for (auto& item : m_mapPlugins) {
@@ -155,36 +148,5 @@ void PluginManager::UnLoadPlugin(const wstring& p_fileName)
 
 void PluginManager::Log(const string& log)
 {
-    m_pEditor->Log(log);
+    GetSingle<EditorManager>()->Log(log);
 }
-
-EditorManager* PluginManager::GetEditor()
-{
-    return m_pEditor;
-}
-
-Engine* PluginManager::GetEngine()
-{
-    return m_pEngine;
-}
-
-SceneManager* PluginManager::GetScene()
-{
-    return m_pScene;
-}
-
-Input* PluginManager::GetInput()
-{
-    return m_pInput;
-}
-
-Resources* PluginManager::GetResources()
-{
-    return m_pResource;
-}
-
-SoundManager* PluginManager::GetSound()
-{
-    return m_pSound;
-}
-

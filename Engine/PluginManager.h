@@ -10,9 +10,9 @@ struct PluginInfo
 
 class PluginManager
 {
-	DECLARE_SINGLE(PluginManager);
+	DECLARE_SINGLE(PluginManager)
 public:
-	void Init(class EditorManager& p_Editor, class Engine& p_Engine, class SceneManager& p_Scene, class Input& p_input, class Resources& p_resource);
+	void Init();
 	void Update();
 	void Render();
 	void End();
@@ -29,26 +29,22 @@ public:
 
 public:
 	void Log(const string& log);
-	class EditorManager* GetEditor();
-	class Engine* GetEngine();
-	class SceneManager* GetScene();
-	class Input* GetInput();
-	class Resources* GetResources();
-	class SoundManager* GetSound();
+	
+	template<typename T>
+	T* GetSingle()
+	{
+		vector<string> splis = Utils::Split(typeid(T).name(), ' ');
+		return reinterpret_cast<T*>((*m_pSingle)[splis[1]]);
+	}
+	
 
 	map<wstring, Ref<PluginInfo>>& Plugins() { return m_mapPlugins; }
 
 private:
 	map<wstring, Ref<PluginInfo>> m_mapPlugins;
 
-	// TODO : È®ÀÎ¿ë
 	wstring					m_strName = L"Plugin";
-	class EditorManager*	m_pEditor = nullptr;
-	class Engine*			m_pEngine = nullptr;
-	class SceneManager*		m_pScene = nullptr;
-	class Input*			m_pInput = nullptr;
-	class Resources*		m_pResource = nullptr;
-	class SoundManager*		m_pSound = nullptr;
+	unordered_map<string, void*>* m_pSingle;
 };
 
 

@@ -70,7 +70,7 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(EditorManager)->Init();
 #endif
 
-	GET_SINGLE(PluginManager)->Init(*EDITOR, *this, *GET_SINGLE(SceneManager), *INPUT, *GET_SINGLE(Resources));
+	GET_SINGLE(PluginManager)->Init();
 
 	ResizeWindow(info.width, info.height);
 
