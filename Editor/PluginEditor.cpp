@@ -49,7 +49,10 @@ void PluginEditor::Show()
 
 	if (ImGui::Button("Complier") == true) {
 		GET_SINGLE(PluginManager)->UnLoadPlugins();
-		system("D:/Cpp/DirectX12/DX_Portfolio/Build.bat");
+
+		vector<Ref<FileInfo>> fileInfos;
+		GET_SINGLE(DirectoryManager)->FindFileInfo(GET_SINGLE(DirectoryManager)->GetFileInfo(), fileInfos, ".bat");
+		system(fileInfos[0]->PathInfo.string().data());
 		m_isReBuild = true;
 		GET_SINGLE(DirectoryManager)->isCheck = true;
 	}

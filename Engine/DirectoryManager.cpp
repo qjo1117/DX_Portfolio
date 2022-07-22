@@ -27,13 +27,11 @@ void DirectoryManager::Init()
 	
 	m_vecExtension.push_back(".dll");
 	m_vecExtension.push_back(".lib");
+	m_vecExtension.push_back(".bat");
 
 
 	CreateFileInfos();
 
-	/* ------ Test ------ */
-	vector<Ref<FileInfo>> vecFileInfos;
-	FindFileInfo(m_pFileInfo, vecFileInfos, ".h");
 
 }
 
@@ -91,6 +89,9 @@ void DirectoryManager::AddFileInfo(fs::path p_pathInfo, const string& p_strPath)
 
 		// TODO : ÆÄÀÏ
 		Ref<FileInfo> fileInfo = FindFileInfo(m_pFileInfo, vecPath);
+		if (fileInfo == nullptr) {
+			return;
+		}
 		Ref<FileInfo> tempInfo = make_shared<FileInfo>();
 		tempInfo->PathInfo = p_pathInfo;
 		tempInfo->Parent = fileInfo;

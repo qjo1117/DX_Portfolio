@@ -16,6 +16,7 @@ BoxCollider::BoxCollider() : BaseCollider(COLLIDER_TYPE::BOX)
 
 BoxCollider::~BoxCollider()
 {
+
 }
 
 void BoxCollider::Awake()
@@ -53,8 +54,7 @@ bool BoxCollider::Collision(Ref<BaseCollider> collider)
 		return BoundBox.Intersects(dynamic_pointer_cast<BoxCollider>(collider)->BoundBox);
 		break;
 
-	case COLLIDER_TYPE::MESH:
-	{
+	case COLLIDER_TYPE::MESH: {
 		Ref<MeshCollider> mesh = dynamic_pointer_cast<MeshCollider>(collider);
 		float dist = 0.0f;
 		if (m_Bound.Intersects(mesh->Bound) == false) {

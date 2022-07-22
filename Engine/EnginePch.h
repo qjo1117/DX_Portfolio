@@ -17,11 +17,19 @@
 #include <fstream>
 #include <mutex>
 #include <thread>
+#include <type_traits>
 
 using namespace std;
 
 #include <filesystem>
 namespace fs = std::filesystem;
+
+#include "TypeInfo.h"
+#include "Method.h"
+#include "Property.h"
+#include "TypeInfoMacros.h"
+#include "MethodMacros.h"
+#include "PropertyMacros.h"
 
 #include "d3dx12.h"
 #include "SimpleMath.h"

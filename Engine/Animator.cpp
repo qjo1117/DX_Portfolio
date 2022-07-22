@@ -20,8 +20,24 @@ Animator::~Animator()
 
 void Animator::EditorUpdate()
 {
-	if (ImGui::DragInt("Clips", &m_clipIndex, 0, m_animClips->size())) {
+	if (ImGui::SliderInt("Clips", &m_clipIndex, 0, m_animClips->size() - 1)) {
 		Play(m_clipIndex);
+	}
+
+	int32 maxUpdateTime = m_animClips->at(m_clipIndex).frameCount;
+
+	ImGui::SliderInt("Event", &m_currentFrame, 0, maxUpdateTime);
+	if (ImGui::Button("Add Event")) {
+		AnimationEvent animEvent;
+		animEvent.frame = m_currentFrame;
+		m_vecAnimEvents.push_back(animEvent);
+	}
+
+	ImGui::Separator();
+
+	for (AnimationEvent& animEvent : m_vecAnimEvents) {
+		ImGui::InputText("Function", animEvent.eventName.data(), 10.0f);
+		ImGui::InputInt("Time", &animEvent.frame);
 	}
 
 }
@@ -40,6 +56,18 @@ void Animator::FinalUpdate()
 	m_frame = min(m_frame, animClip.frameCount - 1);
 	m_nextFrame = min(m_frame + 1, animClip.frameCount - 1);
 	m_frameRatio = static_cast<float>(m_frame - m_frame);
+
+
+	for (auto& script : GetGameObject()->GetScripts()) {
+		const vector<const Method*> vecMethods = script.second->GetTypeInfo().GetMethods();
+		for (auto& method : vecMethods) {
+			for (AnimationEvent& animEvent : m_vecAnimEvents) {
+				if (strcmp(animEvent.eventName.data(), method->GetName()) == 0) {
+					method->Invoke<void>(&script.second);
+				}
+			}
+		}
+	}
 }
 
 

@@ -16,6 +16,7 @@ class Light;
 class ParticleSystem;
 class Terrain;
 class BaseCollider;
+class Rigidbody;
 class Animator;
 
 /*---------------
@@ -51,9 +52,10 @@ public:
 	Ref<ParticleSystem>	GetParticleSystem();
 	Ref<Terrain>		GetTerrain();
 	Ref<BaseCollider>	GetCollider();
+	Ref<Rigidbody>		GetRigidbody();
 	Ref<Animator>		GetAnimator();
 
-	map<string, Ref<MonoBehaviour>>& GetScripts() { return _scripts; }
+	map<string, Ref<MonoBehaviour>>& GetScripts() { return m_scripts; }
 
 	template<typename T>
 	void AddComponent(Ref<T> component);
@@ -72,7 +74,7 @@ public:
 			}
 		}
 
-		for (auto& itme : _scripts) {
+		for (auto& itme : m_scripts) {
 			components.push_back(itme.second);
 		}
 
@@ -88,7 +90,7 @@ private:
 
 	/* ----- Component Variable ----- */
 	array<Ref<Component>, FIXED_COMPONENT_COUNT> _components;
-	map<string, Ref<MonoBehaviour>> _scripts;
+	map<string, Ref<MonoBehaviour>> m_scripts;
 
 	PRIVATE_PROPERTY(bool, isFrustum) = true;
 	PRIVATE_PROPERTY(bool, isActive) = true;
@@ -117,7 +119,7 @@ inline void GameObject::AddComponent(Ref<T> component)
 	else {
 		static char* namePointer = (char*)(&typeid(component).name()[28]);
 		namePointer[::strlen(namePointer) - 1] = '\0';
-		_scripts.insert(make_pair<string, Ref<MonoBehaviour>>(namePointer, dynamic_pointer_cast<MonoBehaviour>(component)));
+		m_scripts.insert(make_pair<string, Ref<MonoBehaviour>>(namePointer, dynamic_pointer_cast<MonoBehaviour>(component)));
 	}
 }
 
@@ -130,9 +132,9 @@ inline Ref<T> GameObject::GetComponent()
 		return static_pointer_cast<T>(_components[index]);
 	}
 
-	auto findIt = _scripts.find((char*)(&typeid(T).name()[6]));
+	auto findIt = m_scripts.find((char*)(&typeid(T).name()[6]));
 
-	if (findIt == _scripts.end()) {
+	if (findIt == m_scripts.end()) {
 		return nullptr;
 	}
 	return static_pointer_cast<T>(findIt->second);

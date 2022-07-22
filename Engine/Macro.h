@@ -104,7 +104,7 @@ public:																		\
 	void Set##member(const type& p_val) { m_##member = p_val; Event(); }     
 
 
-#define PROPERTY(_get, _set) _declspec(property(get = _get, put = _set))
+#define SET_PROPERTY(_get, _set) _declspec(property(get = _get, put = _set))
 
 #define GETMEMBER(type, member)										\
 public:																\
@@ -118,7 +118,7 @@ public:																\
 public:                                                             \
 	SETMEMBER(type, member)											\
 	GETMEMBER(type, member)											\
-	PROPERTY(Get##member,  Set##member) type& ##member;				\
+	SET_PROPERTY(Get##member,  Set##member) type& ##member;				\
 private:                                                            \
 	type m_##member         
 
@@ -129,7 +129,7 @@ private:                                                            \
 public:                                                             \
 	SETMEMBER(type, member)											\
 	GETMEMBER(type, member)											\
-	PROPERTY(Get##member, Set##member) type& ##member;				\
+	SET_PROPERTY(Get##member, Set##member) type& ##member;				\
 public:                                                             \
 	type m_##member                                                                                        
 
@@ -137,7 +137,7 @@ public:                                                             \
 public:                                                             \
 	SETMEMBER(type, member)											\
 	GETMEMBER(type, member)											\
-	PROPERTY(Get##member,  Set##member) type& ##member;				\
+	SET_PROPERTY(Get##member,  Set##member) type& ##member;				\
 protected:                                                          \
 	type m_##member                       
 
@@ -146,7 +146,7 @@ protected:                                                          \
 public:                                                             \
 	SETEVENTMEMBER(type, member, Event)								\
 	GETMEMBER(type, member)											\
-	PROPERTY(Get##member,  Set##member) type& ##member;				\
+	SET_PROPERTY(Get##member,  Set##member) type& ##member;				\
 protected:                                                          \
 	type m_##member                       
 
@@ -154,7 +154,7 @@ protected:                                                          \
 public:                                                             \
 	SETEVENTMEMBER(type, member, Event)								\
 	GETMEMBER(type, member)											\
-	PROPERTY(Get##member,  Set##member) type& ##member;				\
+	SET_PROPERTY(Get##member,  Set##member) type& ##member;				\
 protected:                                                          \
 	type m_##member                       
 

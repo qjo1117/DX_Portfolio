@@ -7,6 +7,9 @@
     <Filter Include="Plugin">
       <UniqueIdentifier>{9d718173-d7c4-4ff7-8508-65d4ba96cfb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{dd26a43a-7aad-4854-9504-4055f69c1268}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,6 +27,9 @@
     <ClInclude Include="..\Engine\IPlugin.h">
       <Filter>Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="TestMonobehaviour.h">
+      <Filter>Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -34,6 +40,9 @@
     </ClCompile>
     <ClCompile Include="ActionPlugin.cpp">
       <Filter>Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMonobehaviour.cpp">
+      <Filter>Content</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

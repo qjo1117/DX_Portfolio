@@ -11,6 +11,7 @@ public:
 
 	virtual PLUGINDECL bool Awake() override;
 	virtual PLUGINDECL bool Init() override;
+	virtual PLUGINDECL bool Start() override;
 	virtual PLUGINDECL bool Update() override;
 	virtual PLUGINDECL bool Render() override;
 	virtual PLUGINDECL bool End() override;

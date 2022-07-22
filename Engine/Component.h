@@ -15,6 +15,8 @@ public:
 	Component(COMPONENT_TYPE type);
 	virtual ~Component();
 
+	GENERATE_CLASS_TYPE_INFO(Component);
+
 public:
 	/* ----- Virtual Function ----- */
 	virtual void Awake() { }

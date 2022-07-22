@@ -19,6 +19,7 @@
 #include "../Engine/Light.h"
 
 
+#include "TestMonobehaviour.h"
 
 PLUGINDECL bool ActionPlugin::Awake()
 {
@@ -43,6 +44,13 @@ PLUGINDECL bool ActionPlugin::Init()
 	m_pManager->Log("Action Init");
 
 
+
+	return true;
+}
+
+PLUGINDECL bool ActionPlugin::Start()
+{
+	
 
 	return true;
 }

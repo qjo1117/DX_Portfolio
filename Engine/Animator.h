@@ -7,6 +7,13 @@ class Material;
 class StructuredBuffer;
 class Mesh;
 
+class AnimationEvent
+{
+public:
+	string	eventName;
+	int32	frame = 0;
+};
+
 class Animator : public Component
 {
 public:
@@ -37,9 +44,12 @@ private:
 	int32						m_frame = 0;
 	int32						m_nextFrame = 0;
 	float						m_frameRatio = 0.0f;
+	int32						m_currentFrame = 0.0f;
 
 	Ref<Material>				m_computeMaterial;
 	Ref<StructuredBuffer>		m_boneFinalMatrix;
 	bool						m_oneFinalUpdated = false;
+
+	vector<AnimationEvent>		m_vecAnimEvents;
 };
 

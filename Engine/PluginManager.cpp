@@ -21,6 +21,13 @@ void PluginManager::Init()
 
 }
 
+void PluginManager::Start()
+{
+    for (auto& item : m_mapPlugins) {
+        item.second->pPlugin->Start();
+    }
+}
+
 void PluginManager::Update()
 {
     for (auto& item : m_mapPlugins) {

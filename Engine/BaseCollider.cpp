@@ -11,6 +11,11 @@ BaseCollider::BaseCollider(COLLIDER_TYPE type) :
 
 BaseCollider::~BaseCollider()
 {
+
+}
+
+void BaseCollider::End()
+{
 	for (function<void(Ref<BaseCollider>)> func : m_BindEnterFunc) {
 		func = nullptr;
 	}
@@ -28,12 +33,12 @@ BaseCollider::~BaseCollider()
 void BaseCollider::AddBind(COLLIDER_STATE state, function<void(Ref<class BaseCollider>)> func)
 {
 	if (state == COLLIDER_STATE::ENTER) {
-		BindEnterFunc.push_back(func);
+		m_BindEnterFunc.push_back(func);
 	}
 	else if (state == COLLIDER_STATE::PRESS) {
-		BindPressFunc.push_back(func);
+		m_BindPressFunc.push_back(func);
 	}
 	else if (state == COLLIDER_STATE::LEAVE) {
-		BindLeaveFunc.push_back(func);
+		m_BindLeaveFunc.push_back(func);
 	}
 }

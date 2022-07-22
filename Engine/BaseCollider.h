@@ -41,6 +41,8 @@ public:
 	BaseCollider(COLLIDER_TYPE type);
 	virtual ~BaseCollider();
 
+	void End();
+
 	virtual bool Intersects(Vec4 rayOrigin, Vec4 rayDir, OUT float& distance) = 0;
 	virtual bool Collision(Ref<class BaseCollider> collider) = 0;
 	virtual void EditorUpdate() override {}

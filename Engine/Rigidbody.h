@@ -20,6 +20,11 @@ public:
 
 private:
     Ref<class BaseCollider> m_collider;
-    Vec3 m_force = Vec3::Zero;
+    
+    PRIVATE_PROPERTY(Vec3, force) = Vec3::Zero;
+    PRIVATE_PROPERTY(Vec3, velocity) = Vec3::Zero;
+    PRIVATE_PROPERTY(float, friction) = 0.1f;
+    PRIVATE_PROPERTY(float, mass) = 1.0f;
+    PRIVATE_PROPERTY(float, e) = 0.8f;
 };
 

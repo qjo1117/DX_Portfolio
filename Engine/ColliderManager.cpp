@@ -204,8 +204,10 @@ void ColliderManager::End()
 {
 	m_Tree->Clear();
 	for (Ref<BaseCollider> collider : m_Collider) {
+		collider->End();
 		collider = nullptr; // REF_RELASE
 	}
+	m_Collider.clear();
 }
 
 void ColliderManager::AddCollider(Ref<BaseCollider> collider)

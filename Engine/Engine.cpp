@@ -15,7 +15,7 @@ void Engine::Init(const WindowInfo& info)
 	// 메모리가 정상적으로 해제가 안되니 꼭꼭꼭 Window를 종료시키자.
 #pragma region DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(2664);
+	//_CrtSetBreakAlloc(157424);
 	//_CrtSetBreakAlloc(51430);
 	// 메모리 Leak이 있을때만 사용하면 됨
 
@@ -102,6 +102,7 @@ void Engine::Update()
 			while (GEngine->GetWindow().loop) {
 				GEngine->CollisionUpdate();
 			}
+			GET_SINGLE(ColliderManager)->End();
 		});
 	}
 

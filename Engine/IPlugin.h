@@ -24,6 +24,7 @@ public:
 
 	virtual PLUGINDECL bool Awake() { return false; }
 	virtual PLUGINDECL bool Init() { return false; }
+	virtual PLUGINDECL bool Start() { return false; }
 	virtual PLUGINDECL bool Update() { return false; }
 	virtual PLUGINDECL bool Render() { return false; }
 	virtual PLUGINDECL bool End() { return false; }

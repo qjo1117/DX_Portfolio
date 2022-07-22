@@ -18,6 +18,7 @@
 #include "MeshData.h"
 #include "ParticleSystem.h"
 #include "Component.h"
+#include "Rigidbody.h"
 
 #include "CameraController.h"
 #include "RotationXComponent.h"
@@ -292,6 +293,7 @@ ToolScene::ToolScene()
 		obj->AddComponent(make_shared<MeshRenderer>());
 		obj->AddComponent(make_shared<SphereCollider>());
 		obj->AddComponent(make_shared<PlayerController>());
+		obj->AddComponent(make_shared<Rigidbody>());
 
 		obj->name = L"Player";
 		obj->isShadow = false;
@@ -331,20 +333,10 @@ ToolScene::ToolScene()
 #pragma region Animation
 	{
 		Ref<GameObject> meshData = GET_SINGLE(Resources)->Get<GameObject>(L"OrangeBot");
+		meshData->AddComponent(make_shared<DragonController>());
+		meshData->AddComponent(make_shared<BoxCollider>());
 		AddGameObject(meshData);
 
-
-		//int32 index = 0;
-		//for (auto& gameObject : gameObjects) {
-		//	gameObject->name = wstring(L"Astronaut") + to_wstring(index++);
-		//	gameObject->isFrustum = false;
-		//	
-		//	gameObject->AddComponent(make_shared<MeshCollider>());
-		//	gameObject->GetTransform()->SetLocalPosition(Vec3(index * 100.0f, 0.f, -300.f));
-		//	gameObject->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f / 2.0f));
-		//	gameObject->GetTransform()->SetLocalScale(Vec3(10.f, 10.f, 10.f));
-		//	AddGameObject(gameObject);
-		//}
 	}
 #pragma endregion
 

@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Engine.h"
 #include "BaseCollider.h"
+#include "PluginManager.h"
 
 void SceneManager::Update()
 {
@@ -42,6 +43,7 @@ void SceneManager::LoadScene(SCENE_TYPE type)
 	m_type = type;
 	m_currentScene->Awake();
 	m_currentScene->Start();
+	GET_SINGLE(PluginManager)->Start();
 }
 
 Ref<class GameObject> SceneManager::Pick(int32 screenX, int32 screenY, RayCastHitInfo& hit)

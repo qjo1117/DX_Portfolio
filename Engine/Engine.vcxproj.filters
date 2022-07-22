@@ -67,6 +67,9 @@
     <Filter Include="Utils\Fmod">
       <UniqueIdentifier>{137b15f1-674b-4153-87f4-774e1787780c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils\Reflection">
+      <UniqueIdentifier>{700490fd-f1d3-4629-a532-50baa64253c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -278,6 +281,15 @@
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>Core\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Method.cpp">
+      <Filter>Utils\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="Property.cpp">
+      <Filter>Utils\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeInfo.cpp">
+      <Filter>Utils\Reflection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +526,27 @@
     </ClInclude>
     <ClInclude Include="..\Library\Include\Fmod\fmod.hpp">
       <Filter>Utils\Fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="MethodMacros.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyMacros.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Method.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Property.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeInfo.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeInfoMacros.h">
+      <Filter>Utils\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection.h">
+      <Filter>Utils\Reflection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

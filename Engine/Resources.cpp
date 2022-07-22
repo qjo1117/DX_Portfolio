@@ -1241,13 +1241,12 @@ void Resources::CreateDefaultGameObject()
 
 #pragma region Animation Mesh
 	{
-		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"Cat\\Cartoon Cat.fbx");
+		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"dragon\\Dragon.fbx");
 		vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
 		
 		gameObjects[0]->name = wstring(L"OrangeBot");
 		gameObjects[0]->isFrustum = false;
 		
-		gameObjects[0]->AddComponent(make_shared<MeshCollider>());
 		gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
 		gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
 		gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));

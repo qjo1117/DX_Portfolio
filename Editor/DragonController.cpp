@@ -23,3 +23,8 @@ void DragonController::Update()
 		anim->Play(index);
 	}
 }
+
+void DragonController::Function()
+{
+	EDITOR->Log("DragonController Reflection -> Function Call", LOG_STATE::WARNING);
+}

@@ -13,6 +13,7 @@ class PluginManager
 	DECLARE_SINGLE(PluginManager)
 public:
 	void Init();
+	void Start();
 	void Update();
 	void Render();
 	void End();

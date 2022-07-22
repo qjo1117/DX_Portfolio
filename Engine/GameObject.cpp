@@ -9,6 +9,7 @@
 #include "Terrain.h"
 #include "BaseCollider.h"
 #include "Animator.h"
+#include "Rigidbody.h"
 #include "ColliderManager.h"
 
 uint32 GameObject::ID = 0;
@@ -28,12 +29,12 @@ GameObject::~GameObject()
 			component = nullptr;
 		}
 	}
-	for (auto& script : _scripts) {
+	for (auto& script : m_scripts) {
 		if (script.second) {
 			script.second = nullptr;
 		}
 	}
-	_scripts.clear();
+	m_scripts.clear();
 }
 
 void GameObject::Init()
@@ -49,7 +50,7 @@ void GameObject::Awake()
 			component->Awake();
 		}
 	}
-	for (const pair<string, Ref<MonoBehaviour>>& script : _scripts) {
+	for (const pair<string, Ref<MonoBehaviour>>& script : m_scripts) {
 		if (script.second) {
 			script.second->Awake();
 		}
@@ -67,7 +68,7 @@ void GameObject::Start()
 			component->Start();
 		}
 	}
-	for (const pair<string, Ref<MonoBehaviour>>& script : _scripts) {
+	for (const pair<string, Ref<MonoBehaviour>>& script : m_scripts) {
 		if (script.second) {
 			script.second->Start();
 		}
@@ -91,7 +92,7 @@ void GameObject::Update()
 			component->Update();
 		}
 	}
-	for (const pair<string, Ref<MonoBehaviour>>& script : _scripts) {
+	for (const pair<string, Ref<MonoBehaviour>>& script : m_scripts) {
 		if (script.second) {
 			script.second->Update();
 		}
@@ -114,7 +115,7 @@ void GameObject::LateUpdate()
 			component->LateUpdate();
 		}
 	}
-	for (const pair<string, Ref<MonoBehaviour>>& script : _scripts) {
+	for (const pair<string, Ref<MonoBehaviour>>& script : m_scripts) {
 		if (script.second) {
 			script.second->LateUpdate();
 		}
@@ -154,7 +155,7 @@ void GameObject::Serializer(class Json::Value& scene)
 		}
 	}
 
-	for (auto& script : _scripts) {
+	for (auto& script : m_scripts) {
 		if (script.second) {
 			script.second->Serializer(gameObject);
 		}
@@ -171,7 +172,7 @@ void GameObject::DeSerializer(class Json::Value& scene)
 		}
 	}
 
-	for (auto& script : _scripts) {
+	for (auto& script : m_scripts) {
 		if (script.second) {
 			script.second->Serializer(gameObject);
 		}
@@ -218,6 +219,11 @@ Ref<Terrain> GameObject::GetTerrain()
 Ref<BaseCollider> GameObject::GetCollider()
 {
 	return static_pointer_cast<BaseCollider>(GetFixedComponent(COMPONENT_TYPE::COLLIDER));
+}
+
+Ref<Rigidbody> GameObject::GetRigidbody()
+{
+	return static_pointer_cast<Rigidbody>(GetFixedComponent(COMPONENT_TYPE::RIGIDBODY));
 }
 
 Ref<Animator> GameObject::GetAnimator()
