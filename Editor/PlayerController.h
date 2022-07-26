@@ -13,7 +13,6 @@ public:
 	virtual ~PlayerController();
 
 	GENERATE_CLASS_TYPE_INFO(PlayerController)
-
 public:
 	/* ----- virtual Function ----- */
 	virtual void Awake();
@@ -22,8 +21,6 @@ public:
 	virtual void LateUpdate();
 
 	void CollisionTest(Ref<class BaseCollider> dest);
-
-
 
 public:
 	/* ----- GUI Function ----- */

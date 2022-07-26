@@ -56,6 +56,7 @@ public:
 	const vector<BoneInfo>* GetBones() { return &_bones; }
 	uint32 GetBoneCount() { return static_cast<uint32>(_bones.size()); }
 	const vector<AnimClipInfo>* GetAnimClip() { return &_animClips; }
+	vector<AnimClipInfo>& GetAnimClips() { return _animClips; }
 
 	bool IsAnimMesh() { return !_animClips.empty(); }
 	Ref<StructuredBuffer> GetBoneFrameDataBuffer(int32 index = 0) { return _frameBuffer[index]; }

@@ -29,7 +29,12 @@ void Rigidbody::Awake()
 
 void Rigidbody::Update()
 {
+	// 중력 가속도 F = mg
+	if (m_isGround == false) {
+		GetTransform()->localPosition.y -= Rigidbody::Gravity * DELTATIME * m_mass;
+	}
 
+	
 }
 
 void Rigidbody::FinalUpdate()
@@ -38,7 +43,7 @@ void Rigidbody::FinalUpdate()
 		// 현재 가속도를 구합니다.
 		Vec3 accel = m_force * DELTATIME;
 		m_velocity = accel * m_mass;
-		force = Vec3::Zero;
+		m_force = Vec3::Zero;
 	}
 
 	if (m_velocity != Vec3::Zero) {

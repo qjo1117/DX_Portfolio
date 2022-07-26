@@ -79,7 +79,7 @@ public:
 		vector.append(vec.x);
 		vector.append(vec.y);
 
-		vecInfo["Vector2"] = vector;
+		vecInfo["Vec2"].append(vector);
 	}
 
 	static void JsonLoadToVec2(Json::Value& info, Vec2& vec)
@@ -94,14 +94,15 @@ public:
 		vec.y = arr[1];
 	}
 
-	static void JsonSaveToVec3(Json::Value& vecInfo, const Vec3& vec) 
+	static void ToJson(Json::Value& jsonString, Vec3& vec) 
 	{
-		Json::Value vector;
-		vector.append(vec.x);
-		vector.append(vec.y);
-		vector.append(vec.z);
+		Json::Value json;
 
-		vecInfo["Vector3"] = vector;
+		json.append(vec.x);
+		json.append(vec.y);
+		json.append(vec.z);
+
+		jsonString["Vec3"].append(json);
 	}
 
 	static void JsonLoadToVec3(Json::Value& info, Vec3& vec)
@@ -117,15 +118,16 @@ public:
 		vec.z = arr[2];
 	}
 
-	static void JsonSaveToVec4(Json::Value& vecInfo, const Vec4& vec)
+	static void ToJson(Json::Value& jsonString, Vec4& vec)
 	{
-		Json::Value vector;
-		vector.append(vec.x);
-		vector.append(vec.y);
-		vector.append(vec.z);
-		vector.append(vec.w);
+		Json::Value json;
 
-		vecInfo["Vector4"] = vector;
+		json.append(vec.x);
+		json.append(vec.y);
+		json.append(vec.z);
+		json.append(vec.w);
+
+		jsonString["Vec4"].append(json);
 	}
 
 	static void JsonLoadToVec4(Json::Value& info, Vec4& vec)
@@ -142,7 +144,7 @@ public:
 		vec.w = arr[3];
 	}
 
-	static void JsonSaveToMatrix(Json::Value& matInfo, const Matrix& mat)
+	static void JsonSaveToMatrix(Json::Value& matInfo, Matrix& mat)
 	{
 		Json::Value vector;
 		for (int32 i = 0; i < 4; ++i) {
@@ -154,12 +156,12 @@ public:
 		matInfo["Matrix"] = vector;
 	}
 
-	static void JsonSaveToVertex(Json::Value& vertexInfo, const Vertex& vertex)
+	static void JsonSaveToVertex(Json::Value& vertexInfo, Vertex& vertex)
 	{
 		Json::Value info;
 
 		/* ----- Position ----- */
-		Utils::JsonSaveToVec3(info, vertex.pos);
+		Utils::ToJson(info, vertex.pos);
 		vertexInfo["Position"] = info;
 		info.clear();
 
@@ -169,22 +171,22 @@ public:
 		info.clear();
 
 		/* ----- Normal ----- */
-		Utils::JsonSaveToVec3(info, vertex.normal);
+		Utils::ToJson(info, vertex.normal);
 		vertexInfo["Normal"] = info;
 		info.clear();
 
 		/* ----- Tangent ----- */
-		Utils::JsonSaveToVec3(info, vertex.tangent);
+		Utils::ToJson(info, vertex.tangent);
 		vertexInfo["Tangent"] = info;
 		info.clear();
 
 		/* ----- Weights ----- */
-		Utils::JsonSaveToVec4(info, vertex.weights);
+		Utils::ToJson(info, vertex.weights);
 		vertexInfo["Weights"] = info;
 		info.clear();
 
 		/* ----- Indices ----- */
-		Utils::JsonSaveToVec4(info, vertex.indices);
+		Utils::ToJson(info, vertex.indices);
 		vertexInfo["Indices"] = info;
 		info.clear();
 	}
@@ -211,7 +213,7 @@ public:
 
 	}
 
-	static void JsonBoneInfo(Json::Value& boneInfo, const BoneInfo& bone)
+	static void JsonBoneInfo(Json::Value& boneInfo, BoneInfo& bone)
 	{
 		Json::Value info;
 
@@ -222,5 +224,52 @@ public:
 		/* ----- ParentOffset Matrix ----- */
 		Utils::JsonSaveToMatrix(info, bone.matOffset);
 		info["ParentOffsetMatrix"] = info;
+	}
+
+	static void ToJson(Json::Value& jsonValue, KeyFrameInfo& keyFrameInfo)
+	{
+		Json::Value json;
+
+		json.append(keyFrameInfo.time);
+		json.append(keyFrameInfo.frame);
+
+		Utils::ToJson(json, keyFrameInfo.scale);
+		Utils::ToJson(json, keyFrameInfo.rotation);
+		Utils::ToJson(json, keyFrameInfo.translate);
+
+		jsonValue["KeyFrameInfo"].append(json);
+	}
+
+	static void ToJson(Json::Value& jsonValue, AnimClipInfo& animClipInfo)
+	{
+		Json::Value json;
+
+		json.append(Utils::Wstr2Str(animClipInfo.animName));
+		json.append(animClipInfo.frameCount);
+		json.append(animClipInfo.duration);
+
+		int32 iSize = animClipInfo.keyFrames.size();
+		for (int32 i = 0; i < iSize; ++i) {
+			for (int32 j = 0; j < animClipInfo.keyFrames[i].size(); ++j) {
+				Utils::ToJson(json, animClipInfo.keyFrames[i][j]);
+			}
+		}
+
+		jsonValue["AnimClipInfo"].append(json);
+	}
+
+	static void ToJson(Json::Value& jsonString, const vector<vector<float>>& vec)
+	{
+		Json::Value json;
+
+		for (auto& iVec : vec) {
+			Json::Value iValue;
+			for (auto& value : iVec) {
+				iValue["colum"].append(value);
+			}
+			json["row"].append(iValue);
+		}
+
+		jsonString["Vector<Vector<float>>"].append(json);
 	}
 };

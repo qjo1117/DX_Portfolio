@@ -47,7 +47,7 @@ struct KeyFrameInfo
 	int32	frame;
 	Vec3	scale;
 	Vec4	rotation;
-	Vec3	translate;
+	Vec3	translate;;
 };
 
 struct BoneInfo

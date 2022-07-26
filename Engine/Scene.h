@@ -92,14 +92,14 @@ private:
 private:
 	/* ----- Scene Object Mapping Variable ----- */
 	array<vector<Ref<GameObject>>, static_cast<uint32>(LAYER_TYPE::END)> _gameObjects;
-	vector<Ref<GameObject>> m_objects;		// 한번에 전체순회
-	vector<Ref<GameObject>> _parentBaseObjects;
-	wstring _name;
+	vector<Ref<GameObject>>		m_objects;		// 한번에 전체순회
+	vector<Ref<GameObject>>		_parentBaseObjects;
+	wstring						_name;
 
-	vector<Ref<GameObject>>& _light;
-	vector<Ref<GameObject>>& _camera;
-	uint32					 _layerSize = static_cast<uint32>(LAYER_TYPE::END);
-	uint32					 _cullingMask = 0;
+	vector<Ref<GameObject>>&	_light;
+	vector<Ref<GameObject>>&	_camera;
+	uint32						_layerSize = static_cast<uint32>(LAYER_TYPE::END);
+	uint32						_cullingMask = 0;
 
 private:
 	vector<Ref<GameObject>>		_vecDeferred;

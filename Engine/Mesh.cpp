@@ -106,7 +106,7 @@ void Mesh::Save(const wstring& path)
 	Json::Value verticesInfo;
 	Json::Value vertex;
 	verticesInfo["VerticesCount"] = _vertices.size();
-	for (const Vertex& vertice : _vertices) {
+	for (Vertex& vertice : _vertices) {
 		Json::Value info;
 		Utils::JsonSaveToVertex(info, vertice);
 		vertex.append(info);

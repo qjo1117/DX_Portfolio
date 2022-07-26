@@ -1,0 +1,7 @@
+﻿  ActionPlugin.cpp
+D:\Cpp\DirectX12\DX_Portfolio\Engine\EditorManager.h(12,2): warning C4094: 태그 없는 'struct'에서 기호를 선언하지 않았습니다.
+D:\Cpp\DirectX12\DX_Portfolio\Engine\BaseCollider.h(31,1): warning C4099: 'RayCastHitInfo': 처음에는 'class'을(를) 사용하여 형식 이름을 표시했는데 이제는 'struct'을(를) 사용하여 표시합니다.
+D:\Cpp\DirectX12\DX_Portfolio\Engine\BaseCollider.h(30): message : 'RayCastHitInfo' 선언을 참조하십시오.
+D:\Cpp\DirectX12\DX_Portfolio\Engine\MeshRenderer.h(50,27): warning C4267: 'return': 'size_t'에서 'uint32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\Cpp\DirectX12\DX_Portfolio\Engine\Animator.h(47,30): warning C4244: '초기화 중': 'float'에서 'int32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  TestDLL_UPDATE.vcxproj -> D:\Cpp\DirectX12\DX_Portfolio\Output\TestDLL_UPDATE.dll

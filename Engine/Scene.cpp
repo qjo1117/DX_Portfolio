@@ -94,6 +94,7 @@ void Scene::Update()
 
 	SortParantGameObject();
 
+	// Update  / Player
 
 	for (const Ref<GameObject>& object : _parentBaseObjects) {
 		if (object == nullptr) {
@@ -106,6 +107,8 @@ void Scene::Update()
 
 void Scene::LateUpdate()
 {
+	// LateUpdate | Decal / Camera 
+
 	for (const Ref<GameObject>& object : _parentBaseObjects) {
 		if (object == nullptr) {
 			continue;

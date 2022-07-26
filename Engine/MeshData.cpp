@@ -67,9 +67,22 @@ void MeshData::Load(const wstring& path)
 
 void MeshData::Save(const wstring& path)
 {
-	
+	std::ofstream file(path + L".json");
 
-	// TODO
+	Json::Value json;
+
+	for (MeshRenderInfo& info : _meshRenders) {
+		if (info.mesh->IsAnimMesh()) {
+			for (auto& clip : info.mesh->GetAnimClips()) {
+				Utils::ToJson(json, clip);
+			}
+		}
+	}
+	Json::StreamWriterBuilder builder;
+	unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
+	writer->write(json, &file);
+
+	file.close();
 }
 
 vector<Ref<GameObject>> MeshData::Instantiate()

@@ -11,7 +11,9 @@ class AnimationEvent
 {
 public:
 	string	eventName;
+	int32	clipIndex = 0;
 	int32	frame = 0;
+	bool	isAnimation = false;
 };
 
 class Animator : public Component
@@ -45,6 +47,8 @@ private:
 	int32						m_nextFrame = 0;
 	float						m_frameRatio = 0.0f;
 	int32						m_currentFrame = 0.0f;
+
+	int32						m_frameIndex = 0;
 
 	Ref<Material>				m_computeMaterial;
 	Ref<StructuredBuffer>		m_boneFinalMatrix;

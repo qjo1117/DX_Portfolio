@@ -14,7 +14,7 @@ public:
 public:
     /* ------ Register Function ----- */
     void RigidbodyCollision(Ref<class BaseCollider> p_collider);
-
+   
 public:
     void AddForce(Vec3 p_force);
 
@@ -26,5 +26,11 @@ private:
     PRIVATE_PROPERTY(float, friction) = 0.1f;
     PRIVATE_PROPERTY(float, mass) = 1.0f;
     PRIVATE_PROPERTY(float, e) = 0.8f;
+    PRIVATE_PROPERTY(bool, isGround) = false;
+
+    const float Gravity = 9.8f;
+
+private:
+
 };
 

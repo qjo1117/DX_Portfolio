@@ -16,8 +16,6 @@ void SceneManager::Update()
 	m_currentScene->LateUpdate();
 	m_currentScene->FinalUpdate();
 
-	Ref<Scene>& scene = m_currentScene;
-
 }
 
 void SceneManager::Render()

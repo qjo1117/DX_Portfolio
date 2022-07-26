@@ -20,16 +20,20 @@ Animator::~Animator()
 
 void Animator::EditorUpdate()
 {
+	int32 maxUpdateTime = m_animClips->at(m_clipIndex).frameCount;
+	ImGui::SliderInt("Frame", &m_frame, 0, maxUpdateTime);
+
 	if (ImGui::SliderInt("Clips", &m_clipIndex, 0, m_animClips->size() - 1)) {
 		Play(m_clipIndex);
 	}
 
-	int32 maxUpdateTime = m_animClips->at(m_clipIndex).frameCount;
+	ImGui::Separator();
 
 	ImGui::SliderInt("Event", &m_currentFrame, 0, maxUpdateTime);
 	if (ImGui::Button("Add Event")) {
 		AnimationEvent animEvent;
 		animEvent.frame = m_currentFrame;
+		animEvent.clipIndex = m_clipIndex;
 		m_vecAnimEvents.push_back(animEvent);
 	}
 
@@ -37,6 +41,7 @@ void Animator::EditorUpdate()
 
 	for (AnimationEvent& animEvent : m_vecAnimEvents) {
 		ImGui::InputText("Function", animEvent.eventName.data(), 10.0f);
+		ImGui::InputInt("Clip", &animEvent.clipIndex);
 		ImGui::InputInt("Time", &animEvent.frame);
 	}
 
@@ -49,6 +54,9 @@ void Animator::FinalUpdate()
 	const AnimClipInfo& animClip = m_animClips->at(m_clipIndex);
 	if (m_updateTime >= animClip.duration) {
 		m_updateTime = 0.0f;
+		for (AnimationEvent& animEvent : m_vecAnimEvents) {
+			animEvent.isAnimation = false;
+		}
 	}
 
 	const int32 ratio = static_cast<int32>(animClip.frameCount / animClip.duration);
@@ -57,13 +65,17 @@ void Animator::FinalUpdate()
 	m_nextFrame = min(m_frame + 1, animClip.frameCount - 1);
 	m_frameRatio = static_cast<float>(m_frame - m_frame);
 
-
 	for (auto& script : GetGameObject()->GetScripts()) {
 		const vector<const Method*> vecMethods = script.second->GetTypeInfo().GetMethods();
 		for (auto& method : vecMethods) {
 			for (AnimationEvent& animEvent : m_vecAnimEvents) {
+				if (animEvent.isAnimation == true || animEvent.frame != m_frame) {
+					continue;
+				}
+
 				if (strcmp(animEvent.eventName.data(), method->GetName()) == 0) {
 					method->Invoke<void>(&script.second);
+					animEvent.isAnimation = true;
 				}
 			}
 		}
