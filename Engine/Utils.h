@@ -73,189 +73,157 @@ public:
 		return r;
 	}
 
-	static void JsonSaveToVec2(Json::Value& vecInfo, const Vec2& vec)
-	{
-		Json::Value vector;
-		vector.append(vec.x);
-		vector.append(vec.y);
+#pragma region FromJson
 
-		vecInfo["Vec2"].append(vector);
+	static void FromJson(Json::Value& jsonString, Vec2& vec)
+	{
+		vec.x = jsonString["x"].asFloat();
+		vec.y = jsonString["y"].asFloat();
 	}
 
-	static void JsonLoadToVec2(Json::Value& info, Vec2& vec)
+	static void FromJson(Json::Value& jsonString, Vec3& vec)
 	{
-		vector<float> arr;
+		vec.x = jsonString["x"].asFloat();
+		vec.y = jsonString["y"].asFloat();
+		vec.z = jsonString["z"].asFloat();
+	}
 
-		Json::Value iterator = info["Vector2"];
-		for (Json::ValueIterator iter = iterator.begin(); iter != iterator.end(); iter++) {
-			arr.push_back(iter->asFloat());
+
+	static void FromJson(Json::Value& jsonString, Vec4& vec)
+	{
+
+		vec.x = jsonString["x"].asFloat();
+		vec.y = jsonString["y"].asFloat();
+		vec.z = jsonString["z"].asFloat();
+		vec.w = jsonString["w"].asFloat();
+	}
+
+	static void FromJson(Json::Value& jsonString, KeyFrameInfo& keyFrameInfo)
+	{
+		keyFrameInfo.time = jsonString["Time"].asDouble();
+		keyFrameInfo.frame = jsonString["Frame"].asInt();
+
+		Utils::FromJson(jsonString["Scale"], keyFrameInfo.scale);
+		Utils::FromJson(jsonString["Rotation"], keyFrameInfo.rotation);
+		Utils::FromJson(jsonString["Translate"], keyFrameInfo.translate);
+	}
+
+	static void FromJson(Json::Value& jsonString, AnimClipInfo& animClipInfo)
+	{
+		animClipInfo.animName = Utils::Str2Wstr(jsonString["AnimName"].asString());
+		animClipInfo.frameCount = jsonString["FrameCount"].asInt();
+		animClipInfo.duration = jsonString["Duration"].asFloat();
+
+		int32 iSize = jsonString["ClipKeyFrameSize"].asInt();
+		animClipInfo.keyFrames.resize(iSize);
+
+		for (int32 i = 0; i < iSize; ++i) {
+			Json::Value vecJson = jsonString["MatrixKeyFrameInfo"][i];
+			int32 jSize = vecJson["ClipKeyFrameSize"].asInt();
+			for (int32 j = 0; j < jSize; ++j) {
+				KeyFrameInfo info;
+				Utils::FromJson(vecJson["KeyFrameInfo"][j], info);
+				animClipInfo.keyFrames[i].push_back(info);
+			}
 		}
-		vec.x = arr[0];
-		vec.y = arr[1];
+
 	}
 
-	static void ToJson(Json::Value& jsonString, Vec3& vec) 
+	static void FromJson(Json::Value& jsonString, Matrix& mat)
 	{
-		Json::Value json;
-
-		json.append(vec.x);
-		json.append(vec.y);
-		json.append(vec.z);
-
-		jsonString["Vec3"].append(json);
-	}
-
-	static void JsonLoadToVec3(Json::Value& info, Vec3& vec)
-	{
-		vector<float> arr;
-		
-		Json::Value iterator = info["Vector3"];
-		for (Json::ValueIterator iter = iterator.begin(); iter != iterator.end(); iter++) {
-			arr.push_back(iter->asFloat());
+		for (int32 i = 0; i < 4; ++i) {
+			Json::Value iValue = jsonString["Row"][i];
+			for (int32 j = 0; j < 4; ++j) {
+				mat.m[i][j] = iValue["Colum"][j].asFloat();
+			}
 		}
-		vec.x = arr[0];
-		vec.y = arr[1];
-		vec.z = arr[2];
+	}
+
+	static void FromJson(Json::Value& jsonString, BoneInfo& bone)
+	{
+		bone.boneName = Utils::Str2Wstr(jsonString["BoneName"].asString());
+		bone.parentIdx = jsonString["ParentIndex"].asInt();
+		Utils::FromJson(jsonString["Offset"], bone.matOffset);
+	}
+
+#pragma endregion
+
+#pragma region ToJson
+
+	static void ToJson(Json::Value& jsonString, Vec2& vec)
+	{
+
+		jsonString["x"] = vec.x;
+		jsonString["y"] = vec.y;
+
+	}
+
+	static void ToJson(Json::Value& jsonString, Vec3& vec)
+	{
+		jsonString["x"] = vec.x;
+		jsonString["y"] = vec.y;
+		jsonString["z"] = vec.z;
+
 	}
 
 	static void ToJson(Json::Value& jsonString, Vec4& vec)
 	{
-		Json::Value json;
-
-		json.append(vec.x);
-		json.append(vec.y);
-		json.append(vec.z);
-		json.append(vec.w);
-
-		jsonString["Vec4"].append(json);
-	}
-
-	static void JsonLoadToVec4(Json::Value& info, Vec4& vec)
-	{
-		vector<float> arr;
-
-		Json::Value iterator = info["Vector4"];
-		for (Json::ValueIterator iter = iterator.begin(); iter != iterator.end(); iter++) {
-			arr.push_back(iter->asFloat());
-		}
-		vec.x = arr[0];
-		vec.y = arr[1];
-		vec.z = arr[2];
-		vec.w = arr[3];
-	}
-
-	static void JsonSaveToMatrix(Json::Value& matInfo, Matrix& mat)
-	{
-		Json::Value vector;
-		for (int32 i = 0; i < 4; ++i) {
-			for (int32 j = 0; j < 4; ++j) {
-				vector.append(mat.m[i][j]);
-			}
-		}
-
-		matInfo["Matrix"] = vector;
-	}
-
-	static void JsonSaveToVertex(Json::Value& vertexInfo, Vertex& vertex)
-	{
-		Json::Value info;
-
-		/* ----- Position ----- */
-		Utils::ToJson(info, vertex.pos);
-		vertexInfo["Position"] = info;
-		info.clear();
-
-		/* ----- UV ----- */
-		Utils::JsonSaveToVec2(info, vertex.uv);
-		vertexInfo["UV"] = info;
-		info.clear();
-
-		/* ----- Normal ----- */
-		Utils::ToJson(info, vertex.normal);
-		vertexInfo["Normal"] = info;
-		info.clear();
-
-		/* ----- Tangent ----- */
-		Utils::ToJson(info, vertex.tangent);
-		vertexInfo["Tangent"] = info;
-		info.clear();
-
-		/* ----- Weights ----- */
-		Utils::ToJson(info, vertex.weights);
-		vertexInfo["Weights"] = info;
-		info.clear();
-
-		/* ----- Indices ----- */
-		Utils::ToJson(info, vertex.indices);
-		vertexInfo["Indices"] = info;
-		info.clear();
-	}
-
-	static void JsonLoadToVertex(Json::Value& vertexInfo, Vertex& vertex)
-	{
-		/* ----- Position ----- */
-		Utils::JsonLoadToVec3(vertexInfo["Position"], vertex.pos);
-
-		/* ----- UV ----- */
-		Utils::JsonLoadToVec2(vertexInfo["UV"], vertex.uv);
-
-		/* ----- Normal ----- */
-		Utils::JsonLoadToVec3(vertexInfo["Normal"], vertex.normal);
-
-		/* ----- Tangent ----- */
-		Utils::JsonLoadToVec3(vertexInfo["Tangent"], vertex.tangent);
-
-		/* ----- Weights ----- */
-		Utils::JsonLoadToVec4(vertexInfo["Weights"], vertex.weights);
-
-		/* ----- Indices ----- */
-		Utils::JsonLoadToVec4(vertexInfo["Indices"], vertex.indices);
-
-	}
-
-	static void JsonBoneInfo(Json::Value& boneInfo, BoneInfo& bone)
-	{
-		Json::Value info;
-
-		/* ----- BoneName | ParentIndex ----- */
-		info["BoneName"] = Utils::Wstr2Str(bone.boneName);
-		info["ParentIndex"] = bone.parentIdx;
-		
-		/* ----- ParentOffset Matrix ----- */
-		Utils::JsonSaveToMatrix(info, bone.matOffset);
-		info["ParentOffsetMatrix"] = info;
+		jsonString["x"] = vec.x;
+		jsonString["y"] = vec.y;
+		jsonString["z"] = vec.z;
+		jsonString["w"] = vec.z;
 	}
 
 	static void ToJson(Json::Value& jsonValue, KeyFrameInfo& keyFrameInfo)
 	{
 		Json::Value json;
 
-		json.append(keyFrameInfo.time);
-		json.append(keyFrameInfo.frame);
+		json["Time"] = keyFrameInfo.time;
+		json["Frame"] = keyFrameInfo.frame;
 
-		Utils::ToJson(json, keyFrameInfo.scale);
-		Utils::ToJson(json, keyFrameInfo.rotation);
-		Utils::ToJson(json, keyFrameInfo.translate);
+		Utils::ToJson(json["Scale"], keyFrameInfo.scale);
+		Utils::ToJson(json["Rotation"], keyFrameInfo.rotation);
+		Utils::ToJson(json["Translate"], keyFrameInfo.translate);
 
-		jsonValue["KeyFrameInfo"].append(json);
+		jsonValue.append(json);
+	}
+
+	static void ToJson(Json::Value& jsonString, Matrix& mat)
+	{
+		Json::Value json;
+		
+		for (int32 i = 0; i < 4; ++i) {
+			Json::Value vecJson;
+			for (int32 j = 0; j < 4; ++j) {
+				vecJson["Colum"].append(mat.m[i][j]);
+			}
+			json["Row"].append(vecJson);
+		}
+
+		jsonString = json;
 	}
 
 	static void ToJson(Json::Value& jsonValue, AnimClipInfo& animClipInfo)
 	{
 		Json::Value json;
 
-		json.append(Utils::Wstr2Str(animClipInfo.animName));
-		json.append(animClipInfo.frameCount);
-		json.append(animClipInfo.duration);
+		json["AnimName"] = Utils::Wstr2Str(animClipInfo.animName);
+		json["FrameCount"] = animClipInfo.frameCount;
+		json["Duration"] = animClipInfo.duration;
 
 		int32 iSize = animClipInfo.keyFrames.size();
+		json["ClipKeyFrameSize"] = iSize;
 		for (int32 i = 0; i < iSize; ++i) {
-			for (int32 j = 0; j < animClipInfo.keyFrames[i].size(); ++j) {
-				Utils::ToJson(json, animClipInfo.keyFrames[i][j]);
+			Json::Value vecJson;
+			int32 jSize = animClipInfo.keyFrames[i].size();
+			vecJson["ClipKeyFrameSize"] = jSize;
+			for (int32 j = 0; j < jSize; ++j) {
+				Utils::ToJson(vecJson["KeyFrameInfo"], animClipInfo.keyFrames[i][j]);
 			}
+			json["MatrixKeyFrameInfo"].append(vecJson);
 		}
 
-		jsonValue["AnimClipInfo"].append(json);
+		jsonValue = json;
 	}
 
 	static void ToJson(Json::Value& jsonString, const vector<vector<float>>& vec)
@@ -271,5 +239,135 @@ public:
 		}
 
 		jsonString["Vector<Vector<float>>"].append(json);
+	}
+
+	static void ToJson(Json::Value& jsonString, BoneInfo& info)
+	{
+		Json::Value json;
+
+		json["BoneName"] = Utils::Wstr2Str(info.boneName);
+		json["ParentIndex"] = info.parentIdx;
+		Utils::ToJson(json["Offset"], info.matOffset);
+
+		jsonString = json;
+	}
+
+	static void ToJson(Json::Value& jsonString, FbxKeyFrameInfo& keyFrameInfo)
+	{
+		Json::Value json;
+
+		json["Time"] = keyFrameInfo.time;
+		Matrix mat = Utils::FbxMatrixToMatrix(keyFrameInfo.matTransform);
+		Utils::ToJson(json["Transform"], mat);
+
+		jsonString.append(json);
+	}
+
+	static void ToJson(Json::Value& jsonString, FbxAnimClipInfo& animClipInfo)
+	{
+		Json::Value json;
+		
+		json["Name"] = Utils::Wstr2Str(animClipInfo.name);
+		
+		int32 startFrame = static_cast<int32>(animClipInfo.startTime.GetFrameCount(animClipInfo.mode));
+		int32 endFrame = static_cast<int32>(animClipInfo.endTime.GetFrameCount(animClipInfo.mode));
+
+		int32 iSize = animClipInfo.keyFrames.size();
+		json["KeyFrameSize_I"] = iSize;
+		for (int32 i = 0; i < iSize; ++i) {
+			Json::Value vecJson = json["KeyFrame_I"];
+			int32 jSize = animClipInfo.keyFrames[i].size();
+			vecJson["KeyFrameSize_J"] = jSize;
+			for (int32 j = 0; j < jSize; ++j) {
+				Utils::ToJson(vecJson, animClipInfo.keyFrames[i][j]);
+			}
+			json["KeyFrame_IJ"].append(vecJson);
+		}
+
+		jsonString.append(json);
+	}
+
+	static void ToJson(Json::Value& jsonString, FbxBoneInfo& boneInfo)
+	{
+
+	}
+
+#pragma endregion
+
+	static void JsonSaveToMatrix(Json::Value& matInfo, Matrix& mat)
+	{
+		Json::Value vector;
+		for (int32 i = 0; i < 4; ++i) {
+			for (int32 j = 0; j < 4; ++j) {
+				vector.append(mat.m[i][j]);
+			}
+		}
+
+		matInfo["Matrix"] = vector;
+	}
+
+	//static void JsonSaveToVertex(Json::Value& vertexInfo, Vertex& vertex)
+	//{
+	//	Json::Value info;
+
+	//	/* ----- Position ----- */
+	//	Utils::ToJson(info, vertex.pos);
+	//	vertexInfo["Position"] = info;
+	//	info.clear();
+
+	//	/* ----- UV ----- */
+	//	Utils::ToJson(info, vertex.uv);
+	//	vertexInfo["UV"] = info;
+	//	info.clear();
+
+	//	/* ----- Normal ----- */
+	//	Utils::ToJson(info, vertex.normal);
+	//	vertexInfo["Normal"] = info;
+	//	info.clear();
+
+	//	/* ----- Tangent ----- */
+	//	Utils::ToJson(info, vertex.tangent);
+	//	vertexInfo["Tangent"] = info;
+	//	info.clear();
+
+	//	/* ----- Weights ----- */
+	//	Utils::ToJson(info, vertex.weights);
+	//	vertexInfo["Weights"] = info;
+	//	info.clear();
+
+	//	/* ----- Indices ----- */
+	//	Utils::ToJson(info, vertex.indices);
+	//	vertexInfo["Indices"] = info;
+	//	info.clear();
+	//}
+
+	//static void JsonLoadToVertex(Json::Value& vertexInfo, Vertex& vertex)
+	//{
+	//	/* ----- Position ----- */
+	//	Utils::JsonLoadToVec3(vertexInfo["Position"], vertex.pos);
+	//	/* ----- UV ----- */
+	//	Utils::JsonLoadToVec2(vertexInfo["UV"], vertex.uv);
+	//	/* ----- Normal ----- */
+	//	Utils::JsonLoadToVec3(vertexInfo["Normal"], vertex.normal);
+	//	/* ----- Tangent ----- */
+	//	Utils::JsonLoadToVec3(vertexInfo["Tangent"], vertex.tangent);
+	//	/* ----- Weights ----- */
+	//	Utils::JsonLoadToVec4(vertexInfo["Weights"], vertex.weights);
+	//	/* ----- Indices ----- */
+	//	Utils::JsonLoadToVec4(vertexInfo["Indices"], vertex.indices);
+	//}
+
+
+	static Matrix FbxMatrixToMatrix(const FbxMatrix& fbxMat)
+	{
+		Matrix mat;
+
+		for (int32 i = 0; i < 4; ++i) {
+			for (int32 j = 0; j < 4; ++j) {
+				mat.m[i][j] = fbxMat[i][j];
+			}
+		}
+
+		return mat;
 	}
 };

@@ -1,78 +1,6 @@
 #pragma once
 
-struct FbxMaterialInfo
-{
-	Vec4			diffuse;
-	Vec4			ambient;
-	Vec4			specular;
-	wstring			name;
-	wstring			diffuseTexName;
-	wstring			normalTexName;
-	wstring			specularTexName;
-};
 
-struct BoneWeight
-{
-	using Pair = pair<int32, double>;
-	vector<Pair> boneWeights;
-
-	void AddWeights(uint32 index, double weight)
-	{
-		if (weight <= 0.f)
-			return;
-
-		auto findIt = std::find_if(boneWeights.begin(), boneWeights.end(),
-			[=](const Pair& p) { return p.second < weight; });
-
-		if (findIt != boneWeights.end())
-			boneWeights.insert(findIt, Pair(index, weight));
-		else
-			boneWeights.push_back(Pair(index, weight));
-
-		// 가중치는 최대 4개
-		if (boneWeights.size() > 4)
-			boneWeights.pop_back();
-	}
-
-	void Normalize()
-	{
-		double sum = 0.f;
-		std::for_each(boneWeights.begin(), boneWeights.end(), [&](Pair& p) { sum += p.second; });
-		std::for_each(boneWeights.begin(), boneWeights.end(), [=](Pair& p) { p.second = p.second / sum; });
-	}
-};
-
-struct FbxMeshInfo
-{
-	wstring								name;
-	vector<Vertex>						vertices;
-	vector<vector<uint32>>				indices;
-	vector<FbxMaterialInfo>				materials;
-	vector<BoneWeight>					boneWeights; // 뼈 가중치
-	bool								hasAnimation;
-};
-
-struct FbxKeyFrameInfo
-{
-	FbxAMatrix  matTransform;
-	double		time;
-};
-
-struct FbxBoneInfo
-{
-	wstring					boneName;
-	int32					parentIndex;
-	FbxAMatrix				matOffset;
-};
-
-struct FbxAnimClipInfo
-{
-	wstring			name;
-	FbxTime			startTime;
-	FbxTime			endTime;
-	FbxTime::EMode	mode;
-	vector<vector<FbxKeyFrameInfo>>	keyFrames;
-};
 
 class FBXLoader
 {
@@ -82,6 +10,7 @@ public:
 
 public:
 	void LoadFbx(const wstring& path);
+	void LoadFbxHasAnimation(const wstring& path);
 
 public:
 	int32 GetMeshCount() { return static_cast<int32>(_meshes.size()); }

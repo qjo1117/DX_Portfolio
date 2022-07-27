@@ -29,6 +29,8 @@ void DirectoryManager::Init()
 	m_vecExtension.push_back(".lib");
 	m_vecExtension.push_back(".bat");
 
+	m_vecExtension.push_back(".json");
+
 
 	CreateFileInfos();
 

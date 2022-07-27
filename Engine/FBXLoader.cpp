@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "PathManager.h"
 
+
 FBXLoader::FBXLoader()
 {
 
@@ -38,6 +39,22 @@ void FBXLoader::LoadFbx(const wstring& path)
 	// 로드된 데이터 파싱 (Mesh/Material/Skin)
 	ParseNode(_scene->GetRootNode());
 
+	// 우리 구조에 맞게 Texture / Material 생성
+	CreateTextures();
+	CreateMaterials();
+
+
+
+}
+
+void FBXLoader::LoadFbxHasAnimation(const wstring& path)
+{
+	// 파일 데이터 로드
+	Import(path);
+
+
+	// 로드된 데이터 파싱 (Mesh/Material/Skin)
+	ParseNode(_scene->GetRootNode());
 
 	// 우리 구조에 맞게 Texture / Material 생성
 	CreateTextures();
@@ -453,6 +470,8 @@ void FBXLoader::LoadAnimationData(FbxMesh* mesh, FbxMeshInfo* meshInfo)
 			}
 		}
 	}
+
+
 
 	FillBoneWeight(mesh, meshInfo);
 }

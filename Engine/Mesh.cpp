@@ -67,6 +67,25 @@ Ref<Mesh> Mesh::CreateFromFBX(const FbxMeshInfo* meshInfo, FBXLoader& loader)
 	return mesh;
 }
 
+Ref<Mesh> Mesh::CreateFromFBX_HasAnimation(const FbxMeshInfo* meshInfo, FBXLoader& loader, Ref<Mesh>& mesh)
+{
+	mesh->CreateVertexBuffer(meshInfo->vertices);
+
+	for (const vector<uint32>& buffer : meshInfo->indices) {
+		if (buffer.empty()) {		// 임시처리
+			vector<uint32> defaultBuffer{ 0 };
+			mesh->CreateIndexBuffer(defaultBuffer);
+		}
+		else {
+			mesh->CreateIndexBuffer(buffer);
+		}
+	}
+
+	mesh->CreateHasBonesAndAnimations();
+
+	return mesh;
+}
+
 void Mesh::Modify(const vector<Vertex>& vertexBuffer)
 {
 	void* vertexDataBuffer = nullptr;
@@ -107,8 +126,8 @@ void Mesh::Save(const wstring& path)
 	Json::Value vertex;
 	verticesInfo["VerticesCount"] = _vertices.size();
 	for (Vertex& vertice : _vertices) {
-		Json::Value info;
-		Utils::JsonSaveToVertex(info, vertice);
+		Json::Value info;/*
+		Utils::JsonSaveToVertex(info, vertice);*/
 		vertex.append(info);
 	}
 	verticesInfo["Position"] = vertex;
@@ -159,7 +178,7 @@ void Mesh::Load(const wstring& path)
 		Json::Value iterator = verticesInfo["Position"];
 		for (Json::ValueIterator iter = iterator.begin(); iter != iterator.end(); iter++) {
 			Vertex vertex;
-			Utils::JsonLoadToVertex(*iter, vertex);
+			//Utils::JsonLoadToVertex(*iter, vertex);
 			vertexs.push_back(vertex);
 		}
 	}
@@ -306,7 +325,7 @@ void Mesh::CreateBonesAndAnimations(FBXLoader& loader)
 			}
 		}
 
-		_animClips.push_back(info);
+		m_animClips.push_back(info);
 	}
 #pragma endregion
 
@@ -318,7 +337,7 @@ void Mesh::CreateBonesAndAnimations(FBXLoader& loader)
 		boneInfo.parentIdx = bone->parentIndex;
 		boneInfo.matOffset = GetMatrix(bone->matOffset);
 		boneInfo.boneName = bone->boneName;
-		_bones.push_back(boneInfo);
+		m_bones.push_back(boneInfo);
 	}
 #pragma endregion
 
@@ -326,23 +345,23 @@ void Mesh::CreateBonesAndAnimations(FBXLoader& loader)
 	if (IsAnimMesh())
 	{
 		// BoneOffet 행렬
-		const int32 boneCount = static_cast<int32>(_bones.size());
+		const int32 boneCount = static_cast<int32>(m_bones.size());
 		vector<Matrix> offsetVec(boneCount);
 		for (size_t b = 0; b < boneCount; b++)
-			offsetVec[b] = _bones[b].matOffset;
+			offsetVec[b] = m_bones[b].matOffset;
 
 		// OffsetMatrix StructuredBuffer 세팅
-		_offsetBuffer = make_shared<StructuredBuffer>();
-		_offsetBuffer->Init(sizeof(Matrix), static_cast<uint32>(offsetVec.size()), offsetVec.data());
+		m_offsetBuffer = make_shared<StructuredBuffer>();
+		m_offsetBuffer->Init(sizeof(Matrix), static_cast<uint32>(offsetVec.size()), offsetVec.data());
 
-		const int32 animCount = static_cast<int32>(_animClips.size());
+		const int32 animCount = static_cast<int32>(m_animClips.size());
 		for (int32 i = 0; i < animCount; i++)
 		{
-			AnimClipInfo& animClip = _animClips[i];
+			AnimClipInfo& animClip = m_animClips[i];
 
 			// 애니메이션 프레임 정보
 			vector<AnimFrameParams> frameParams;
-			frameParams.resize(_bones.size() * animClip.frameCount);
+			frameParams.resize(m_bones.size() * animClip.frameCount);
 
 			for (int32 b = 0; b < boneCount; b++)
 			{
@@ -365,8 +384,57 @@ void Mesh::CreateBonesAndAnimations(FBXLoader& loader)
 			}
 
 			// StructuredBuffer 세팅
-			_frameBuffer.push_back(make_shared<StructuredBuffer>());
-			_frameBuffer.back()->Init(sizeof(AnimFrameParams), static_cast<uint32>(frameParams.size()), frameParams.data());
+			m_frameBuffer.push_back(make_shared<StructuredBuffer>());
+			m_frameBuffer.back()->Init(sizeof(AnimFrameParams), static_cast<uint32>(frameParams.size()), frameParams.data());
+		}
+	}
+#pragma endregion
+}
+
+void Mesh::CreateHasBonesAndAnimations()
+{
+
+#pragma region SkinData
+	if (IsAnimMesh()) {
+		// BoneOffet 행렬
+		const int32 boneCount = static_cast<int32>(m_bones.size());
+		vector<Matrix> offsetVec(boneCount);
+		for (size_t b = 0; b < boneCount; b++) {
+			offsetVec[b] = m_bones[b].matOffset;
+		}
+
+		// OffsetMatrix StructuredBuffer 세팅
+		m_offsetBuffer = make_shared<StructuredBuffer>();
+		m_offsetBuffer->Init(sizeof(Matrix), static_cast<uint32>(offsetVec.size()), offsetVec.data());
+
+		const int32 animCount = static_cast<int32>(m_animClips.size());
+		for (int32 i = 0; i < animCount; i++) {
+			AnimClipInfo& animClip = m_animClips[i];
+
+			// 애니메이션 프레임 정보
+			vector<AnimFrameParams> frameParams;
+			frameParams.resize(m_bones.size() * animClip.frameCount);
+
+			for (int32 b = 0; b < boneCount; b++) {
+				const int32 keyFrameCount = static_cast<int32>(animClip.keyFrames[b].size());
+				for (int32 f = 0; f < keyFrameCount; f++) {
+					int32 idx = static_cast<int32>(boneCount * f + b);
+
+					if (idx > frameParams.size()) {
+						break;
+					}
+
+					frameParams[idx] = AnimFrameParams {
+						Vec4(animClip.keyFrames[b][f].scale),
+						animClip.keyFrames[b][f].rotation, // Quaternion
+						Vec4(animClip.keyFrames[b][f].translate)
+					};
+				}
+			}
+
+			// StructuredBuffer 세팅
+			m_frameBuffer.push_back(make_shared<StructuredBuffer>());
+			m_frameBuffer.back()->Init(sizeof(AnimFrameParams), static_cast<uint32>(frameParams.size()), frameParams.data());
 		}
 	}
 #pragma endregion

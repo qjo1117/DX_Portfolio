@@ -29,6 +29,7 @@ public:
 	void Render(Ref<class InstancingBuffer>& buffer, uint32 index = 0);
 
 	static Ref<Mesh> CreateFromFBX(const struct FbxMeshInfo* meshInfo, class FBXLoader& loader);
+	static Ref<Mesh> CreateFromFBX_HasAnimation(const struct FbxMeshInfo* meshInfo, class FBXLoader& loader, Ref<Mesh>& mesh);
 
 	void Modify(const vector<Vertex>& vertexBuffer);
 	void Modify(const vector<uint32>& indexBuffer, int32 index = 0);
@@ -43,6 +44,7 @@ public:
 	/* ----- Helper Function ----- */
 	vector<Vertex>& GetVertices() { return _vertices; }
 	vector<uint32>& GetIndices() { return _vecIndexInfo[0].indices; }
+	void CreateHasBonesAndAnimations();
 
 private:
 	/* ----- Create Function ----- */
@@ -52,15 +54,19 @@ private:
 	Matrix GetMatrix(FbxAMatrix& matrix);
 
 public:
-	uint32 GetSubsetCount() { return static_cast<uint32>(_vecIndexInfo.size()); }
-	const vector<BoneInfo>* GetBones() { return &_bones; }
-	uint32 GetBoneCount() { return static_cast<uint32>(_bones.size()); }
-	const vector<AnimClipInfo>* GetAnimClip() { return &_animClips; }
-	vector<AnimClipInfo>& GetAnimClips() { return _animClips; }
+	void SetAnimationClip(vector<AnimClipInfo>& animClips) { m_animClips = animClips; }
+	void SetBoneInfo(vector<BoneInfo>& bones) { m_bones = bones; }
 
-	bool IsAnimMesh() { return !_animClips.empty(); }
-	Ref<StructuredBuffer> GetBoneFrameDataBuffer(int32 index = 0) { return _frameBuffer[index]; }
-	Ref<StructuredBuffer> GetBoneOffsetBuffer() { return _offsetBuffer; }
+	uint32 GetSubsetCount() { return static_cast<uint32>(_vecIndexInfo.size()); }
+	const vector<BoneInfo>* GetBones() { return &m_bones; }
+	uint32 GetBoneCount() { return static_cast<uint32>(m_bones.size()); }
+	const vector<AnimClipInfo>* GetAnimClip() { return &m_animClips; }
+	vector<AnimClipInfo>& GetAnimClips() { return m_animClips; }
+	vector<BoneInfo>& GetBoneInfos() { return m_bones; }
+
+	bool IsAnimMesh() { return !m_animClips.empty(); }
+	Ref<StructuredBuffer> GetBoneFrameDataBuffer(int32 index = 0) { return m_frameBuffer[index]; }
+	Ref<StructuredBuffer> GetBoneOffsetBuffer() { return m_offsetBuffer; }
 
 	ComPtr<ID3D12Resource>	GetVertexBuffer() { return _vertexBuffer; }
 private:
@@ -75,12 +81,12 @@ private:
 	vector<IndexBufferInfo>		_vecIndexInfo;
 
 	/* ----- Animation ----- */
-	vector<AnimClipInfo>			_animClips;
-	vector<BoneInfo>				_bones;
+	vector<AnimClipInfo>			m_animClips;
+	vector<BoneInfo>				m_bones;
 
 	/* ----- Animation Data ----- */
-	Ref<StructuredBuffer>			_offsetBuffer; // 각 뼈의 offset 행렬
-	vector<Ref<StructuredBuffer>>	_frameBuffer; // 전체 본 프레임 정보
+	Ref<StructuredBuffer>			m_offsetBuffer; // 각 뼈의 offset 행렬
+	vector<Ref<StructuredBuffer>>	m_frameBuffer; // 전체 본 프레임 정보
 
 };
 

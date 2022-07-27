@@ -41,6 +41,80 @@ struct TransformParams
 
 /* ------- Animation Struct ------- */
 
+struct FbxMaterialInfo
+{
+	Vec4			diffuse;
+	Vec4			ambient;
+	Vec4			specular;
+	wstring			name;
+	wstring			diffuseTexName;
+	wstring			normalTexName;
+	wstring			specularTexName;
+};
+
+struct BoneWeight
+{
+	using Pair = pair<int32, double>;
+	vector<Pair> boneWeights;
+
+	void AddWeights(uint32 index, double weight)
+	{
+		if (weight <= 0.f)
+			return;
+
+		auto findIt = std::find_if(boneWeights.begin(), boneWeights.end(),
+			[=](const Pair& p) { return p.second < weight; });
+
+		if (findIt != boneWeights.end())
+			boneWeights.insert(findIt, Pair(index, weight));
+		else
+			boneWeights.push_back(Pair(index, weight));
+
+		// 가중치는 최대 4개
+		if (boneWeights.size() > 4)
+			boneWeights.pop_back();
+	}
+
+	void Normalize()
+	{
+		double sum = 0.f;
+		std::for_each(boneWeights.begin(), boneWeights.end(), [&](Pair& p) { sum += p.second; });
+		std::for_each(boneWeights.begin(), boneWeights.end(), [=](Pair& p) { p.second = p.second / sum; });
+	}
+};
+
+struct FbxMeshInfo
+{
+	wstring								name;
+	vector<Vertex>						vertices;
+	vector<vector<uint32>>				indices;
+	vector<FbxMaterialInfo>				materials;
+	vector<BoneWeight>					boneWeights; // 뼈 가중치
+	bool								hasAnimation;
+};
+
+struct FbxKeyFrameInfo
+{
+	FbxAMatrix  matTransform;
+	double		time;
+};
+
+struct FbxBoneInfo
+{
+	wstring					boneName;
+	int32					parentIndex;
+	fbxsdk::FbxAMatrix		matOffset;
+};
+
+struct FbxAnimClipInfo
+{
+	wstring							name;
+	fbxsdk::FbxTime					startTime;
+	fbxsdk::FbxTime					endTime;
+	fbxsdk::FbxTime::EMode			mode;
+	vector<vector<FbxKeyFrameInfo>>	keyFrames;
+};
+
 struct KeyFrameInfo
 {
 	double	time;
@@ -71,3 +145,4 @@ struct AnimFrameParams
 	Vec4	rotation; // Quaternion
 	Vec4	translation;
 };
+

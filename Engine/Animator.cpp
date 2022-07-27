@@ -20,29 +20,32 @@ Animator::~Animator()
 
 void Animator::EditorUpdate()
 {
-	int32 maxUpdateTime = m_animClips->at(m_clipIndex).frameCount;
-	ImGui::SliderInt("Frame", &m_frame, 0, maxUpdateTime);
+	if (ImGui::CollapsingHeader("Animator") == true) {
 
-	if (ImGui::SliderInt("Clips", &m_clipIndex, 0, m_animClips->size() - 1)) {
-		Play(m_clipIndex);
-	}
+		int32 maxUpdateTime = m_animClips->at(m_clipIndex).frameCount;
+		ImGui::SliderInt("Frame", &m_frame, 0, maxUpdateTime);
 
-	ImGui::Separator();
+		if (ImGui::SliderInt("Clips", &m_clipIndex, 0, m_animClips->size() - 1)) {
+			Play(m_clipIndex);
+		}
 
-	ImGui::SliderInt("Event", &m_currentFrame, 0, maxUpdateTime);
-	if (ImGui::Button("Add Event")) {
-		AnimationEvent animEvent;
-		animEvent.frame = m_currentFrame;
-		animEvent.clipIndex = m_clipIndex;
-		m_vecAnimEvents.push_back(animEvent);
-	}
+		ImGui::Separator();
 
-	ImGui::Separator();
+		ImGui::SliderInt("Event", &m_currentFrame, 0, maxUpdateTime);
+		if (ImGui::Button("Add Event")) {
+			AnimationEvent animEvent;
+			animEvent.frame = m_currentFrame;
+			animEvent.clipIndex = m_clipIndex;
+			m_vecAnimEvents.push_back(animEvent);
+		}
 
-	for (AnimationEvent& animEvent : m_vecAnimEvents) {
-		ImGui::InputText("Function", animEvent.eventName.data(), 10.0f);
-		ImGui::InputInt("Clip", &animEvent.clipIndex);
-		ImGui::InputInt("Time", &animEvent.frame);
+		ImGui::Separator();
+
+		for (AnimationEvent& animEvent : m_vecAnimEvents) {
+			ImGui::InputText("Function", animEvent.eventName.data(), 10.0f);
+			ImGui::InputInt("Clip", &animEvent.clipIndex);
+			ImGui::InputInt("Time", &animEvent.frame);
+		}
 	}
 
 }

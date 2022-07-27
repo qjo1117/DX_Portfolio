@@ -9,6 +9,7 @@
 
 void Game::Init(const WindowInfo& info)
 {
+
 	_info = info;
 	GEngine->Init(info);
 

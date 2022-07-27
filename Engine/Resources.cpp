@@ -655,7 +655,6 @@ Ref<MeshData> Resources::LoadFBX(const wstring& path)
 		return meshData;
 	}
 
-	//meshData->Load(SCENE_PATH + path);
 	if (meshData == nullptr) {
 		meshData = MeshData::LoadFromFBX(FBX_PATH + path);
 	}
@@ -1240,39 +1239,6 @@ void Resources::CreateDefaultGameObject()
 	}
 #pragma endregion
 
-#pragma region Test
-	{
-		Vec3 position = Vec3::Forward + Vec3::Right;
-		Vec4 rotation = Vec4(1.0f, 0.5f, -10.5f, -13.5477f);
-		string str;
-		Json::Value json;
-		Utils::ToJson(json, position);
-		Utils::ToJson(json, rotation);
-		Utils::ToJson(json, position);
-		Utils::ToJson(json, position);
-
-		vector<vector<float>> vecFloat = vector<vector<float>>(4, vector<float>(4, 1.0f));
-		
-		Random random;
-		random.Init();
-		for (int32 i = 0; i < 4; ++i) {
-			for (int32 j = 0; j < 4; ++j) {
-				vecFloat[i][j] = random.Rand();
-			}
-		}
-		Utils::ToJson(json, vecFloat);
-
-		ofstream json_file;
-		json_file.open("d:\\JSON_DATA.json");
-		Json::StreamWriterBuilder builder;
-		unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
-		writer->write(json, &json_file);
-		json_file.close();
-
-		int32 size = 0;
-	}
-#pragma endregion
-
 #pragma region Animation Mesh
 	{
 		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"dragon\\Dragon.fbx");
@@ -1286,7 +1252,7 @@ void Resources::CreateDefaultGameObject()
 		gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
 		gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
 
-		meshData->Save(fbxPath);
+		meshData->Save(GET_SINGLE(PathManager)->FindPath(FBX_PATH_KEY) + L"Dragon");
 
 		Add<GameObject>(L"OrangeBot", gameObjects[0]);
 	}

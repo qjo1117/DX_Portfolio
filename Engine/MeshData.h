@@ -21,8 +21,8 @@ public:
 public:
 	static Ref<MeshData> LoadFromFBX(const wstring& path);
 
-	virtual void Load(const wstring& path);
-	virtual void Save(const wstring& path);
+	virtual void Load(const wstring& path) override;
+	virtual void Save(const wstring& path) override;
 
 	vector<Ref<GameObject>> Instantiate();
 
