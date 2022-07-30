@@ -27,6 +27,7 @@ void EditorManager::Init()
 		m_srvHeap->GetGPUDescriptorHandleForHeapStart());
 
 	ImGuiContext& g = *GImGui;
+    imgui = GImGui;
 	ImGuiViewportP* viewport = g.Viewports[0];
 	g.Viewports[0]->Size.x = GEngine->GetWindow().width;
 	g.Viewports[0]->Size.y = GEngine->GetWindow().height;

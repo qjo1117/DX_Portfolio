@@ -146,6 +146,8 @@ void Engine::End()
 
 	GET_SINGLE(SoundManager)->End();
 
+	GET_SINGLE(SceneManager)->End();
+
 	GET_SINGLE(PathManager)->Clear();
 	GET_SINGLE(PluginManager)->End();
 	GET_SINGLE(DirectoryManager)->End();

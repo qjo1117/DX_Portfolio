@@ -1240,22 +1240,22 @@ void Resources::CreateDefaultGameObject()
 #pragma endregion
 
 #pragma region Animation Mesh
-	{
-		Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"dragon\\Dragon.fbx");
-		vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
-		
+	//{
+	//	Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"dragon\\Dragon.fbx");
+	//	vector<Ref<GameObject>> gameObjects = meshData->Instantiate();
+	//	
 
-		gameObjects[0]->name = wstring(L"OrangeBot");
-		gameObjects[0]->isFrustum = false;
-		
-		gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
-		gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
-		gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
+	//	gameObjects[0]->name = wstring(L"OrangeBot");
+	//	gameObjects[0]->isFrustum = false;
+	//	
+	//	gameObjects[0]->GetTransform()->SetLocalPosition(Vec3(100.0f, 0.f, -300.f));
+	//	gameObjects[0]->GetTransform()->localRotation = (Vec3(3.14f / 2.0f, 0.f, -3.14f));
+	//	gameObjects[0]->GetTransform()->SetLocalScale(Vec3(1.0f, 1.0f, 1.0f));
 
-		meshData->Save(GET_SINGLE(PathManager)->FindPath(FBX_PATH_KEY) + L"Dragon");
+	//	meshData->Save(GET_SINGLE(PathManager)->FindPath(FBX_PATH_KEY) + L"Dragon");
 
-		Add<GameObject>(L"OrangeBot", gameObjects[0]);
-	}
+	//	Add<GameObject>(L"OrangeBot", gameObjects[0]);
+	//}
 
 	//{
 	//	Ref<MeshData> meshData = GET_SINGLE(Resources)->LoadFBX(L"IronMan.fbx");

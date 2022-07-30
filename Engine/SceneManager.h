@@ -20,6 +20,8 @@ public:
 	void Render();
 	void LoadScene(SCENE_TYPE type);
 
+	void End();
+
 	Ref<class GameObject> Pick(int32 screenX, int32 screenY);
 	Ref<class GameObject> Pick(int32 screenX, int32 screenY, class RayCastHitInfo& hit);
 
@@ -29,12 +31,12 @@ public:
 	void CreateScene(SCENE_TYPE type)
 	{
 		uint32 index = static_cast<uint32>(type);
-		assert(_scenes[static_cast<uint32>(type)] == nullptr);
+		assert(m_scenes[static_cast<uint32>(type)] == nullptr);
 
 		Ref<T> scene = make_shared<T>();
 
-		if (_scenes[index] == nullptr) {
-			_scenes[index] = scene;
+		if (m_scenes[index] == nullptr) {
+			m_scenes[index] = scene;
 		}
 	}
 
@@ -45,7 +47,7 @@ public:
 private:
 	/* ----- Scene Variable ----- */
 	Ref<Scene> m_currentScene;
-	array<Ref<Scene>, static_cast<uint32>(SCENE_TYPE::END)> _scenes;
+	array<Ref<Scene>, static_cast<uint32>(SCENE_TYPE::END)> m_scenes;
 	SCENE_TYPE m_type;
 };
 

@@ -29,11 +29,18 @@ Scene::~Scene()
 	/* ----- 첫번째는 레이어를 순회를 한다, 두번째는 레이어안에 GameObject를 순회한다. ----- */
 	for (vector<Ref<GameObject>>& gameObjects : _gameObjects) {
 		for (Ref<GameObject>& obj : gameObjects) {
-			obj = nullptr;
+			if (obj) {
+				obj = nullptr;
+			}
 		}
 	}
-	for (Ref<GameObject>& obj : m_objects) {
-		obj = nullptr;
+
+	if (m_objects.empty() == false) {
+		for (Ref<GameObject>& obj : m_objects) {
+			if (obj) {
+				obj = nullptr;
+			}
+		}
 	}
 }
 
@@ -297,6 +304,14 @@ void Scene::Render()
 	RenderFoward();
 
 
+}
+
+void Scene::End()
+{
+	for (auto& obj : m_objects) {
+		obj = nullptr;
+	}
+	m_objects.clear();
 }
 
 void Scene::RenderLights()

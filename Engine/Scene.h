@@ -22,6 +22,8 @@ public:
 
 	void Render();
 
+	void End();
+
 	void ClearRTV();
 
 	void RenderShadow();

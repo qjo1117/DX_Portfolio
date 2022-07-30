@@ -46,6 +46,8 @@ public:
 
 	template<typename T>
 	T* GetWindow();
+public:
+	ImGuiContext* imgui = nullptr;
 
 private:
 	/* ----- Draw Variable ----- */
@@ -53,6 +55,7 @@ private:
 
 	PRIVATE_PROPERTY(Ref<class Object>, PickObject);
 	PRIVATE_PROPERTY(Ref<class Texture>, DefaultImage);
+
 
 	vector<IEditor*>				m_vecEditor;
 

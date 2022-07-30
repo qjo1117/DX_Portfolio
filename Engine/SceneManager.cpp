@@ -29,19 +29,34 @@ void SceneManager::Render()
 void SceneManager::LoadScene(SCENE_TYPE type)
 {
 	/* ----- Scene이 존재하는지 체크하고 있으면 씬전환을 한다. ----- */
-	assert(_scenes[static_cast<uint32>(type)]);
+	assert(m_scenes[static_cast<uint32>(type)]);
 
 	if (m_currentScene == nullptr) {
-		m_currentScene = _scenes[static_cast<uint32>(type)];
+		m_currentScene = m_scenes[static_cast<uint32>(type)];
 	}
 	else {
 		// TODO : 내용물 초기화
-		m_currentScene = _scenes[static_cast<uint32>(type)];
+		m_currentScene = m_scenes[static_cast<uint32>(type)];
 	}
 	m_type = type;
 	m_currentScene->Awake();
 	m_currentScene->Start();
 	GET_SINGLE(PluginManager)->Start();
+}
+
+void SceneManager::End()
+{
+	for (auto& scene : m_scenes) {
+		if (scene) {
+			scene->End();
+			scene = nullptr;
+		}
+	}
+
+	if (m_currentScene) {
+		m_currentScene = nullptr;
+	}
+	
 }
 
 Ref<class GameObject> SceneManager::Pick(int32 screenX, int32 screenY, RayCastHitInfo& hit)

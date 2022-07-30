@@ -330,13 +330,13 @@ ToolScene::ToolScene()
 #pragma endregion
 
 #pragma region Animation
-	{
-		Ref<GameObject> meshData = GET_SINGLE(Resources)->Get<GameObject>(L"OrangeBot");
-		meshData->AddComponent(make_shared<DragonController>());
-		meshData->AddComponent(make_shared<BoxCollider>());
-		AddGameObject(meshData);
+	//{
+	//	Ref<GameObject> meshData = GET_SINGLE(Resources)->Get<GameObject>(L"OrangeBot");
+	//	meshData->AddComponent(make_shared<DragonController>());
+	//	meshData->AddComponent(make_shared<BoxCollider>());
+	//	AddGameObject(meshData);
 
-	}
+	//}
 #pragma endregion
 
 

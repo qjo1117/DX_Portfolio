@@ -11,6 +11,8 @@
 
 
 #include <string>
+#include "PluginManager.h"
+#include "EditorManager.h"
 using namespace std;
 
 
@@ -19,7 +21,7 @@ class PluginManager;
 class IPlugin
 {
 public:
-	IPlugin(PluginManager& manager) : m_pManager(&manager) { }
+	IPlugin(PluginManager& manager) : m_pManager(&manager) { GImGui = GET_SINGLE_DLL(EditorManager)->imgui; }
 	virtual ~IPlugin() { }
 
 	virtual PLUGINDECL bool Awake() { return false; }
