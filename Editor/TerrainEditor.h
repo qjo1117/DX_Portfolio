@@ -14,14 +14,14 @@ class TerrainEditor :
 public:
 	TerrainEditor() {}
 	virtual ~TerrainEditor() {}
-
+	
+	// MenuItem(Register)
 	MENUITEM("Menu/Terrain", TerrainEditor, Register);
 	static void Register()
 	{
 		if (m_pInstance == nullptr) {
 			m_pInstance = EDITOR->GetWindow<TerrainEditor>();
 		}
-		
 	}
 
 	virtual void Init() override;

@@ -68,7 +68,7 @@ public:
 	{
 		vector<Ref<Component>> components;
 
-		for (Ref<Component>& component : _components) {
+		for (Ref<Component>& component : m_components) {
 			if (component != nullptr) {
 				components.push_back(component);
 			}
@@ -89,7 +89,7 @@ private:
 	PRIVATE_PROPERTY(uint32, layerType) = static_cast<uint32>(LAYER_TYPE::DEFAULT);
 
 	/* ----- Component Variable ----- */
-	array<Ref<Component>, FIXED_COMPONENT_COUNT> _components;
+	array<Ref<Component>, FIXED_COMPONENT_COUNT> m_components;
 	map<string, Ref<MonoBehaviour>> m_scripts;
 
 	PRIVATE_PROPERTY(bool, isFrustum) = true;
@@ -111,7 +111,7 @@ inline void GameObject::AddComponent(Ref<T> component)
 
 	uint8 index = static_cast<uint8>(component->GetType());
 	if (index < FIXED_COMPONENT_COUNT) {
-		_components[index] = component;
+		m_components[index] = component;
 		if (index == static_cast<uint8>(COMPONENT_TYPE::COLLIDER)) {
 			GET_SINGLE(ColliderManager)->AddCollider(static_pointer_cast<BaseCollider>(GetFixedComponent(COMPONENT_TYPE::COLLIDER)));
 		}
@@ -129,7 +129,7 @@ inline Ref<T> GameObject::GetComponent()
 	uint8 index = static_cast<uint8>(objectType);
 
 	if (index < FIXED_COMPONENT_COUNT) {
-		return static_pointer_cast<T>(_components[index]);
+		return static_pointer_cast<T>(m_components[index]);
 	}
 
 	auto findIt = m_scripts.find((char*)(&typeid(T).name()[6]));

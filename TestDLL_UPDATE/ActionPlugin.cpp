@@ -56,7 +56,7 @@ PLUGINDECL bool ActionPlugin::Start()
 			test->AddComponent(meshRenderer);
 		}
 		test->GetTransform()->localPosition = Vec3::Backward * 300.0f;
-		test->GetTransform()->localScale = Vec3::One * 100.0f;
+		test->GetTransform()->localScale = Vec3::One * 300.0f;
 		GET_SINGLE_DLL(SceneManager)->GetCurrentScene()->AddGameObject(test);
 	}
 

@@ -24,7 +24,7 @@ GameObject::GameObject() : Object(OBJECT_TYPE::GAMEOBJECT)
 
 GameObject::~GameObject()
 {
-	for (Ref<Component>& component : _components) {
+	for (Ref<Component>& component : m_components) {
 		if (component) {
 			component = nullptr;
 		}
@@ -45,7 +45,7 @@ void GameObject::Init()
 void GameObject::Awake()
 {
 
-	for (const Ref<Component>& component : _components) {
+	for (const Ref<Component>& component : m_components) {
 		if (component) {
 			component->Awake();
 		}
@@ -63,7 +63,7 @@ void GameObject::Start()
 		return;
 	}
 
-	for (const Ref<Component>& component : _components) {
+	for (const Ref<Component>& component : m_components) {
 		if (component) {
 			component->Start();
 		}
@@ -87,7 +87,7 @@ void GameObject::Update()
 		return;
 	}
 
-	for (const Ref<Component>& component : _components) {
+	for (const Ref<Component>& component : m_components) {
 		if (component) {
 			component->Update();
 		}
@@ -110,7 +110,7 @@ void GameObject::LateUpdate()
 		return;
 	}
 
-	for (const Ref<Component>& component : _components) {
+	for (const Ref<Component>& component : m_components) {
 		if (component) {
 			component->LateUpdate();
 		}
@@ -133,7 +133,7 @@ void GameObject::FinalUpdate()
 		return;
 	}
 
-	for (const Ref<Component>& component : _components) {
+	for (const Ref<Component>& component : m_components) {
 		if (component) {
 			component->FinalUpdate();
 		}
@@ -149,7 +149,7 @@ void GameObject::Serializer(class Json::Value& scene)
 {
 	Json::Value& gameObject = scene[Utils::Wstr2Str(m_name)];
 
-	for(auto& component : _components) {
+	for(auto& component : m_components) {
 		if (component) {
 			component->Serializer(gameObject);
 		}
@@ -166,7 +166,7 @@ void GameObject::DeSerializer(class Json::Value& scene)
 {
 	Json::Value gameObject = scene[Utils::Wstr2Str(m_name)];
 
-	for (auto& component : _components) {
+	for (auto& component : m_components) {
 		if (component) {
 			component->Serializer(gameObject);
 		}
@@ -183,7 +183,7 @@ Ref<Component> GameObject::GetFixedComponent(COMPONENT_TYPE type)
 {
 	uint8 index = static_cast<uint8>(type);
 	assert(index < FIXED_COMPONENT_COUNT);
-	return _components[index];
+	return m_components[index];
 }
 
 Ref<Transform> GameObject::GetTransform()

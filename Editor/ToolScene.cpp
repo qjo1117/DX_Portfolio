@@ -323,6 +323,7 @@ ToolScene::ToolScene()
 		obj->GetMeshRenderer()->SetMaterial(GET_SINGLE(Resources)->Get<Material>(L"Player"));
 		obj->GetMeshRenderer()->mesh = GET_SINGLE(Resources)->LoadSphereMesh();
 
+		// µî·Ï
 		AddGameObject(obj, LAYER_TYPE::DEFAULT);
 
 		_pickSphere = obj;
@@ -361,6 +362,7 @@ void ToolScene::Awake()
 void ToolScene::Start()
 {
 	Scene::Start();
+
 }
 
 void ToolScene::Update()

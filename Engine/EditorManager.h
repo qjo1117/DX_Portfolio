@@ -22,6 +22,7 @@ public:
 public:
 	/* ----- External Function ----- */
 	void Init();
+	void AlreadRender();
 	void Render();
 	void End();
 

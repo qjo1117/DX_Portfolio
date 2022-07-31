@@ -35,11 +35,8 @@ void EditorManager::Init()
     m_DefaultImage = GET_SINGLE(Resources)->Get<Texture>(L"Default");
 }
 
-void EditorManager::Render()
+void EditorManager::AlreadRender()
 {
-	ID3D12DescriptorHeap* descriptorHeaps[] = { m_srvHeap.Get() };
-	GRAPHICS_CMD_LIST->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
-
 	ImGui::GImageCount = 1;
 
 	// Start the Dear ImGui frame
@@ -56,10 +53,15 @@ void EditorManager::Render()
     }
 
 	ImGui::EndFrame();
+}
 
-	ImGui::Render();
+void EditorManager::Render()
+{
+    ID3D12DescriptorHeap* descriptorHeaps[] = { m_srvHeap.Get() };
+    GRAPHICS_CMD_LIST->SetDescriptorHeaps(_countof(descriptorHeaps), descriptorHeaps);
 
-	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), GRAPHICS_CMD_LIST.Get());
+    ImGui::Render();
+    ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), GRAPHICS_CMD_LIST.Get());
 }
 
 void EditorManager::End()

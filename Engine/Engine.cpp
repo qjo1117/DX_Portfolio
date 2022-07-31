@@ -61,15 +61,12 @@ void Engine::Init(const WindowInfo& info)
 	GET_SINGLE(Timer)->Init(m_winInfo.hWnd);
 	GET_SINGLE(DirectoryManager)->Init();
 	GET_SINGLE(SoundManager)->Init();
-
 	GET_SINGLE(Resources)->Init();
 	GET_SINGLE(ColliderManager)->Init();
-
 
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->Init();
 #endif
-
 	GET_SINGLE(PluginManager)->Init();
 
 	ResizeWindow(info.width, info.height);
@@ -84,10 +81,8 @@ void Engine::Render()
 	RenderBegin();
 
 	GET_SINGLE(SceneManager)->Render();
-
-#ifdef EDITOR_MANAGER
+	GET_SINGLE(EditorManager)->AlreadRender();
 	GET_SINGLE(EditorManager)->Render();
-#endif
 
 	RenderEnd();
 }
@@ -108,7 +103,6 @@ void Engine::Update()
 
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Timer)->Update();
-
 	GET_SINGLE(SceneManager)->Update();
 
 	LateUpdate();
@@ -143,11 +137,8 @@ void Engine::End()
 #ifdef EDITOR_MANAGER
 	GET_SINGLE(EditorManager)->End();
 #endif
-
 	GET_SINGLE(SoundManager)->End();
-
 	GET_SINGLE(SceneManager)->End();
-
 	GET_SINGLE(PathManager)->Clear();
 	GET_SINGLE(PluginManager)->End();
 	GET_SINGLE(DirectoryManager)->End();
