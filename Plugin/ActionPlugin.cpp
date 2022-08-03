@@ -45,27 +45,27 @@ PLUGINDECL bool ActionPlugin::Start()
 {
 	GET_SINGLE_DLL(EditorManager)->Log("Action Load");
 
-	{
-		Ref<GameObject> test = make_shared<GameObject>();
-		test->AddComponent(make_shared<Transform>());
-		test->AddComponent(make_shared<TestMonobehaviour>());
-		{
-			Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
-			meshRenderer->mesh = GET_SINGLE_DLL(Resources)->LoadCubeMesh();
-			meshRenderer->SetMaterial(GET_SINGLE_DLL(Resources)->Get<Material>(L"Defualt"));
-			test->AddComponent(meshRenderer);
-		}
-		test->GetTransform()->localPosition = Vec3::Backward * 300.0f;
-		test->GetTransform()->localScale = Vec3::One * 300.0f;
-		GET_SINGLE_DLL(SceneManager)->GetCurrentScene()->AddGameObject(test);
-	}
+	//{
+	//	Ref<GameObject> test = make_shared<GameObject>();
+	//	test->AddComponent(make_shared<Transform>());
+	//	test->AddComponent(make_shared<TestMonobehaviour>());
+	//	{
+	//		Ref<MeshRenderer> meshRenderer = make_shared<MeshRenderer>();
+	//		meshRenderer->mesh = GET_SINGLE_DLL(Resources)->LoadCubeMesh();
+	//		meshRenderer->SetMaterial(GET_SINGLE_DLL(Resources)->Get<Material>(L"Defualt"));
+	//		test->AddComponent(meshRenderer);
+	//	}
+	//	test->GetTransform()->localPosition = Vec3::Backward * 300.0f;
+	//	test->GetTransform()->localScale = Vec3::One * 300.0f;
+	//	GET_SINGLE_DLL(SceneManager)->GetCurrentScene()->AddGameObject(test);
+	//}
 
 	return true;
 }
 
 PLUGINDECL bool ActionPlugin::Update()
 {
-	GET_SINGLE_DLL(EditorManager)->Log("Action Update");
+	GET_SINGLE_DLL(EditorManager)->Log("Action Update", LOG_STATE::WARNING);
 
 	return true;
 }

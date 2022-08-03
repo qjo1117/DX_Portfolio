@@ -19,6 +19,7 @@ void PluginManager::Init()
         item.second->pPlugin->Init();
     }
 
+    CreateReBuildBatFile();
 }
 
 void PluginManager::Start()
@@ -151,6 +152,47 @@ void PluginManager::UnLoadPlugin(const wstring& p_fileName)
 
     m_mapPlugins.erase(p_fileName);
 
+}
+
+void PluginManager::CreateReBuildBatFile()
+{
+    vector<Ref<FileInfo>> vecSln;
+    vector<Ref<FileInfo>> vecVcxproj;
+    vector<Ref<FileInfo>> vecDLL;
+
+    Ref<FileInfo> root = GET_SINGLE(DirectoryManager)->GetFileInfo();
+    GET_SINGLE(DirectoryManager)->FindFileInfo(root, vecSln, ".sln");
+    GET_SINGLE(DirectoryManager)->FindFileInfo(root, vecDLL, ".dll");
+    GET_SINGLE(DirectoryManager)->FindFileInfo(root, vecVcxproj, ".vcxproj");
+
+    auto findFunction = [](const vector<Ref<FileInfo>>& vecFileInfo, const string& name) -> Ref<FileInfo>
+    {
+        vector<string> vecSplit = Utils::Split(name, '.');
+        for (const auto& info : vecFileInfo) {
+            if (info->Name.find(vecSplit[0]) != string::npos) {
+                return info;
+            }
+        }
+        return nullptr;
+    };
+
+    string path = root->PathInfo.string() + "build.bat";
+    std::ofstream file(path);
+
+    if (file.is_open() == false) {
+        return;
+    }
+    file << "@echo off\n";
+    file << "@call \"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat\"\n";
+    for (const Ref<FileInfo>& info : vecDLL) {
+        Ref<FileInfo> findInfo = findFunction(vecVcxproj, info->Name);
+        if (findInfo != nullptr) {
+            string strProject = findInfo->PathInfo.string().substr(root->PathInfo.string().size());
+            file << "devenv \"" + vecSln.back()->PathInfo.string() + "\" /rebuild Debug /projectconfig \"" + strProject + "\"";
+        }
+    }
+
+    file.close();
 }
 
 void PluginManager::Log(const string& log)

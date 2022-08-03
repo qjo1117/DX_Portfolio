@@ -24,6 +24,8 @@ public:
 	bool LoadPlugin(const wstring& p_fileName);
 	void UnLoadPlugin(const wstring& p_fileName);
 
+	void CreateReBuildBatFile();
+
 	Ref<PluginInfo> FindPlugin(const wstring& name);
 public:
 	void Log(const string& log);
